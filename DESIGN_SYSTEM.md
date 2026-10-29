@@ -11,7 +11,7 @@ This is a lightweight CSS implementation informed by Google's Material 3 and Mat
 ## Design rules
 
 1. Prefer system roles (for example `--md-sys-color-primary`) over hard-coded colors.
-2. Prefer component tokens (for example `--md-comp-button-height`) over one-off dimensions.
+2. Prefer component tokens (for example `--app-component-button-height`) over one-off dimensions.
 3. Use the correct `on-*` color for text and icons on a colored container.
 4. Treat tonal container changes as the main dark-theme elevation cue; shadows are supplemental.
 5. Use expressive shape morphing selectively for emphasized cards and hero moments, not every control.
@@ -34,14 +34,14 @@ Available roles follow the Material type scale:
 - Body: `body-large`, `body-medium`, `body-small`
 - Label: `label-large`, `label-medium`, `label-small`
 
-Each role exposes font family, size, line-height, weight and tracking tokens under `--md-sys-typescale-*`. Component properties also follow Material Web's component-token naming pattern, including `--md-filled-button-*`, `--md-outlined-button-*`, `--md-icon-button-*`, `--md-card-*`, `--md-fab-*` and `--md-outlined-text-field-*`; change these at `:root` or scope them to a component wrapper.
+Material Web exposes font, size, line-height and weight for each baseline type role. Letter tracking is a site-specific extension under `--app-type-tracking-*`. Component properties also follow Material Web's component-token naming pattern, including `--md-filled-button-*`, `--md-outlined-button-*`, `--md-icon-button-*`, `--app-card-*`, `--md-fab-*` and `--md-outlined-text-field-*`; change these at `:root` or scope them to a component wrapper.
 
 ## Shapes, elevation and motion
 
-- Shape tokens: `--md-sys-shape-corner-none`, `extra-small`, `small`, `medium`, `large`, `large-increased`, `extra-large`, `extra-large-increased`, `full`, plus AppSweep's `brand` silhouette.
-- Elevation: `--md-sys-elevation-level0` to `level5`; use tonal surface colors before shadows.
-- Motion: `--md-sys-motion-duration-*` and `--md-sys-motion-easing-*`.
-- Expressive helpers: `.md3-shape-morph`, `.md3-shape-squircle`, `.md3-shape-arch`, `.md3-shape-cut`, and `.md3-card--expressive`.
+- Material Web shape tokens are `--md-sys-shape-corner-none`, `extra-small`, `small`, `medium`, `large`, `extra-large` and `full`. Expressive increased radii and the brand silhouette are app-specific `--app-shape-*` extensions.
+- Elevation: `--app-elevation-level0` to `level5`; use tonal surface colors before shadows.
+- Motion: `--app-motion-duration-*` and `--app-motion-easing-*`.
+- Expressive helpers: `.app-shape-morph`, `.app-shape-squircle`, `.app-shape-arch`, `.md3-shape-cut`, and `.app-card--expressive`.
 
 ## Component recipes
 
@@ -59,7 +59,7 @@ The site's existing `.button-filled`, `.button-tonal` and `.button-outlined` cla
 Use `.md3-icon-button` with an optional variant: `.md3-icon-button--filled`, `--tonal`, or `--outlined`. Add an accessible label whenever the icon is the only content.
 
 ### Cards and chips
-- Cards: `.md3-card--elevated`, `.md3-card--filled`, `.md3-card--outlined`, optionally `.md3-card--expressive`.
+- Cards: `.md3-card--elevated`, `.md3-card--filled`, `.md3-card--outlined`, optionally `.app-card--expressive`.
 - Chips: `.md3-chip--assist`, `--filter`, `--input`, `--suggestion`, `--elevated`, `--warning`, `--success`.
 
 ### Navigation and grouped controls
@@ -115,7 +115,7 @@ Use these patterns as starting points. Keep interactive state, navigation, form 
 ### Expressive outlined card
 
 ```html
-<article class="md3-card md3-card--outlined md3-card--expressive">
+<article class="md3-card md3-card--outlined app-card--expressive">
   <span class="material-symbol" aria-hidden="true">apps</span>
   <h2>Installed applications</h2>
   <p>Inspect available information before taking action.</p>
