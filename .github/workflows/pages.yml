@@ -197,15 +197,17 @@ jobs:
               if missing_classes:
                   failures.append("DESIGN_SYSTEM.md references undefined CSS classes: " + ", ".join(missing_classes))
 
-          versions = []
+          versions = {"tokens.css": [], "styles.css": []}
           for path in html_paths:
               source = path.read_text(encoding="utf-8")
-              found = re.findall(r"""(?:tokens\.css|styles\.css)\?v=([^"' ]+)""", source)
-              if len(found) != 2 or len(set(found)) != 1:
-                  failures.append(f"{path.name}: expected matching cache versions for both stylesheets")
-              versions.extend(found)
-          if versions and len(set(versions)) != 1:
-              failures.append("CSS cache versions differ between HTML pages")
+              found = re.findall(r"""(tokens\.css|styles\.css)\?v=([^"' ]+)""", source)
+              if len(found) != 2 or {asset for asset, _ in found} != set(versions):
+                  failures.append(f"{path.name}: expected one cache version for each stylesheet")
+              for asset, version in found:
+                  versions[asset].append(version)
+          for asset, values in versions.items():
+              if values and len(set(values)) != 1:
+                  failures.append(f"{asset} cache versions differ between HTML pages")
 
           if failures:
               print("Static site validation failed:")
