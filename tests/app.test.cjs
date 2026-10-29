@@ -64,7 +64,7 @@ function boot({ releases = [], fetcher, stored, storageBlocked = false, withPane
     setTimeout, clearTimeout,
   };
   runInNewContext(source, context);
-  return { ids, root, metaTheme, document, context, listeners, stored: () => saved };
+  return { ids, root, metaTheme, document, context, listeners, docLinks, stored: () => saved };
 }
 
 async function flush() {
@@ -180,5 +180,5 @@ test('malformed API payload is handled as an error', async () => {
 test('documentation navigation keeps a current-location state and the measured header offset', () => {
   const app = boot({ withPanel: false, docs: true });
   assert.equal(app.root.style['--app-layout-header-offset'], '72px');
-  assert.equal(app.ids['download'].getAttribute('aria-current'), 'location');
+  assert.equal(app.docLinks[0].getAttribute('aria-current'), 'location');
 });
