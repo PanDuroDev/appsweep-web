@@ -1027,3 +1027,53 @@ button { font: inherit; }
     grid-area: footer;
   }
 }
+
+
+/* Compact navigation: keep the app bar clear and reveal links on demand. */
+.app-bar__menu-toggle { display: none; }
+
+@media (max-width: 839px) {
+  .app-bar__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--app-spacing-1);
+    width: calc(100% - var(--app-spacing-3));
+    padding-block: var(--app-spacing-1);
+  }
+
+  .app-bar__actions {
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+
+  .app-bar__menu-toggle { display: inline-flex; }
+
+  .app-bar__nav {
+    display: none;
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--app-spacing-1);
+    padding-block: var(--app-spacing-2);
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    overflow: visible;
+  }
+
+  .app-bar.is-menu-open .app-bar__nav { display: flex; }
+
+  .app-bar__nav a {
+    width: auto;
+    min-height: var(--app-touch-target);
+    justify-content: flex-start;
+    padding-inline: var(--app-spacing-2);
+    white-space: normal;
+  }
+}
+
+@media (max-width: 599px) {
+  .app-bar__inner { width: calc(100% - var(--app-spacing-2)); }
+  .app-bar__actions > a { display: none; }
+}
