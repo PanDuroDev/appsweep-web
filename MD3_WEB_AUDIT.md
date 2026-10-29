@@ -21,7 +21,7 @@ The audit is deliberately open-ended. It has no fixed completion date. Findings 
 - Pages: `index.html`, `docs.html`, `releases.html`, and `release.html`.
 - Implementation: semantic HTML, CSS custom properties, and vanilla JavaScript; no frontend framework or build step is currently used.
 - Keep the static-site architecture unless an evidence-backed reason justifies changing it.
-- Preserve the established dark-first, neutral/monochrome visual identity unless the owner explicitly approves a brand-direction change.
+- The only permitted brand-specific design-property exception is the palette `#111111` and `#eaeaea`. All other applicable properties must follow current Material 3 Web guidance; these values do not excuse incorrect semantic roles, contrast, typography, shape, layout, surfaces, states, or motion.
 - M3 is a design system, not a requirement to add every component to every site. Only introduce a component when the information architecture and interaction require it.
 - Do not treat Compose/Android-only behavior as a Web requirement. Distinguish core M3 guidance, M3 Expressive guidance, Material Web component implementation details, and browser/WCAG requirements.
 - Do not add Material Web as a dependency merely to obtain visual parity. Evaluate its current maintenance/support status and the cost of introducing it before considering adoption.
@@ -54,11 +54,11 @@ These are evidence-led audit candidates from the current source, not all confirm
 
 ### 1. Color system and theme generation
 
-- Dark primary, secondary, and tertiary currently share neutral values; the light theme also uses a predominantly neutral palette. Confirm whether a monochrome scheme is the intentional brand decision or an accidental loss of M3 role distinction.
+- The monochrome palette is a binding product constraint: `#111111` and `#eaeaea` are the only allowed brand-specific exception. Audit how these values map to semantic roles and verify every other role, tonal relationship, and contrast requirement against M3 Web guidance.
 - Verify every foreground/background pairing in both themes, including text, icons, outlines, disabled controls, focus indicators, and state layers. Test computed colors, not only token names.
 - Check whether all color roles used by the pages have a valid value in both themes, and whether unused roles should remain as supported theme contract or be removed.
 - Check that the HTML theme-color metadata and JavaScript theme updates remain synchronized with the actual surface tokens.
-- Identify hard-coded colors outside the theme layer and classify each as a necessary platform/browser integration value or an avoidable duplicate.
+- Find every hard-coded color outside the theme layer. Only `#111111` and `#eaeaea` are allowed as explicit brand exceptions; every other color must be justified by the applicable M3 semantic role/platform requirement or corrected.
 
 ### 2. Typography and font assets
 
@@ -162,7 +162,7 @@ Do not label something “M3 violation” based only on a resemblance or a third
 - Each M3 foundation has an explicit status: compliant, partial, non-compliant, not applicable, or pending evidence.
 - Every reported issue has a source location, authoritative reference, impact, recommendation, and validation method.
 - Redundant and unnecessary elements are listed separately from missing functionality.
-- Brand decisions (especially monochrome color and expressive motion) are separated from objective implementation defects.
+- The `#111111` / `#eaeaea` palette exception is enforced; no other design-property exception is assumed. Any technical limitation must be evidenced and documented.
 - The final backlog is prioritized and contains no speculative or duplicate findings.
 - No implementation is merged solely because it appears on a generic M3 component checklist.
 
