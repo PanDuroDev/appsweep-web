@@ -828,10 +828,6 @@ button { font: inherit; }
   align-items: stretch;
 }
 
-.project-card {
-  min-height: 100%;
-}
-
 .release {
   display: flex;
   flex-direction: column;
@@ -843,29 +839,11 @@ button { font: inherit; }
   min-width: 0;
 }
 
-.release__meta {
-  overflow-wrap: anywhere;
-}
-
 .docs-block + .docs-block {
   border-top: 1px solid var(--md-sys-color-outline-variant);
 }
 
-.asset-groups {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-@media (min-width: 1600px) {
-  .asset-groups {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 599px) {
-  .asset-groups {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
   .home-page > #workflow {
     padding-block-start: var(--app-spacing-4);
   }
