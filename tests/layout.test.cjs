@@ -45,7 +45,7 @@ test('all pages load the new layout styles and use matching cache keys', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
     assert.match(html, /tokens\.css\?v=20261029-md3-tidy1/);
-    assert.match(html, /styles\.css\?v=20261029-md3-tidy1/);
+    assert.match(html, /styles\.css\?v=20261029-layout1/);
     assert.match(html, /app\.js\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);

@@ -801,3 +801,47 @@ button { font: inherit; }
   }
   .loading-indicator { border-color: CanvasText; border-top-color: Highlight; }
 }
+
+
+/* Layout tidy-up: clearer grouping without changing page content or behavior. */
+.home-page {
+  row-gap: var(--app-spacing-1);
+}
+
+.home-page > .hero {
+  max-width: 760px;
+}
+
+.home-page > #download {
+  min-width: 0;
+}
+
+.home-page > #workflow {
+  padding-block-start: var(--app-spacing-5);
+}
+
+.section-heading {
+  max-width: 760px;
+}
+
+.feature-grid {
+  align-items: stretch;
+}
+
+.release {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-spacing-2);
+}
+
+.release__ready,
+.release__error {
+  min-width: 0;
+}
+
+
+@media (max-width: 599px) {
+  .home-page > #workflow {
+    padding-block-start: var(--app-spacing-4);
+  }
+}
