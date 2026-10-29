@@ -44,8 +44,8 @@ test('releases and assets use adaptive grids rather than a single narrow column'
 test('all pages load the new layout styles and use matching cache keys', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
-    assert.match(html, /tokens\.css\?v=20261029-md3-tidy1/);
-    assert.match(html, /styles\.css\?v=20261029-layout1/);
+    assert.match(html, /tokens\.css\?v=20261029-layout2/);
+    assert.match(html, /styles\.css\?v=20261029-layout2/);
     assert.match(html, /app\.js\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);
@@ -68,4 +68,23 @@ test('homepage step cards keep a compact and consistent label-to-title gap', () 
 test('release cards use a consistent vertical stack with actions aligned to the bottom', () => {
   assert.match(styles, /\.release-card\s*\{[^}]*display:\s*flex;[^}]*flex-direction:\s*column;[^}]*min-width:\s*0;/s);
   assert.match(styles, /\.release-card__actions\s*\{[^}]*margin-block-start:\s*auto;[^}]*padding-block-start:\s*var\(--app-spacing-2\)/s);
+});
+
+
+test('documentation has a complete section index and matching section targets', () => {
+  const docs = read('docs.html');
+  const links = [...docs.matchAll(/<a href="#([^"]+)">/g)].map(match => match[1]);
+  const ids = new Set([...docs.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
+  assert.deepEqual(links, ['overview', 'download', 'workflow', 'safety', 'build', 'troubleshooting', 'support']);
+  for (const id of links) assert.ok(ids.has(id), `Missing documentation section target: #${id}`);
+  assert.match(docs, /Pre-alpha software/);
+  assert.match(docs, /A detected path is not proof that it is safe to delete/);
+  assert.match(docs, /Remove usernames, personal file paths, tokens/);
+});
+
+test('documentation redesign includes responsive facts, reading blocks, and readable lists', () => {
+  assert.match(styles, /\.docs-facts\s*\{[^}]*display:\s*grid/s);
+  assert.match(styles, /\.docs-detail-list\s*\{[^}]*display:\s*grid/s);
+  assert.match(styles, /\.docs-steps,\s*\.docs-checklist\s*\{[^}]*display:\s*grid/s);
+  assert.match(styles, /@media\s*\(max-width:\s*839px\)[\s\S]*?\.docs-facts\s*\{\s*grid-template-columns:\s*1fr/);
 });
