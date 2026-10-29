@@ -247,3 +247,12 @@ This finding is documented in PR discussion. No source changes have been made. T
 
 ### Additional source scan notes
 A scan of literal CSS values also found layout widths, icon sizes, 40px brand/progress dimensions, 2px/3px optical offsets, and responsive grid constraints. These are not automatically defects: each needs comparison with the relevant component/layout guidance and rendered context. No speculative issue has been opened for them in this pass.
+
+## Live evidence update — 2026-10-30: page theme metadata cross-check
+
+- [x] Inspect all four page HTML files for inline style attributes and literal color values.
+- [x] Verify each page declares the dark initial theme-color metadata value (#111111).
+- [x] Verify app.js updates the theme-color metadata to #111111 for dark mode and #f5f5f5 for light mode, matching the corresponding semantic surface colors in tokens.css.
+- [x] Confirm no inline style declarations or additional hard-coded color literals were found in the four page HTML files during this scan.
+
+**Assessment:** No color-policy finding from this check. The light-mode #f5f5f5 value is the defined M3 surface role used for browser chrome metadata, not an additional brand-palette exception. The HTML/CSS/JS source relationship is consistent. Browser chrome rendering still needs device/browser verification.
