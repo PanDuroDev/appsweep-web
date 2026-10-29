@@ -46,7 +46,7 @@ test('all pages load the new layout styles and use matching cache keys', () => {
     const html = read(path);
     assert.match(html, /tokens\.css\?v=20261029-layout2/);
     assert.match(html, /styles\.css\?v=20261029-mobile-nav4/);
-    assert.match(html, /app\.js\?v=20261029-mobile-nav3/);
+    assert.match(html, /app\.js\?v=20261029-mobile-nav4/);
     assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);
   }
@@ -149,7 +149,8 @@ test('every page exposes an accessible collapsible mobile navigation', () => {
   assert.match(mobileQuery, /\.app-bar__inner\s*>\s*\.brand\s*\{\s*grid-area:\s*brand/);
   assert.match(mobileQuery, /\.app-bar__actions\s*\{\s*grid-area:\s*actions/);
   assert.match(mobileQuery, /\.app-bar__nav\s*\{\s*grid-area:\s*nav/);
-  assert.match(mobileQuery, /\.app-bar\.has-mobile-menu\s+\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);\n  assert.doesNotMatch(mobileQuery, /\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/, 'Menu toggle must stay hidden until JavaScript initializes');
+  assert.match(mobileQuery, /\.app-bar\.has-mobile-menu\s+\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
+  assert.doesNotMatch(mobileQuery, /^\s*\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}\s*$/m, 'Menu toggle must stay hidden until JavaScript initializes');
   assert.match(mobileQuery, /\.app-bar\.has-mobile-menu:not\(\.is-menu-open\)\s+\.app-bar__nav\s*\{\s*display:\s*none;\s*\}/);
   assert.match(mobileQuery, /max-height:\s*calc\(100dvh\s*-\s*var\(--app-layout-app-bar-height\)\s*-\s*2rem\)/);
   assert.match(mobileQuery, /overflow-y:\s*auto/);

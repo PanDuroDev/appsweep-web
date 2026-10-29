@@ -73,10 +73,6 @@
     }
   });
 
-  addEventListener('resize', () => {
-    if (innerWidth > 839) setMenuOpen(false);
-  }, { passive: true });
-
   // Preserve navigation if JavaScript is disabled or setup fails.
   bar?.classList.add('has-mobile-menu');
 
@@ -89,7 +85,10 @@
     });
   }
   addEventListener('scroll', onScroll, { passive: true });
-  addEventListener('resize', onScroll, { passive: true });
+  addEventListener('resize', () => {
+    if (innerWidth > 839) setMenuOpen(false);
+    onScroll();
+  }, { passive: true });
   updateNavigation();
 
   const panel = document.getElementById('release-panel');
