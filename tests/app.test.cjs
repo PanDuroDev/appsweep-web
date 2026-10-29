@@ -158,7 +158,7 @@ test('latest download skips prereleases and chooses the newest stable release', 
     return { ok: true, json: async () => [prerelease, stable] };
   } });
   await flush();
-  assert.match(requestedUrl, /releases\\?per_page=100$/);
+  assert.equal(requestedUrl, 'https://api.github.com/repos/PanDuroDev/appsweep/releases?per_page=100');
   assert.equal(app.ids['release-panel'].dataset.state, 'ready');
   assert.equal(app.ids['release-title'].textContent, 'AppSweep v1');
   assert.equal(app.ids['download-latest'].href, stable.assets[0].browser_download_url);
