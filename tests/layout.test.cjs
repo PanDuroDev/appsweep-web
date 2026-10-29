@@ -137,6 +137,7 @@ test('every page exposes an accessible collapsible mobile navigation', () => {
     assert.match(html, /<nav id="app-navigation" class="app-bar__nav" aria-label="Main navigation">/);
     assert.match(html, /id="menu-toggle" type="button" aria-controls="app-navigation" aria-expanded="false" aria-label="Open navigation"/);
     assert.match(html, /id="menu-icon" aria-hidden="true">menu/);
+    assert.ok(html.indexOf('<div class="app-bar__actions">') < html.indexOf('<nav id="app-navigation"'), path + ' must put the menu controls before navigation in DOM order');
     assert.match(html, /href="releases.html"/);
   }
 
