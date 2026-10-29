@@ -34,7 +34,7 @@ Available roles follow the Material type scale:
 - Body: `body-large`, `body-medium`, `body-small`
 - Label: `label-large`, `label-medium`, `label-small`
 
-Material Web exposes font, size, line-height and weight for each of its 15 baseline type roles. Letter tracking is a site-specific extension under `--app-type-tracking-*`. Material 3 Expressive also defines emphasized counterparts; this stylesheet provides AppSweep-owned `--app-type-emphasized-*` aliases because those are not official Material Web tokens. Component properties also follow Material Web's component-token naming pattern, including `--md-filled-button-*`, `--md-outlined-button-*`, `--md-icon-button-*`, `--app-card-*`, `--md-fab-*` and `--md-outlined-text-field-*`; change these at `:root` or scope them to a component wrapper.
+Material Web exposes font, size, line-height and weight for each of its 15 baseline type roles. This project now keeps the official baseline values separate from bold, responsive AppSweep Expressive presets. Letter tracking is a site-specific extension under `--app-type-tracking-*`. Material 3 Expressive also defines emphasized counterparts; this stylesheet provides AppSweep-owned `--app-type-emphasized-*` aliases because those are not official Material Web tokens. Component properties also follow Material Web's component-token naming pattern, including `--md-filled-button-*`, `--md-outlined-button-*`, `--md-icon-button-*`, `--app-card-*`, `--md-fab-*` and `--md-outlined-text-field-*`; change these at `:root` or scope them to a component wrapper.
 
 ## Shapes, elevation and motion
 
