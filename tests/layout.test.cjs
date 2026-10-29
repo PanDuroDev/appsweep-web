@@ -141,8 +141,11 @@ test('every page exposes an accessible collapsible mobile navigation', () => {
   }
 
   assert.match(styles, /\.app-bar__menu-toggle\s*\{\s*display:\s*none;\s*\}/);
-  assert.match(styles, /@media\s*\(max-width:\s*839px\)[\s\S]*?\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
-  assert.match(styles, /\.app-bar\.is-menu-open\s+\.app-bar__nav\s*\{\s*display:\s*flex;\s*\}/);
+  const mobileQueryStart = styles.lastIndexOf('@media (max-width: 839px)');
+  assert.notEqual(mobileQueryStart, -1, 'Missing compact navigation breakpoint');
+  const mobileQuery = extractCssBlock(styles, styles.indexOf('{', mobileQueryStart));
+  assert.match(mobileQuery, /\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
+  assert.match(mobileQuery, /\.app-bar\.is-menu-open\s+\.app-bar__nav\s*\{\s*display:\s*flex;\s*\}/);
   assert.match(read('app.js'), /aria-expanded/);
   assert.match(read('app.js'), /event\.key === 'Escape'/);
 });
