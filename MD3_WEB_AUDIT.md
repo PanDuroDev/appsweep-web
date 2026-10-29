@@ -186,3 +186,48 @@ Do not label something “M3 violation” based only on a resemblance or a third
 ---
 
 **Important:** this document is the audit charter and initial source inventory. It is not the final compliance report. Findings must be expanded and verified through the remaining audit phases before implementation decisions are made.
+
+## Live evidence update — 2026-10-30: styles.css first color/state pass
+
+### Verified source scope
+- Reviewed styles.css focus outline, links, app-bar navigation, filled/tonal/outlined/quiet buttons, card/notice/release surfaces, docs navigation, loading indicator, reduced-motion and forced-colors rules.
+- Cross-checked state-layer values directly against the generated Material Web v0.192 source: [_md-sys-state.scss](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-sys-state.scss). Exact values: hover 0.08, focus 0.12, pressed 0.12, dragged 0.16.
+- Cross-checked button reference dimensions against generated Material Web v0.192 component tokens: [filled button](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-button.scss) and [filled icon button](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-comp-filled-icon-button.scss).
+
+### Computed foreground/background results
+Ratios were calculated from the actual declared hex values in tokens.css. Each row represents the five backgrounds surface, surface-container-low, surface-container, surface-container-high, and surface-container-highest.
+
+| Theme | Foreground role | Lowest ratio across the five surfaces | WCAG AA normal text |
+|---|---|---:|---|
+| Dark | on-surface | 10.97:1 | Pass |
+| Dark | on-surface-variant | 7.73:1 | Pass |
+| Dark | primary (used by links and emphasis) | 7.73:1 | Pass |
+| Light | on-surface | 13.05:1 | Pass |
+| Light | on-surface-variant | 7.04:1 | Pass |
+| Light | primary (used by links and emphasis) | 13.05:1 | Pass |
+
+The primary focus outline was also checked against all five surfaces: its lowest ratio is 7.73:1 in dark mode and 13.05:1 in light mode. The standard outline role remains above 3:1 against all five surfaces (minimum 4.13:1 dark, 3.44:1 light).
+
+### Outline-variant classification — pending, not a confirmed WCAG defect
+The outline-variant border color is below 3:1 against all five surface-container backgrounds (range 1.42–2.03:1 dark; 1.31–1.58:1 light). It is currently used on section separators and non-interactive grouping surfaces/cards. WCAG 1.4.11 applies when the visual boundary is necessary to identify a UI component or its state; a decorative/grouping border does not automatically need 3:1. The actual page semantics and rendered grouping must be assessed before raising a confirmed accessibility defect. Keep this item open pending component-by-component classification.
+
+### Interaction-state review
+- Shared button and navigation state rules correctly distinguish hover, focus-visible, and active/pressed selectors; selected/current navigation states have separate base and interaction rules.
+- The shared focus indicator is a 2px primary outline with 2px offset. Its token contrast is strong against all currently declared content surfaces.
+- The confirmed mismatch remains the shared focus/pressed opacity token (10% instead of 12%); it affects filled/tonal/outlined/quiet buttons and both navigation groups.
+- The CSS explicitly disables the loading-indicator animation and component transitions under prefers-reduced-motion: reduce; forced-colors overrides are present. This is source-level evidence only, not browser verification.
+
+### Progress/loading and accessibility follow-up
+- The loading indicator is a custom 40px ring with a 3px border and 1400ms linear rotation. Its motion is disabled under reduced-motion. Material Web documents circular progress as an indeterminate circular indicator and exposes size/indicator-width tokens; the current source inspection alone does not establish a defect in the chosen custom rendering.
+- Release loading containers set aria-busy, while the spinner is intentionally aria-hidden and visible loading text is provided. Retry/loading/error transitions still need a screen-reader check to establish whether status changes are announced adequately (WCAG 4.1.3).
+- No browser-computed-style, screenshot, keyboard, or screen-reader verification has been performed in this pass.
+
+### Status
+- [x] Calculate the actual text-role combinations against all five surface-container backgrounds in both themes.
+- [x] Check focus-outline and standard-outline contrast against the same surfaces.
+- [x] Inspect CSS state selectors for hover/focus/pressed separation and selected navigation variants.
+- [x] Confirm the source-level reduced-motion and forced-colors rules.
+- [ ] Classify every outline-variant use as decorative versus necessary component/state boundary.
+- [ ] Verify release loading/retry/error announcements with a screen reader.
+- [ ] Perform browser-computed-style and visual checks.
+- [ ] Resolve confirmed findings and run regression checks.
