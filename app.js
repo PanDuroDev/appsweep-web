@@ -143,9 +143,9 @@
     releaseGithub.hidden = true;
 
     if (!release) {
-      title.textContent = 'No published release yet';
-      meta.textContent = 'No AppSweep release has been published. The direct download will become available when a Windows build is attached to a release.';
-      setLatestDownload('releases.html', 'No release available yet');
+      title.textContent = 'No stable release published yet';
+      meta.textContent = 'No stable AppSweep release has been published. Prereleases are not offered as the latest stable download.';
+      setLatestDownload('releases.html', 'No stable release available yet');
       return;
     }
     if (typeof release.tag_name !== 'string' || !Array.isArray(release.assets)) throw new Error('Invalid release data');
@@ -193,7 +193,7 @@
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 12000);
     try {
-      const response = await fetch('https://api.github.com/repos/PanDuroDev/appsweep/releases?per_page=1', {
+      const response = await fetch('https://api.github.com/repos/PanDuroDev/appsweep/releases?per_page=100', {
         headers: { Accept: 'application/vnd.github+json' },
         signal: controller.signal,
       });
@@ -202,8 +202,13 @@
       if (!Array.isArray(releases) || releases.some(item => !item || typeof item !== 'object' || Array.isArray(item))) {
         throw new Error('Invalid release list');
       }
-      render(releases[0]);
-      setState(releases.length ? 'ready' : 'empty');
+      // The API can return prereleases before the latest stable release.
+      // Select the newest published stable release rather than blindly using item zero.
+      const stableReleases = releases.filter(item => item.draft !== true && item.prerelease !== true
+        && typeof item.tag_name === 'string');
+      stableReleases.sort((a, b) => new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime());
+      render(stableReleases[0]);
+      setState(stableReleases.length ? 'ready' : 'empty');
     } catch {
       setLatestDownload('releases.html', 'Could not check releases');
       setState('error');
