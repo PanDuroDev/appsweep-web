@@ -231,3 +231,19 @@ The outline-variant border color is below 3:1 against all five surface-container
 - [ ] Verify release loading/retry/error announcements with a screen reader.
 - [ ] Perform browser-computed-style and visual checks.
 - [ ] Resolve confirmed findings and run regression checks.
+
+## Live evidence update — 2026-10-30: documentation typography override
+
+### Finding F-STYLES-01 — Body line-height overrides
+- **Classification:** confirmed M3 typography-token mismatch.
+- **Severity:** Low; visual consistency/readability. No clipping or functional failure has been established.
+- **Locations:** styles.css lines 905–912 and 944–949.
+- **Evidence:** The docs-fact/detail-list/steps supporting-text selector uses the Body Medium font size (14px) but overrides line-height with 1.65 (23.1px), instead of the Body Medium token of 20px. The docs-steps/checklist list-item selector also uses 1.65; with inherited Body Large 16px this computes to 26.4px instead of the Body Large token of 24px.
+- **Recommendation:** Restore the corresponding M3 line-height tokens and ensure each selector uses a coherent type role (font, size, weight, line-height, tracking). Do not add a custom line-height exception just to loosen the reading rhythm.
+- **Validation:** Compare computed typography against Body Medium (14/20) and Body Large (16/24); review line wrapping and readability at compact, medium, and wide widths; add a regression assertion.
+- **Reference:** [Material 3 Typography](https://m3.material.io/styles/typography/overview).
+
+This finding is documented in PR discussion. No source changes have been made. The styles.css file-level checklist remains unchecked until all CSS findings are resolved and validated.
+
+### Additional source scan notes
+A scan of literal CSS values also found layout widths, icon sizes, 40px brand/progress dimensions, 2px/3px optical offsets, and responsive grid constraints. These are not automatically defects: each needs comparison with the relevant component/layout guidance and rendered context. No speculative issue has been opened for them in this pass.
