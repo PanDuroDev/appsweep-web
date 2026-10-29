@@ -4,125 +4,52 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111318">
-  <meta name="description" content="AppSweep is an open-source Windows app manager and deep uninstaller. Find installed apps, inspect app details, and review leftover traces from one focused interface.">
-  <meta property="og:title" content="AppSweep — A cleaner way to manage Windows apps">
-  <meta property="og:description" content="An open-source Windows app manager and deep uninstaller.">
-  <meta property="og:type" content="website">
-  <title>AppSweep — A cleaner way to manage Windows apps</title>
+  <meta name="description" content="AppSweep is an open-source Windows desktop app for viewing installed applications and reviewing app-related information.">
+  <title>AppSweep — Windows app manager</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="script.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
   <header class="topbar">
-    <a class="brand" href="#top" aria-label="AppSweep home">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 4 34 12v16L20 36 6 28V12Z" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="m12 22 5 5 11-13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span>AppSweep</span>
-    </a>
-    <nav class="nav-links" aria-label="Main navigation">
+    <a class="brand" href="index.html" aria-label="AppSweep home"><span class="brand-mark">A</span><span>AppSweep</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#about">About</a>
       <a href="#features">Features</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="#faq">FAQ</a>
+      <a href="docs.html">Docs</a>
+      <a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Source ↗</a>
     </nav>
-    <a class="button button-small button-tonal nav-cta" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-      View on GitHub <span aria-hidden="true">↗</span>
-    </a>
-    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+    <a class="button button-small button-tonal" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">Download</a>
   </header>
-  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
-    <a href="#features">Features</a><a href="#how-it-works">How it works</a><a href="#faq">FAQ</a>
-    <a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">View on GitHub ↗</a>
-  </nav>
 
-  <main id="main">
-    <section class="hero section-wrap" id="top">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="status-dot"></span> OPEN SOURCE · BUILT FOR WINDOWS</div>
-        <h1>Uninstall with intent.<br><span class="gradient-text">Leave less behind.</span></h1>
-        <p class="hero-lede">AppSweep is a focused Windows app manager designed to help you see what is installed, understand where it lives, and review leftover traces when an app is removed.</p>
-        <div class="hero-actions">
-          <a class="button button-filled" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">
-            Explore releases <span class="arrow" aria-hidden="true">↗</span>
-          </a>
-          <a class="button button-outlined" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            Browse source
-          </a>
-        </div>
-        <div class="hero-meta"><span><span class="meta-check">✓</span> Open source</span><span><span class="meta-check">✓</span> Windows desktop</span><span><span class="meta-check">✓</span> No account required</span></div>
+  <main>
+    <section class="hero" id="about">
+      <p class="eyebrow">OPEN SOURCE · WINDOWS DESKTOP</p>
+      <h1>Manage installed apps.<br><span>Know what you're removing.</span></h1>
+      <p class="lead">AppSweep is a Windows desktop application for discovering installed software, inspecting its available details, and reviewing related traces before taking action.</p>
+      <div class="actions">
+        <a class="button button-filled" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">Download from GitHub <span aria-hidden="true">↗</span></a>
+        <a class="button button-outlined" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">View source</a>
       </div>
-      <div class="hero-visual" aria-label="Illustration of the AppSweep desktop interface">
-        <div class="glow glow-one"></div><div class="glow glow-two"></div>
-        <div class="app-window">
-          <div class="window-top"><div class="window-brand"><span class="mini-mark">A</span><span>AppSweep</span></div><div class="window-controls"><i></i><i></i><i></i></div></div>
-          <div class="window-body">
-            <aside class="mock-sidebar"><div class="side-active"><span>▦</span> Applications</div><div><span>⌕</span> Deep scan</div><div><span>☆</span> Favorites</div><div><span>⚙</span> Settings</div><div class="side-bottom"><span class="online-dot"></span> Local device</div></aside>
-            <div class="mock-content">
-              <div class="mock-heading"><div><span class="mock-kicker">YOUR LIBRARY</span><h3>Applications</h3></div><span class="mock-count">LOCAL</span></div>
-              <div class="mock-search">⌕ <span>Search installed apps</span><span class="keycap">Ctrl K</span></div>
-              <div class="mock-stats"><div><span>Installed apps</span><strong>Overview</strong></div><div><span>Sources</span><strong>Multiple</strong></div></div>
-              <div class="mock-app"><span class="app-tile tile-blue">W</span><span class="app-name"><strong>Windows utility</strong><small>Desktop program</small></span><span class="app-arrow">›</span></div>
-              <div class="mock-app"><span class="app-tile tile-purple">◈</span><span class="app-name"><strong>Store application</strong><small>Store app</small></span><span class="app-arrow">›</span></div>
-              <div class="mock-app"><span class="app-tile tile-green">⌘</span><span class="app-name"><strong>Installed software</strong><small>Desktop program</small></span><span class="app-arrow">›</span></div>
-              <div class="mock-note"><span class="note-icon">✦</span><span><strong>Know before you remove</strong><small>Review app details and traces first.</small></span></div>
-            </div>
-          </div>
-          <div class="window-caption"><span class="caption-pulse"></span> Interface concept · Illustrative data</div>
-        </div>
-        <div class="float-chip chip-left"><span class="chip-icon">⌕</span><span><strong>Find</strong><small>Installed apps</small></span></div>
-        <div class="float-chip chip-right"><span class="chip-icon chip-icon-green">✦</span><span><strong>Review</strong><small>Leftover traces</small></span></div>
-      </div>
-      <div class="hero-bottom-line"><span>LESS CLUTTER, MORE CLARITY</span><span class="line"></span><span>MADE BY <a href="https://github.com/PanDuroDev" target="_blank" rel="noreferrer">PANDURODEV</a></span></div>
+      <p class="note">Downloads are provided through GitHub Releases when a release asset is published. If no downloadable file is listed, check the repository for the latest project status.</p>
     </section>
 
-    <section class="trust-strip">
-      <div class="section-wrap trust-inner"><span>BUILT AROUND YOUR WORKFLOW</span><div><span class="trust-symbol">⌘</span> Desktop apps</div><div><span class="trust-symbol">▣</span> Store apps</div><div><span class="trust-symbol">⌕</span> Residue awareness</div><div><span class="trust-symbol">◇</span> Open source</div></div>
-    </section>
-
-    <section class="section-wrap section features-section" id="features">
-      <div class="section-heading"><span class="eyebrow">PURPOSEFUL BY DESIGN</span><h2>Your installed apps.<br><span class="muted-heading">A clearer picture.</span></h2><p>Useful details, focused tools, and a more deliberate approach to removing software from Windows.</p></div>
-      <div class="feature-grid">
-        <article class="feature-card feature-card-large"><div class="feature-icon icon-blue"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M8 4v5"/></svg></div><span class="card-index">01 / DISCOVER</span><h3>One place to look</h3><p>Bring desktop programs, Store apps, and shortcuts into one searchable library, instead of hunting through separate Windows screens.</p><div class="mini-pills"><span>Desktop</span><span>Store</span><span>Shortcuts</span></div><div class="card-decoration decor-list"><span></span><span></span><span></span><span></span></div></article>
-        <article class="feature-card"><div class="feature-icon icon-purple"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4M8 11h6"/></svg></div><span class="card-index">02 / INSPECT</span><h3>Details that matter</h3><p>Check available app information, install locations, versions, and uninstall details before taking action.</p><div class="feature-visual inspect-visual"><span class="inspect-row"><i></i><b></b><em></em></span><span class="inspect-row"><i></i><b></b><em></em></span><span class="inspect-row"><i></i><b></b><em></em></span></div></article>
-        <article class="feature-card"><div class="feature-icon icon-green"><svg viewBox="0 0 24 24"><path d="M4 5h16M7 5v14m10-14v14M5 19h14M9 9h6M9 13h6"/></svg></div><span class="card-index">03 / REVIEW</span><h3>Look beyond uninstall</h3><p>Explore detected leftover traces associated with apps, including relevant folders and other app-related entries.</p><div class="trace-visual"><span>AppData</span><span>ProgramData</span><span class="trace-muted">Temporary files</span></div></article>
-        <article class="feature-card"><div class="feature-icon icon-amber"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div><span class="card-index">04 / STAY IN CONTROL</span><h3>Review before you act</h3><p>App removal can have consequences. AppSweep is designed to help you inspect what is associated with an app rather than treating every file as disposable.</p><div class="safety-tag"><span>✓</span> Your decision stays yours</div></article>
+    <section class="section" id="features">
+      <p class="eyebrow">WHAT IT DOES</p>
+      <h2>Focused tools, no fictional screenshots.</h2>
+      <div class="feature-list">
+        <article><span class="number">01</span><div><h3>Find installed applications</h3><p>Collects application entries from Windows registry uninstall records, Store apps, and Start Menu shortcuts.</p></div></article>
+        <article><span class="number">02</span><div><h3>Inspect available details</h3><p>Shows available information such as publisher, version, install location, architecture, and uninstall information.</p></div></article>
+        <article><span class="number">03</span><div><h3>Review related paths</h3><p>Helps inspect detected app-related locations and leftover traces. Results depend on the information available on the device.</p></div></article>
+        <article><span class="number">04</span><div><h3>Open-source Windows utility</h3><p>The application is built with Rust and egui, with Windows-specific functionality. Read the source and report issues on GitHub.</p></div></article>
       </div>
     </section>
 
-    <section class="workflow-section" id="how-it-works">
-      <div class="section-wrap workflow-layout">
-        <div class="workflow-copy"><span class="eyebrow">A SIMPLE FLOW</span><h2>From installed<br>to understood.</h2><p>Start with the app you want to manage. Check the information AppSweep finds, then choose your next step with more context.</p><a class="text-link" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Explore the project <span>↗</span></a></div>
-        <div class="steps">
-          <article class="step"><span class="step-number">1</span><div><h3>Find the app</h3><p>Browse or search the applications detected on your Windows device.</p></div><span class="step-symbol">⌕</span></article>
-          <article class="step"><span class="step-number">2</span><div><h3>Inspect its details</h3><p>Review available metadata, uninstall information, and related locations.</p></div><span class="step-symbol">◫</span></article>
-          <article class="step"><span class="step-number">3</span><div><h3>Choose deliberately</h3><p>Use the information to decide what to remove and what should stay.</p></div><span class="step-symbol">✓</span></article>
-        </div>
-      </div>
+    <section class="download-panel">
+      <div><p class="eyebrow">GET APPSWEEP</p><h2>Ready to try it?</h2><p>Open the releases page to find any published downloads, or build the project from source.</p></div>
+      <a class="button button-filled" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">View downloads ↗</a>
     </section>
-
-    <section class="section-wrap section open-source-section">
-      <div class="open-source-card"><div class="open-source-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="open-source-logo">A<span>✓</span></div><span class="orbit-dot dot-a"></span><span class="orbit-dot dot-b"></span></div><div class="open-source-copy"><span class="eyebrow">OPEN SOURCE, OPEN PROCESS</span><h2>Curious how it works?</h2><p>AppSweep is developed in the open. Read the code, follow changes, report an issue, or contribute to the project on GitHub.</p><div class="hero-actions"><a class="button button-filled" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Explore the repository <span class="arrow">↗</span></a><a class="button button-outlined" href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">Report an issue</a></div></div></div>
-    </section>
-
-    <section class="section-wrap section faq-section" id="faq">
-      <div class="faq-intro"><span class="eyebrow">GOOD TO KNOW</span><h2>Questions,<br><span class="muted-heading">answered.</span></h2><p>Want the technical details? The repository is the source of truth for the latest project status.</p></div>
-      <div class="faq-list">
-        <details><summary>Is AppSweep free and open source?<span class="faq-plus"></span></summary><p>Yes. The source code is publicly available on GitHub. Review the repository for the current license and project status.</p></details>
-        <details><summary>Which platform is it for?<span class="faq-plus"></span></summary><p>AppSweep is a Windows desktop application. It uses Windows-specific app discovery and management capabilities, so it is not a macOS or Linux uninstaller.</p></details>
-        <details><summary>Does this website uninstall apps?<span class="faq-plus"></span></summary><p>No. This website is the project landing page. App discovery and management happen in the AppSweep desktop application on Windows.</p></details>
-        <details><summary>Is there a download available now?<span class="faq-plus"></span></summary><p>Check the GitHub Releases page for published builds. If no release is listed, a packaged download may not be available yet; the source code remains available in the repository.</p></details>
-        <details><summary>Can leftover files always be safely deleted?<span class="faq-plus"></span></summary><p>No. A file or registry entry can be shared or misidentified. Review what is detected and make sure you understand the consequences before removing anything.</p></details>
-      </div>
-    </section>
-
-    <section class="section-wrap final-cta"><div class="cta-orb"></div><span class="eyebrow">TAKE A CLOSER LOOK</span><h2>Make app cleanup<br><span class="gradient-text">more intentional.</span></h2><p>Discover AppSweep, follow development, and help shape the project.</p><a class="button button-filled" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Get started on GitHub <span class="arrow">↗</span></a></section>
   </main>
 
-  <footer class="footer"><div class="section-wrap footer-inner"><a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 4 34 12v16L20 36 6 28V12Z" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="m12 22 5 5 11-13" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>AppSweep</span></a><p>Built in the open by <a href="https://github.com/PanDuroDev" target="_blank" rel="noreferrer">PanDuroDev</a>.</p><div class="footer-links"><a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Source</a><a href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">Releases</a><a href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">Issues</a></div><span class="copyright">© <span id="year">2026</span> AppSweep</span></div></footer>
+  <footer><a class="brand" href="index.html"><span class="brand-mark">A</span><span>AppSweep</span></a><span>Open source · Windows</span><div><a href="docs.html">Docs</a><a href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">Issues</a><a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">GitHub</a></div></footer>
 </body>
 </html>
