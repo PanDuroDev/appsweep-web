@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111318">
+  <meta name="description" content="Basic AppSweep documentation: download, build, and use the Windows application.">
+  <title>Docs — AppSweep</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark">A</span><span>AppSweep</span></a>
+    <nav aria-label="Main navigation"><a href="index.html#about">About</a><a href="index.html#features">Features</a><a href="docs.html" aria-current="page">Docs</a><a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Source ↗</a></nav>
+    <a class="button button-small button-tonal" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">Download</a>
+  </header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">DOCUMENTATION</p>
+      <h1>Getting started with <span>AppSweep.</span></h1>
+      <p class="lead">A short guide to finding a build, running AppSweep, and getting help. Details may change as the project evolves; the repository is the source of truth.</p>
+      <div class="actions"><a class="button button-filled" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">Open releases ↗</a><a class="button button-outlined" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Repository</a></div>
+    </section>
+    <section class="section">
+      <p class="eyebrow">01 / DOWNLOAD</p><h2>Get a published build</h2>
+      <p>Open the <a href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">GitHub Releases page</a> and download an asset if one is available. If no release file is published, use the repository to check the current build instructions. Do not download executables from unofficial mirrors.</p>
+    </section>
+    <section class="section">
+      <p class="eyebrow">02 / BUILD FROM SOURCE</p><h2>Build on Windows</h2>
+      <p>AppSweep is a Rust project. To build it from source, install the Rust toolchain and the required Windows C++ build tools, then run these commands from PowerShell or a terminal:</p>
+      <pre><code>git clone https://github.com/PanDuroDev/appsweep.git
+cd appsweep
+cargo build --release</code></pre>
+      <p>The release build is normally written under <code>target\release\</code>. Native build prerequisites may be required; see the repository and build errors for current requirements.</p>
+    </section>
+    <section class="section">
+      <p class="eyebrow">03 / USE</p><h2>Inspect before removing</h2>
+      <p>Use AppSweep to review the installed-app entries and the information available for each one. Detected paths and metadata can be incomplete. Carefully verify the selected app and any related paths before confirming an action; removing software or files can affect your system.</p>
+    </section>
+    <section class="section">
+      <p class="eyebrow">04 / HELP</p><h2>Report a problem</h2>
+      <p>For bugs, questions, or feature requests, open an issue on <a href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">GitHub Issues</a>. Include your Windows version, the AppSweep version or commit, steps to reproduce, and relevant logs. Do not post private information or sensitive system paths.</p>
+    </section>
+  </main>
+  <footer><a class="brand" href="index.html"><span class="brand-mark">A</span><span>AppSweep</span></a><span>Basic documentation</span><div><a href="index.html">Home</a><a href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">Issues</a><a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">GitHub</a></div></footer>
+</body>
+</html>
