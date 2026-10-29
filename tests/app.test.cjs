@@ -31,6 +31,9 @@ function boot({ releases = [], fetcher, stored, storageBlocked = false, withPane
   ].map(id => [id, element()]));
   const root = element();
   root.scrollHeight = 1800;
+  ['download', 'build', 'safety', 'support'].forEach((id, index) => {
+    ids[id].getBoundingClientRect = () => ({ top: 50 + index * 200, width: 0, height: 0 });
+  });
   const panel = ids['release-panel'];
   panel.dataset.state = 'idle';
   for (const selector of ['.release__loading', '.release__ready', '.release__error']) {
