@@ -3,7 +3,6 @@
   const root = document.documentElement;
   const toggle = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
-  const systemTheme = matchMedia('(prefers-color-scheme: dark)');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   let savedTheme;
   try { savedTheme = localStorage.getItem('theme'); } catch {}
@@ -12,17 +11,14 @@
     root.dataset.theme = theme;
     if (themeIcon) themeIcon.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
     toggle?.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#191114' : '#fff8f8');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#111111' : '#f5f5f5');
   }
-  setTheme(savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : systemTheme.matches ? 'dark' : 'light');
+  setTheme(savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : 'dark');
   if (toggle) toggle.hidden = false;
   toggle?.addEventListener('click', () => {
     savedTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
     setTheme(savedTheme);
     try { localStorage.setItem('theme', savedTheme); } catch {}
-  });
-  systemTheme.addEventListener('change', () => {
-    if (savedTheme !== 'light' && savedTheme !== 'dark') setTheme(systemTheme.matches ? 'dark' : 'light');
   });
 
   const shapeParameters = {

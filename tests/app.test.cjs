@@ -161,19 +161,21 @@ test('reduced motion and hidden documents stop loading frames', async () => {
   app.document.listeners.visibilitychange();
   assert.equal(app.frames.size, 0);
 });
-test('both theme selections persist, while unset themes follow the system', () => {
+test('dark monochrome is the default and explicit theme selections persist', () => {
   const app = boot({ docs: true });
-  assert.equal(app.root.dataset.theme, 'light');
-  app.ids['theme-toggle'].listeners.click();
-  assert.equal(app.stored(), 'dark');
-  assert.equal(boot({ docs: true, stored: app.stored() }).root.dataset.theme, 'dark');
+  assert.equal(app.root.dataset.theme, 'dark');
   app.ids['theme-toggle'].listeners.click();
   assert.equal(app.stored(), 'light');
-  assert.equal(boot({ docs: true, dark: true, stored: app.stored() }).root.dataset.theme, 'light');
-  const system = boot({ docs: true, storageBlocked: true });
-  system.media.dark.matches = true;
-  system.media.dark.listeners.change();
-  assert.equal(system.root.dataset.theme, 'dark');
+  assert.equal(app.root.dataset.theme, 'light');
+  assert.equal(boot({ docs: true, stored: app.stored() }).root.dataset.theme, 'light');
+  app.ids['theme-toggle'].listeners.click();
+  assert.equal(app.stored(), 'dark');
+  assert.equal(app.root.dataset.theme, 'dark');
+  assert.equal(boot({ docs: true, stored: app.stored() }).root.dataset.theme, 'dark');
+  const withoutStorage = boot({ docs: true, storageBlocked: true });
+  assert.equal(withoutStorage.root.dataset.theme, 'dark');
+  withoutStorage.ids['theme-toggle'].listeners.click();
+  assert.equal(withoutStorage.root.dataset.theme, 'light');
 });
 test('reference silhouettes have 180 finite points and docs can select the final section', () => {
   const app = boot({ docs: true });

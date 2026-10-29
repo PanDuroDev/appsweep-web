@@ -1,10 +1,10 @@
 # AppSweep website
 
-A simple, responsive site for the pre-alpha Windows project. It explains the project, links to documentation and source, and checks official GitHub Releases for a downloadable build.
+A responsive site for the pre-alpha Windows project. It explains the project, links to documentation and source, and checks official GitHub Releases for a downloadable build.
 
 ## Design
 
-The site uses semantic HTML, CSS, and a small JavaScript file. Its warm Material 3-inspired palette and local Google Sans Flex font are consistent in light and dark modes. The layout prioritizes one headline, three short feature explanations, one release panel, and focused documentation. It does not contain application screenshots or a simulated application interface.
+The site uses semantic HTML, CSS, and a small JavaScript file. The default visual system is monochrome: **#111111** near-black foundations, **#eaeaea** primary text, a progression of charcoal surfaces, and subtle silver gradients. An optional light theme remains available through the theme control. The layout prioritizes one headline, three concise feature explanations, one release panel, and focused documentation.
 
 ## Run locally
 
