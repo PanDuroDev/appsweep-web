@@ -397,9 +397,15 @@ img, svg { max-width: 100%; }
   pointer-events: none;
   transition: opacity var(--app-motion-duration-short2) linear;
 }
-.md3-button:hover::before, .button:hover::before, .md3-icon-button:hover::before { opacity: var(--app-state-hover-opacity); }
-.md3-button:focus-visible::before, .button:focus-visible::before, .md3-icon-button:focus-visible::before { opacity: var(--app-state-focus-opacity); }
-.md3-button:active::before, .button:active::before, .md3-icon-button:active::before { opacity: var(--app-state-pressed-opacity); }
+.md3-button:not(:disabled):not([aria-disabled="true"]):hover::before,
+.button:not(:disabled):not([aria-disabled="true"]):hover::before,
+.md3-icon-button:not(:disabled):not([aria-disabled="true"]):hover::before { opacity: var(--app-state-hover-opacity); }
+.md3-button:not(:disabled):not([aria-disabled="true"]):focus-visible::before,
+.button:not(:disabled):not([aria-disabled="true"]):focus-visible::before,
+.md3-icon-button:not(:disabled):not([aria-disabled="true"]):focus-visible::before { opacity: var(--app-state-focus-opacity); }
+.md3-button:not(:disabled):not([aria-disabled="true"]):active::before,
+.button:not(:disabled):not([aria-disabled="true"]):active::before,
+.md3-icon-button:not(:disabled):not([aria-disabled="true"]):active::before { opacity: var(--app-state-pressed-opacity); }
 .md3-button:disabled, .md3-button[aria-disabled="true"], .button:disabled, .button[aria-disabled="true"] {
   opacity: 1;
   box-shadow: none;
@@ -635,13 +641,13 @@ img, svg { max-width: 100%; }
   transition: border-radius var(--app-motion-duration-medium2) var(--app-motion-easing-emphasized), box-shadow var(--app-motion-duration-short3) var(--app-motion-easing-standard), transform var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
 .md3-fab .material-symbol { --app-icon-size: var(--md-fab-icon-size, 24px); }
-.md3-fab:hover { border-radius: var(--app-shape-corner-large-increased) var(--app-shape-corner-large-increased) var(--md-sys-shape-corner-large) var(--app-shape-corner-large-increased); box-shadow: var(--app-elevation-level4); }
-.md3-fab:active { box-shadow: var(--app-elevation-level1); }
+.md3-fab:not(:disabled):not([aria-disabled="true"]):hover { border-radius: var(--app-shape-corner-large-increased) var(--app-shape-corner-large-increased) var(--md-sys-shape-corner-large) var(--app-shape-corner-large-increased); box-shadow: var(--app-elevation-level4); }
+.md3-fab:not(:disabled):not([aria-disabled="true"]):active { box-shadow: var(--app-elevation-level1); }
 .md3-fab--small { min-width: 40px; min-height: 40px; border-radius: var(--md-fab-small-container-shape, var(--md-sys-shape-corner-medium)); }
 .md3-fab--small .material-symbol { --app-icon-size: var(--md-fab-small-icon-size, 24px); }
 .md3-fab--large { min-width: 96px; min-height: 96px; border-radius: var(--md-fab-large-container-shape, var(--md-sys-shape-corner-extra-large)); }
 .md3-fab--large .material-symbol { --app-icon-size: var(--md-fab-large-icon-size, 36px); }
-.md3-fab--extended { min-width: 0; padding-inline: 20px; border-radius: var(--md-fab-container-shape); font-family: var(--md-fab-label-text-font, var(--md-sys-typescale-label-large-font)); }
+.md3-fab--extended { min-width: 0; padding-inline: 20px; border-radius: var(--md-fab-container-shape, var(--md-sys-shape-corner-large)); font-family: var(--md-fab-label-text-font, var(--md-sys-typescale-label-large-font)); }
 
 .md3-fab:disabled, .md3-fab[aria-disabled="true"] {
   box-shadow: none;
@@ -689,20 +695,20 @@ img, svg { max-width: 100%; }
   cursor: pointer;
 }
 .md3-tab::after { position: absolute; right: 12px; bottom: -1px; left: 12px; height: 3px; border-radius: 3px 3px 0 0; background: var(--md-sys-color-primary); content: ""; transform: scaleX(0); transform-origin: center; transition: transform var(--app-motion-duration-medium2) var(--app-motion-easing-emphasized); }
-.md3-tab:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
-.md3-tab:active { background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent); }
+.md3-tab:not(:disabled):not([aria-disabled="true"]):hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
+.md3-tab:not(:disabled):not([aria-disabled="true"]):active { background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent); }
 .md3-tab[aria-selected="true"], .md3-tab.is-active { color: var(--md-sys-color-primary); }
 .md3-tab[aria-selected="true"]::after, .md3-tab.is-active::after { transform: scaleX(1); }
 .md3-segmented-button-group { display: inline-flex; align-items: stretch; overflow: hidden; border: 1px solid var(--md-sys-color-outline); border-radius: var(--md-sys-shape-corner-small); }
 .md3-segmented-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 16px; border: 0; border-inline-end: 1px solid var(--md-sys-color-outline); color: var(--md-sys-color-on-surface); background: transparent; font-family: var(--md-sys-typescale-label-large-font); font-size: var(--md-sys-typescale-label-large-size); font-weight: var(--md-sys-typescale-label-large-weight); cursor: pointer; }
 .md3-segmented-button:last-child { border-inline-end: 0; }
-.md3-segmented-button:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
-.md3-segmented-button:active { background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent); }
+.md3-segmented-button:not(:disabled):not([aria-disabled="true"]):hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
+.md3-segmented-button:not(:disabled):not([aria-disabled="true"]):active { background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent); }
 .md3-segmented-button[aria-pressed="true"], .md3-segmented-button.is-selected { color: var(--md-sys-color-on-secondary-container); background: var(--md-sys-color-secondary-container); }
 .md3-navigation-bar { display: flex; align-items: stretch; justify-content: space-around; gap: var(--app-spacing-2); min-height: 80px; padding: var(--app-spacing-2) var(--app-spacing-2) var(--app-spacing-3); background: var(--md-sys-color-surface-container); }
 .md3-navigation-item { display: flex; flex: 1 1 0; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-width: 0; border: 0; border-radius: var(--md-sys-shape-corner-large); color: var(--md-sys-color-on-surface-variant); background: transparent; font-family: var(--md-sys-typescale-label-medium-font); font-size: var(--md-sys-typescale-label-medium-size); font-weight: var(--md-sys-typescale-label-medium-weight); cursor: pointer; }
-.md3-navigation-item:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
-.md3-navigation-item:active { background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent); }
+.md3-navigation-item:not(:disabled):not([aria-disabled="true"]):hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
+.md3-navigation-item:not(:disabled):not([aria-disabled="true"]):active { background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent); }
 .md3-navigation-item .material-symbol { font-size: 24px; }
 .md3-navigation-item[aria-current="page"] .navigation-icon, .md3-navigation-item.is-active .navigation-icon { display: grid; place-items: center; min-width: 64px; min-height: 32px; border-radius: var(--md-sys-shape-corner-full); color: var(--md-sys-color-on-secondary-container); background: var(--md-sys-color-secondary-container); }
 .md3-navigation-rail { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 80px; padding: 16px 8px; background: var(--md-sys-color-surface); }
@@ -721,7 +727,7 @@ img, svg { max-width: 100%; }
 .md3-divider--inset { width: calc(100% - 56px); margin-inline-start: 56px; }
 .md3-menu { min-width: 192px; padding: var(--app-spacing-2) 0; border: 1px solid var(--md-sys-color-outline-variant); border-radius: var(--md-sys-shape-corner-extra-small); color: var(--md-sys-color-on-surface); background: var(--md-sys-color-surface-container); box-shadow: var(--app-elevation-level2); }
 .md3-menu-item { display: flex; align-items: center; gap: var(--app-spacing-3); min-height: 48px; padding: 0 var(--app-spacing-3); color: inherit; background: transparent; text-decoration: none; }
-.md3-menu-item:hover, .md3-menu-item:focus-visible { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
+.md3-menu-item:not([aria-disabled="true"]):hover, .md3-menu-item:not([aria-disabled="true"]):focus-visible { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
 
 /* Text fields, selection controls and switches */
 .md3-text-field { display: flex; flex-direction: column; gap: 6px; width: 100%; color: var(--md-outlined-text-field-label-text-color, var(--md-sys-color-on-surface-variant)); font-family: var(--md-sys-typescale-label-medium-font); font-size: var(--md-sys-typescale-body-small-size); }
@@ -1185,10 +1191,14 @@ img, svg { max-width: 100%; }
   color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
   cursor: not-allowed;
 }
-.md3-list-item[role="button"], .md3-menu-item[role="menuitem"] { cursor: pointer; }
-.md3-list-item[role="button"]:hover, .md3-menu-item[role="menuitem"]:hover {
+.md3-list-item[role="button"]:not([aria-disabled="true"]), .md3-menu-item[role="menuitem"]:not([aria-disabled="true"]) { cursor: pointer; }
+.md3-list-item[role="button"][aria-disabled="true"], .md3-menu-item[role="menuitem"][aria-disabled="true"] {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  cursor: not-allowed;
+}
+.md3-list-item[role="button"]:not([aria-disabled="true"]):hover, .md3-menu-item[role="menuitem"]:not([aria-disabled="true"]):hover {
   background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
 }
-.md3-list-item[role="button"]:active, .md3-menu-item[role="menuitem"]:active {
+.md3-list-item[role="button"]:not([aria-disabled="true"]):active, .md3-menu-item[role="menuitem"]:not([aria-disabled="true"]):active {
   background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
 }
