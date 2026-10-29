@@ -22,7 +22,7 @@ function element() {
 }
 
 function boot({ releases = [], fetcher, stored, dark = false, reduced = false, storageBlocked = false, docs = false } = {}) {
-  const ids = Object.fromEntries(['theme-toggle', 'theme-icon', 'app-bar', 'release-panel', 'release-title', 'release-meta', 'release-download', 'release-retry'].map(id => [id, element()]));
+  const ids = Object.fromEntries(['theme-toggle', 'theme-icon', 'app-bar', 'release-panel', 'release-title', 'release-meta', 'release-download', 'release-retry', 'download-latest', 'download-latest-label', 'release-assets', 'release-github'].map(id => [id, element()]));
   const root = element();
   root.scrollHeight = 2000;
   const panel = ids['release-panel'];
@@ -89,6 +89,8 @@ test('empty lookup hides loading, clears timeout, and stops animation', async ()
   assert.equal(app.panel.children['.release__loading'].hidden, true);
   assert.equal(app.panel.children['.release__ready'].hidden, false);
   assert.equal(app.ids['release-download'].hidden, true);
+  assert.equal(app.ids['download-latest'].href, 'releases.html');
+  assert.equal(app.ids['download-latest-label'].textContent, 'No release available yet');
   assert.equal(app.frames.size, 0);
   assert.equal(app.timers.size, 0);
 });
@@ -107,6 +109,11 @@ test('safe assets render as text and skip malicious candidates', async () => {
   assert.match(app.ids['release-meta'].textContent, /1.0 MB/);
   assert.equal(app.ids['release-download'].href, asset().browser_download_url);
   assert.equal(app.ids['release-download'].hidden, false);
+  assert.equal(app.ids['release-download'].href, asset().browser_download_url);
+  assert.equal(app.ids['download-latest'].href, asset().browser_download_url);
+  assert.equal(app.ids['download-latest-label'].textContent, 'Download latest version');
+  assert.equal(app.ids['release-assets'].href, 'release.html?tag=v1');
+  assert.equal(app.ids['release-assets'].hidden, false);
 });
 test('rejects downloads outside the official repository or with credentials', async () => {
   for (const url of ['http://github.com/PanDuroDev/appsweep/releases/download/v1/a.exe', 'https://github.com.evil.test/a.exe', 'https://github.com/other/repo/releases/download/v1/a.exe', 'https://user@github.com/PanDuroDev/appsweep/releases/download/v1/a.exe', 'javascript:alert(1)']) {
