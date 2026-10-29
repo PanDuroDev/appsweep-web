@@ -17,6 +17,7 @@ This is a lightweight CSS implementation informed by Google's Material 3 and Mat
 5. Use expressive shape morphing selectively for emphasized cards and hero moments, not every control.
 6. All motion must respect `prefers-reduced-motion`; focus must remain visible.
 7. Use Material Symbols through `.material-symbol`; icons are decorative when paired with an accessible text label.
+8. Keep focus and selection indicators visible in `forced-colors: active`; do not rely on shadows or hue alone.
 
 ## Color roles
 

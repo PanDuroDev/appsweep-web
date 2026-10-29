@@ -760,6 +760,10 @@ img, svg { max-width: 100%; }
   cursor: not-allowed;
   opacity: 1;
 }
+.md3-text-field:has(:disabled) > label,
+.md3-text-field:has(:disabled) .field-supporting {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+}
 .md3-text-field .field-supporting { color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-body-small-size); }
 .md3-choice { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; color: var(--md-sys-color-on-surface); cursor: pointer; }
 .md3-choice input { width: 18px; height: 18px; margin: 0; accent-color: var(--md-sys-color-primary); }
@@ -801,6 +805,68 @@ img, svg { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+
+@media (forced-colors: active) {
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible { outline-color: Highlight; }
+
+  .brand-mark { forced-color-adjust: none; color: HighlightText; background: Highlight; }
+
+  .md3-card--outlined, .md3-chip, .md3-button--outlined, .button-outlined,
+  .md3-text-field input, .md3-text-field textarea, .md3-text-field select,
+  .md3-fab, .md3-icon-button--outlined {
+    border-color: ButtonText;
+  }
+
+  .md3-button--filled, .button-filled, .md3-fab--primary,
+  .md3-icon-button--filled {
+    color: HighlightText;
+    background: Highlight;
+    border-color: Highlight;
+  }
+
+  .md3-button--elevated, .button-elevated, .md3-button--tonal, .button-tonal,
+  .md3-icon-button--tonal {
+    color: ButtonText;
+    background: ButtonFace;
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+
+  .md3-card--elevated, .md3-card--outlined, .md3-card--filled,
+  .md3-dialog, .md3-menu, .md3-snackbar {
+    box-shadow: none;
+  }
+
+  .md3-text-field input, .md3-text-field textarea, .md3-text-field select {
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  .md3-switch input {
+    forced-color-adjust: none;
+    border-color: ButtonText;
+    background: Canvas;
+  }
+  .md3-switch input::before { background: ButtonText; }
+  .md3-switch input:checked { border-color: Highlight; background: Highlight; }
+  .md3-switch input:checked::before { background: HighlightText; }
+  .md3-switch input:disabled { border-color: GrayText; background: Canvas; }
+  .md3-switch input:disabled::before { background: GrayText; }
+
+  .md3-tab[aria-selected="true"], .md3-tab.is-active { color: Highlight; }
+  .md3-tab[aria-selected="true"]::after, .md3-tab.is-active::after { background: Highlight; }
+  .md3-navigation-item[aria-current="page"] .navigation-icon,
+  .md3-navigation-item.is-active .navigation-icon {
+    color: HighlightText;
+    background: Highlight;
+  }
+
+  .md3-progress-track { border: 1px solid CanvasText; background: Canvas; }
+  .md3-progress-track > span { background: Highlight; }
+  .status-dot, .status-pulse { box-shadow: none; border: 1px solid currentColor; }
+  .hero-art .art-slab { border: 1px solid CanvasText; box-shadow: none; }
 }
 
 
