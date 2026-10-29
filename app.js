@@ -77,6 +77,9 @@
     if (innerWidth > 839) setMenuOpen(false);
   }, { passive: true });
 
+  // Preserve navigation if JavaScript is disabled or setup fails.
+  bar?.classList.add('has-mobile-menu');
+
   let scrollFrame = 0;
   function onScroll() {
     if (scrollFrame) return;
