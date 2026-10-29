@@ -13,7 +13,17 @@ function element() {
     dataset: {}, hidden: false, disabled: false, textContent: '', href: '', children: {},
     listeners, attributes, scrollHeight: 1800,
     style: { setProperty(name, value) { this[name] = value; } },
-    classList: { toggle() {} },
+    classList: {
+      values: new Set(),
+      add(name) { this.values.add(name); },
+      remove(name) { this.values.delete(name); },
+      toggle(name, force) {
+        if (force === undefined) force = !this.values.has(name);
+        if (force) this.values.add(name); else this.values.delete(name);
+        return force;
+      },
+      contains(name) { return this.values.has(name); },
+    },
     setAttribute(name, value) { attributes.set(name, String(value)); },
     getAttribute(name) { return attributes.get(name); },
     removeAttribute(name) { attributes.delete(name); },
@@ -25,7 +35,7 @@ function element() {
 
 function boot({ releases = [], fetcher, stored, storageBlocked = false, withPanel = true, docs = false } = {}) {
   const ids = Object.fromEntries([
-    'theme-toggle', 'theme-icon', 'app-bar', 'download-latest', 'download-latest-label',
+    'theme-toggle', 'theme-icon', 'app-bar', 'menu-toggle', 'menu-icon', 'download-latest', 'download-latest-label',
     'release-panel', 'release-title', 'release-meta', 'release-assets', 'release-github',
     'release-retry', 'workflow', 'download', 'build', 'safety', 'support',
   ].map(id => [id, element()]));
@@ -42,15 +52,21 @@ function boot({ releases = [], fetcher, stored, storageBlocked = false, withPane
   if (!withPanel) ids['release-panel'] = null;
   const docLinks = ['download', 'build', 'safety', 'support'].map(id => Object.assign(element(), { hash: '#' + id }));
   const metaTheme = element();
+  const listeners = {};
+  const navLinks = ['workflow', 'download', 'docs', 'source'].map(() => element());
+  ids['app-bar'].querySelectorAll = selector => selector === '.app-bar__nav a' ? navLinks : [];
   const document = {
     documentElement: root,
     hidden: false,
     getElementById(id) { return ids[id] || null; },
     querySelector(selector) { return selector === 'meta[name="theme-color"]' ? metaTheme : null; },
-    querySelectorAll(selector) { return selector === '.docs-nav a' && docs ? docLinks : []; },
+    querySelectorAll(selector) {
+      if (selector === '.docs-nav a' && docs) return docLinks;
+      return [];
+    },
+    addEventListener(name, fn) { listeners['document:' + name] = fn; },
   };
   let saved = stored;
-  const listeners = {};
   const context = {
     document, URL, Intl, AbortController,
     scrollY: 0, innerHeight: 800,
@@ -64,7 +80,7 @@ function boot({ releases = [], fetcher, stored, storageBlocked = false, withPane
     setTimeout, clearTimeout,
   };
   runInNewContext(source, context);
-  return { ids, root, metaTheme, document, context, listeners, docLinks, stored: () => saved };
+  return { ids, root, metaTheme, document, context, listeners, docLinks, navLinks, stored: () => saved };
 }
 
 async function flush() {
