@@ -88,3 +88,11 @@ test('documentation redesign includes responsive facts, reading blocks, and read
   assert.match(styles, /\.docs-steps,\s*\.docs-checklist\s*\{[^}]*display:\s*grid/s);
   assert.match(styles, /@media\s*\(max-width:\s*839px\)[\s\S]*?\.docs-facts\s*\{\s*grid-template-columns:\s*1fr/);
 });
+
+test('homepage balances the hero and release panel on compact desktop screens', () => {
+  assert.match(styles, /@media\s*\(min-width:\s*1024px\)\s*and\s*\(max-width:\s*1199px\)[\s\S]*?\.home-page\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1\.15fr\)\s+minmax\(340px,\s*0\.85fr\)/);
+  assert.match(styles, /grid-template-areas:\s*"hero download"\s*"workflow workflow"\s*"footer footer"/);
+  assert.match(styles, /\.home-page > #download\s*\{[^}]*grid-area:\s*download/s);
+  assert.match(styles, /\.home-page > #workflow\s*\{\s*grid-area:\s*workflow/);
+  assert.match(styles, /\.home-page > \.footer\s*\{\s*grid-area:\s*footer/);
+});
