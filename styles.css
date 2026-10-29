@@ -5,6 +5,7 @@
 
 html {
   scroll-padding-top: var(--app-layout-header-offset);
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -21,7 +22,14 @@ body {
 
 h1, h2, h3, p { margin: 0; }
 h1, h2, h3 { color: var(--md-sys-color-on-surface); }
-a { color: var(--md-sys-color-primary); text-underline-offset: 3px; }
+a {
+  color: var(--md-sys-color-primary);
+  text-underline-offset: 3px;
+  transition: color var(--app-motion-duration-short3) var(--app-motion-easing-standard),
+    text-decoration-color var(--app-motion-duration-short3) var(--app-motion-easing-standard),
+    text-decoration-thickness var(--app-motion-duration-short3) var(--app-motion-easing-standard);
+}
+a:where(:not(.btn):not(.brand)):hover { color: var(--md-sys-color-on-surface); text-decoration-thickness: 2px; }
 button { font: inherit; }
 
 .icon {
@@ -47,6 +55,7 @@ button { font: inherit; }
   z-index: 100;
   top: -100px;
   left: var(--app-spacing-2);
+  transition: top var(--app-motion-duration-short3) var(--app-motion-easing-emphasized-decelerate);
 }
 .skip-link:focus { top: var(--app-spacing-1); }
 
@@ -55,6 +64,7 @@ button { font: inherit; }
   z-index: 20;
   top: 0;
   background: var(--md-sys-color-surface);
+  transition: background-color var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
 .app-bar.is-stuck { background: var(--md-sys-color-surface-container); }
 
@@ -120,13 +130,22 @@ button { font: inherit; }
   line-height: var(--md-sys-typescale-label-large-line-height);
   letter-spacing: var(--md-sys-typescale-label-large-tracking);
   white-space: nowrap;
+  transition: color var(--app-motion-duration-short3) var(--app-motion-easing-standard),
+    background-color var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
 
 .app-bar__nav a:hover,
-.app-bar__nav a[aria-current="page"] {
+.app-bar__nav a:focus-visible,
+.app-bar__nav a:active {
   color: var(--md-sys-color-on-surface);
-  background: var(--md-sys-color-surface-container-high);
+  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-hover-opacity), transparent);
 }
+.app-bar__nav a:focus-visible { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-focus-opacity), transparent); }
+.app-bar__nav a:active { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-pressed-opacity), transparent); }
+.app-bar__nav a[aria-current="page"] { color: var(--md-sys-color-on-surface); background: var(--md-sys-color-surface-container-high); }
+.app-bar__nav a[aria-current="page"]:hover { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-hover-opacity), var(--md-sys-color-surface-container-high)); }
+.app-bar__nav a[aria-current="page"]:focus-visible { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-focus-opacity), var(--md-sys-color-surface-container-high)); }
+.app-bar__nav a[aria-current="page"]:active { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-pressed-opacity), var(--md-sys-color-surface-container-high)); }
 
 .app-bar__actions { display: flex; align-items: center; gap: var(--app-spacing-1); }
 
@@ -149,23 +168,31 @@ button { font: inherit; }
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color var(--app-motion-duration-short2) var(--app-motion-easing-standard);
+  transition: background-color var(--app-motion-duration-short3) var(--app-motion-easing-standard),
+    color var(--app-motion-duration-short3) var(--app-motion-easing-standard),
+    border-color var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
 .btn:hover {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-primary) 8%, var(--md-sys-color-primary));
+  background-color: color-mix(in srgb, var(--md-sys-color-on-primary) var(--app-state-hover-opacity), var(--md-sys-color-primary));
+}
+.btn:focus-visible {
+  background-color: color-mix(in srgb, var(--md-sys-color-on-primary) var(--app-state-focus-opacity), var(--md-sys-color-primary));
 }
 .btn:active {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-primary) 12%, var(--md-sys-color-primary));
+  background-color: color-mix(in srgb, var(--md-sys-color-on-primary) var(--app-state-pressed-opacity), var(--md-sys-color-primary));
 }
 .btn--tonal {
   color: var(--md-sys-color-on-secondary-container);
   background: var(--md-sys-color-secondary-container);
 }
 .btn--tonal:hover {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 8%, var(--md-sys-color-secondary-container));
+  background-color: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--app-state-hover-opacity), var(--md-sys-color-secondary-container));
+}
+.btn--tonal:focus-visible {
+  background-color: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--app-state-focus-opacity), var(--md-sys-color-secondary-container));
 }
 .btn--tonal:active {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 12%, var(--md-sys-color-secondary-container));
+  background-color: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--app-state-pressed-opacity), var(--md-sys-color-secondary-container));
 }
 .btn--outlined {
   border: 1px solid var(--md-sys-color-outline);
@@ -174,13 +201,27 @@ button { font: inherit; }
 }
 .btn--outlined:hover,
 .btn--quiet:hover {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-hover-opacity), transparent);
+}
+.btn--outlined:focus-visible,
+.btn--quiet:focus-visible {
+  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-focus-opacity), transparent);
 }
 .btn--outlined:active,
 .btn--quiet:active {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-pressed-opacity), transparent);
 }
 .btn--quiet { color: var(--md-sys-color-on-surface); background: transparent; }
+.btn:disabled {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+  cursor: default;
+}
+.btn--outlined:disabled,
+.btn--quiet:disabled {
+  border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+  background: transparent;
+}
 .btn--icon { width: var(--app-touch-target); min-width: var(--app-touch-target); padding: 0; }
 .btn--small { padding-inline: var(--app-spacing-2); }
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--app-spacing-1); }
@@ -358,7 +399,7 @@ button { font: inherit; }
   border: 3px solid var(--md-sys-color-secondary-container);
   border-top-color: var(--md-sys-color-primary);
   border-radius: var(--md-sys-shape-corner-full);
-  animation: md3-progress-rotation var(--app-motion-duration-medium1) linear infinite;
+  animation: md3-progress-rotation var(--app-motion-duration-progress-cycle) linear infinite;
 }
 @keyframes md3-progress-rotation {
   to { transform: rotate(360deg); }
@@ -404,12 +445,21 @@ button { font: inherit; }
   font-weight: var(--md-sys-typescale-label-large-weight);
   line-height: var(--md-sys-typescale-label-large-line-height);
   text-decoration: none;
+  transition: color var(--app-motion-duration-short3) var(--app-motion-easing-standard),
+    background-color var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
 .docs-nav a:hover,
-.docs-nav a[aria-current="location"] {
+.docs-nav a:focus-visible,
+.docs-nav a:active {
   color: var(--md-sys-color-on-surface);
-  background: var(--md-sys-color-surface-container-high);
+  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-hover-opacity), transparent);
 }
+.docs-nav a:focus-visible { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-focus-opacity), transparent); }
+.docs-nav a:active { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-pressed-opacity), transparent); }
+.docs-nav a[aria-current="location"] { color: var(--md-sys-color-on-surface); background: var(--md-sys-color-surface-container-high); }
+.docs-nav a[aria-current="location"]:hover { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-hover-opacity), var(--md-sys-color-surface-container-high)); }
+.docs-nav a[aria-current="location"]:focus-visible { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-focus-opacity), var(--md-sys-color-surface-container-high)); }
+.docs-nav a[aria-current="location"]:active { background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-pressed-opacity), var(--md-sys-color-surface-container-high)); }
 .docs-block { padding-block: var(--app-spacing-3); }
 .docs-block .section-heading { gap: var(--app-spacing-1); margin-block-end: var(--app-spacing-2); }
 .docs-block .eyebrow { margin-block-end: 0; }
@@ -645,8 +695,9 @@ button { font: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .loading-indicator { animation: none; }
-  .btn { transition: none; }
+  .btn, a, .app-bar, .app-bar__nav a, .docs-nav a { transition: none; }
 }
 
 @media (forced-colors: active) {
