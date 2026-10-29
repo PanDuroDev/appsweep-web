@@ -801,3 +801,72 @@ button { font: inherit; }
   }
   .loading-indicator { border-color: CanvasText; border-top-color: Highlight; }
 }
+
+
+/* Layout tidy-up: clearer grouping without changing page content or behavior. */
+.home-page {
+  row-gap: var(--app-spacing-1);
+}
+
+.home-page > .hero {
+  max-width: 760px;
+}
+
+.home-page > #download {
+  min-width: 0;
+}
+
+.home-page > #workflow {
+  padding-block-start: var(--app-spacing-5);
+}
+
+.section-heading {
+  max-width: 760px;
+}
+
+.feature-grid {
+  align-items: stretch;
+}
+
+.project-card {
+  min-height: 100%;
+}
+
+.release {
+  display: flex;
+  flex-direction: column;
+  gap: var(--app-spacing-2);
+}
+
+.release__ready,
+.release__error {
+  min-width: 0;
+}
+
+.release__meta {
+  overflow-wrap: anywhere;
+}
+
+.docs-block + .docs-block {
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.asset-groups {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 1600px) {
+  .asset-groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 599px) {
+  .asset-groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-page > #workflow {
+    padding-block-start: var(--app-spacing-4);
+  }
+}
