@@ -60,6 +60,12 @@
     link.addEventListener('click', () => setMenuOpen(false));
   });
 
+  document.addEventListener('click', event => {
+    if (menuToggle?.getAttribute('aria-expanded') === 'true' && bar && !bar.contains(event.target)) {
+      setMenuOpen(false);
+    }
+  });
+
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && menuToggle?.getAttribute('aria-expanded') === 'true') {
       setMenuOpen(false);
