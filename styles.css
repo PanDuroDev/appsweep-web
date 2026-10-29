@@ -1036,12 +1036,17 @@ button { font: inherit; }
   .app-bar__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand actions"
+      "nav nav";
     gap: var(--app-spacing-1);
     width: calc(100% - var(--app-spacing-3));
     padding-block: var(--app-spacing-1);
   }
 
+  .app-bar__inner > .brand { grid-area: brand; min-width: 0; }
   .app-bar__actions {
+    grid-area: actions;
     align-items: center;
     justify-content: flex-end;
     min-width: 0;
@@ -1050,8 +1055,8 @@ button { font: inherit; }
   .app-bar__menu-toggle { display: inline-flex; }
 
   .app-bar__nav {
+    grid-area: nav;
     display: none;
-    grid-column: 1 / -1;
     width: 100%;
     min-width: 0;
     flex-direction: column;
