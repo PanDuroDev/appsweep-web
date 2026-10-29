@@ -28,7 +28,7 @@ a {
   transition: color var(--app-motion-duration-short3) var(--app-motion-easing-standard),
     text-decoration-color var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
-a:not(.btn):not(.brand):hover { color: var(--md-sys-color-primary); }
+a:not(.btn):not(.brand):hover { color: var(--md-sys-color-on-surface); text-decoration-thickness: 2px; }
 button { font: inherit; }
 
 .icon {
