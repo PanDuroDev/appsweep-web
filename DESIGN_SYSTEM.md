@@ -38,7 +38,7 @@ Material Web exposes font, size, line-height and weight for each of its 15 basel
 
 ## Shapes, elevation and motion
 
-- Material Web shape tokens are `--md-sys-shape-corner-none`, `extra-small`, `small`, `medium`, `large`, `extra-large` and `full`. Expressive increased radii and the brand silhouette are app-specific `--app-shape-*` extensions.
+- Material Web shape tokens are `--md-sys-shape-corner-none`, `extra-small`, `small`, `medium`, `large`, `extra-large` and `full`. AppSweep uses a single increased-large radius and a provisional brand silhouette under `--app-shape-*`.
 - Elevation: `--app-elevation-level0` to `level5`; use tonal surface colors before shadows.
 - Motion: `--app-motion-duration-*` and `--app-motion-easing-*`.
 - Expressive helpers: `.app-shape-morph`, `.app-shape-squircle`, `.app-shape-arch`, `.md3-shape-cut`, and `.app-card--expressive`.
