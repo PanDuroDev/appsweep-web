@@ -123,7 +123,7 @@ jobs:
           css_paths = sorted(ROOT.glob("*.css"))
           css_sources = []
           for path in css_paths:
-              source = re.sub(r"/\\*.*?\\*/", "", path.read_text(encoding="utf-8"), flags=re.S)
+              source = re.sub(r"/\*.*?\*/", "", path.read_text(encoding="utf-8"), flags=re.S)
               depth = 0
               quote = None
               escaped = False
@@ -131,7 +131,7 @@ jobs:
                   if quote:
                       if escaped:
                           escaped = False
-                      elif char == "\\\\":
+                      elif char == "\\":
                           escaped = True
                       elif char == quote:
                           quote = None
@@ -148,8 +148,8 @@ jobs:
                   failures.append(f"{path.name}: unbalanced CSS braces")
               css_sources.append(source)
 
-          joined_css = "\\n".join(css_sources)
-          declared = set(re.findall(r"(--[\\w-]+)\\s*:", joined_css))
+          joined_css = "\n".join(css_sources)
+          declared = set(re.findall(r"(--[\w-]+)\s*:", joined_css))
           i = 0
           while i < len(joined_css):
               if joined_css[i:i + 4] != "var(":
@@ -165,18 +165,18 @@ jobs:
                       has_fallback = True
                   j += 1
               body = joined_css[i + 4:j - 1]
-              match = re.match(r"\\s*(--[\\w-]+)", body)
+              match = re.match(r"\s*(--[\w-]+)", body)
               if match and match.group(1) not in declared and not has_fallback:
                   failures.append("undefined CSS custom property without fallback: " + match.group(1))
               i = j
 
-          if re.search(r"--md-(?:comp-|card-|sys-(?:motion|spacing|state|elevation-level))[\\w-]*\\s*:", joined_css):
+          if re.search(r"--md-(?:comp-|card-|sys-(?:motion|spacing|state|elevation-level))[\w-]*\s*:", joined_css):
               failures.append("non-standard Material token prefix found; app-owned tokens should use --app-*")
 
           versions = []
           for path in html_paths:
               source = path.read_text(encoding="utf-8")
-              found = re.findall(r"(?:md3\\.css|styles\\.css)\\?v=([^\\\"' ]+)", source)
+              found = re.findall(r"""(?:md3\.css|styles\.css)\?v=([^"' ]+)""", source)
               if len(found) != 2 or len(set(found)) != 1:
                   failures.append(f"{path.name}: expected matching cache versions for both stylesheets")
               versions.extend(found)
