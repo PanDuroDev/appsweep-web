@@ -77,7 +77,7 @@ These recipes are CSS primitives, not JavaScript components: interactive behavio
 
 ## Icon font
 
-The site loads **Material Symbols Rounded** as a variable font. The `.material-symbol` helper supports `--md-icon-size`, `--md-icon-fill`, `--md-icon-weight`, `--md-icon-grade` and `--md-icon-optical-size`. Use icon names from Google's Material Symbols catalogue and keep meaningful action labels in text for accessibility.
+The site loads **Material Symbols Rounded** as a variable font. The `.material-symbol` helper supports AppSweep-owned `--app-icon-size`, `--app-icon-fill`, `--app-icon-weight`, `--app-icon-grade` and `--app-icon-optical-size` properties that map to the font's `FILL`, `wght`, `GRAD` and `opsz` axes. Use icon names from Google's Material Symbols catalogue and keep meaningful action labels in text for accessibility.
 
 ## References
 
