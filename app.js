@@ -41,6 +41,36 @@
     });
   }
 
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuIcon = document.getElementById('menu-icon');
+
+  function setMenuOpen(open) {
+    if (!bar || !menuToggle) return;
+    bar.classList.toggle('is-menu-open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+    menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+    if (menuIcon) menuIcon.textContent = open ? 'close' : 'menu';
+  }
+
+  menuToggle?.addEventListener('click', () => {
+    setMenuOpen(menuToggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  bar?.querySelectorAll('.app-bar__nav a').forEach(link => {
+    link.addEventListener('click', () => setMenuOpen(false));
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menuToggle?.getAttribute('aria-expanded') === 'true') {
+      setMenuOpen(false);
+      menuToggle.focus();
+    }
+  });
+
+  addEventListener('resize', () => {
+    if (innerWidth > 839) setMenuOpen(false);
+  }, { passive: true });
+
   let scrollFrame = 0;
   function onScroll() {
     if (scrollFrame) return;
