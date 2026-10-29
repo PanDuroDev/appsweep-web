@@ -1052,7 +1052,7 @@ button { font: inherit; }
     min-width: 0;
   }
 
-  .app-bar__menu-toggle { display: inline-flex; }
+  .app-bar.has-mobile-menu .app-bar__menu-toggle { display: inline-flex; }
 
   .app-bar__nav {
     grid-area: nav;
