@@ -28,6 +28,8 @@ function element() {
     getAttribute(name) { return attributes.get(name); },
     removeAttribute(name) { attributes.delete(name); },
     addEventListener(name, fn) { listeners[name] = fn; },
+    focus() { this.focused = true; },
+    contains(target) { return target === this; },
     querySelector(name) { return this.children[name]; },
     getBoundingClientRect() { return { width: 240, height: 64, top: 100 }; },
   };
@@ -53,6 +55,8 @@ function boot({ releases = [], fetcher, stored, storageBlocked = false, withPane
   const docLinks = ['download', 'build', 'safety', 'support'].map(id => Object.assign(element(), { hash: '#' + id }));
   const metaTheme = element();
   const listeners = {};
+  ids['menu-toggle'].setAttribute('aria-expanded', 'false');
+  ids['menu-icon'].textContent = 'menu';
   const navLinks = ['workflow', 'download', 'docs', 'source'].map(() => element());
   ids['app-bar'].querySelectorAll = selector => selector === '.app-bar__nav a' ? navLinks : [];
   const document = {
@@ -197,4 +201,39 @@ test('documentation navigation keeps a current-location state and the measured h
   const app = boot({ withPanel: false, docs: true });
   assert.equal(app.root.style['--app-layout-header-offset'], '72px');
   assert.equal(app.docLinks[0].getAttribute('aria-current'), 'location');
+});
+
+test('mobile menu updates state and closes on outside click or Escape', () => {
+  const app = boot({ withPanel: false });
+  const toggle = app.ids['menu-toggle'];
+  const bar = app.ids['app-bar'];
+  const icon = app.ids['menu-icon'];
+
+  toggle.listeners.click();
+  assert.equal(toggle.getAttribute('aria-expanded'), 'true');
+  assert.equal(toggle.getAttribute('aria-label'), 'Close navigation');
+  assert.equal(icon.textContent, 'close');
+  assert.equal(bar.classList.contains('is-menu-open'), true);
+
+  app.listeners['document:click']({ target: element() });
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
+  assert.equal(icon.textContent, 'menu');
+
+  toggle.listeners.click();
+  app.listeners['document:keydown']({ key: 'Escape' });
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
+  assert.equal(toggle.focused, true);
+});
+
+test('mobile menu closes after a navigation link is selected and on desktop resize', () => {
+  const app = boot({ withPanel: false });
+  const toggle = app.ids['menu-toggle'];
+  toggle.listeners.click();
+  app.navLinks[0].listeners.click();
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
+
+  toggle.listeners.click();
+  app.context.innerWidth = 1024;
+  app.listeners.resize();
+  assert.equal(toggle.getAttribute('aria-expanded'), 'false');
 });
