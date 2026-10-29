@@ -14,7 +14,8 @@ The website uses Material Design 3 roles and component patterns through semantic
 
 - The type scale uses Roboto Flex and Material 3 display, headline, title, body, and label roles.
 - Buttons use the full corner token; cards and grouped panels use the medium corner token; code panels use the small corner token.
-- Spacing uses shared 8dp-based tokens. Main content remains constrained to 920px and reflows at compact/medium breakpoints.
+- Spacing uses shared 8dp-based tokens. The app shell can expand to 1920px on large monitors with responsive screen margins; reading text retains character-based line limits rather than stretching across the full viewport.
+- Compact and medium widths reflow into stacked content and two-column feature layouts. At 1200px+, the homepage uses a two-pane hero/latest-release layout, the documentation page places its section index in a sticky side rail beside the text, release cards form an adaptive grid, and release asset groups expand to four columns. The layout remains fluid below these breakpoints.
 - Tonal surfaces replace custom shadows. Gradients, backdrop blur, arbitrary corner radii, and hover movement are not used.
 - Buttons use filled, tonal, and outlined treatments with consistent state feedback and 48px minimum interaction targets.
 - Motion uses the Material 3 web fallback: the standard easing curve and 150ms state feedback. A press gives pill-shaped buttons and navigation items a subtle, tokenized corner morph; icon-only buttons move to the medium corner token. This is a CSS approximation of Expressive shape motion, not native spring physics. The release progress indicator uses a steady 1.4s cycle.
