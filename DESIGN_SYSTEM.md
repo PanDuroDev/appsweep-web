@@ -26,7 +26,7 @@ AppSweep-specific success/warning statuses use the supplementary `--app-color-*`
 
 ## Typography
 
-Available roles follow the Material type scale:
+Use `.app-type-display-large`, `.app-type-headline-medium`, `.app-type-body-large`, and the matching class for any of the 15 baseline roles. Responsive bold site headings use `.app-type-emphasized-*`, separate from the baseline system-token values. Available roles follow the Material type scale:
 
 - Display: `display-large`, `display-medium`, `display-small`
 - Headline: `headline-large`, `headline-medium`, `headline-small`
@@ -57,6 +57,8 @@ The site's existing `.button-filled`, `.button-tonal` and `.button-outlined` cla
 
 ### Icon buttons
 Use `.md3-icon-button` with an optional variant: `.md3-icon-button--filled`, `--tonal`, or `--outlined`. Add an accessible label whenever the icon is the only content.
+
+Wrap a 32px visual chip or 40px icon button in `.md3-chip-hit-target` or `.md3-icon-button-hit-target` when it is interactive; each wrapper reserves a minimum 48px target without enlarging the visual component.
 
 ### Cards and chips
 - Cards: `.md3-card--elevated`, `.md3-card--filled`, `.md3-card--outlined`, optionally `.app-card--expressive`.

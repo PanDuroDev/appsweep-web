@@ -150,7 +150,7 @@ h1, h2, h3, p { margin-top: 0; }
 .workflow-step:first-child { padding-top: 0; }
 .workflow-step:last-child { padding-bottom: 0; border-bottom: 0; }
 .step-number { display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--md-sys-shape-corner-medium); color: var(--md-sys-color-on-primary-container); background: var(--md-sys-color-primary-container); font-size: var(--md-sys-typescale-title-small-size); font-weight: 800; }
-.workflow-step h3 { margin: 0 0 4px; font-family: var(--md-sys-typescale-title-medium-font); font-size: var(--md-sys-typescale-title-medium-size); line-height: var(--md-sys-typescale-title-medium-line-height); font-weight: var(--md-sys-typescale-title-medium-weight); letter-spacing: var(--app-type-tracking-title-medium); }
+.workflow-step h3 { margin: 0 0 4px; }
 .workflow-step p { margin: 0; color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-body-small-size); line-height: 1.7; }
 .cta-section { display: flex; align-items: center; gap: 25px; margin-bottom: 96px; padding: 35px 40px; border-radius: var(--md-sys-shape-corner-extra-large); color: var(--md-sys-color-on-primary-container); background: var(--md-sys-color-primary-container); }
 .cta-symbol { display: grid; place-items: center; flex: 0 0 66px; height: 66px; border-radius: var(--app-shape-corner-brand); color: var(--md-sys-color-on-primary); background: var(--md-sys-color-primary); font-family: var(--md-ref-typeface-brand); font-size: 36px; font-weight: 800; }
