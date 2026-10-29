@@ -130,17 +130,18 @@ test('homepage release title wraps long dynamic names without forcing horizontal
 });
 
 
+
 test('every page exposes an accessible collapsible mobile navigation', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
     assert.match(html, /<nav id="app-navigation" class="app-bar__nav" aria-label="Main navigation">/);
     assert.match(html, /id="menu-toggle" type="button" aria-controls="app-navigation" aria-expanded="false" aria-label="Open navigation"/);
-    assert.match(html, /id="menu-icon" aria-hidden="true">menu<\\/span>/);
+    assert.match(html, /id="menu-icon" aria-hidden="true">menu/);
     assert.match(html, /href="releases.html"/);
   }
 
   assert.match(styles, /\.app-bar__menu-toggle\s*\{\s*display:\s*none;\s*\}/);
-  assert.match(styles, /@media\s*\(max-width:\s*839px\)[\\s\\S]*?\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
+  assert.match(styles, /@media\s*\(max-width:\s*839px\)[\s\S]*?\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
   assert.match(styles, /\.app-bar\.is-menu-open\s+\.app-bar__nav\s*\{\s*display:\s*flex;\s*\}/);
   assert.match(read('app.js'), /aria-expanded/);
   assert.match(read('app.js'), /event\.key === 'Escape'/);
