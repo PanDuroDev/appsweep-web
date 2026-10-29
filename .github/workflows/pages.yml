@@ -149,6 +149,18 @@ jobs:
               css_sources.append(source)
 
           joined_css = "\n".join(css_sources)
+          styles_text = re.sub(r"/\\*.*?\\*/", "", (ROOT / "styles.css").read_text(encoding="utf-8"), flags=re.S)
+          if re.search(r"#[0-9a-fA-F]{3,8}\\b", styles_text):
+              failures.append("styles.css: raw color literal found outside semantic tokens")
+          if re.search(r"(?:linear|radial|conic)-gradient\\s*\\(|\\bbox-shadow\\s*:|\\bbackdrop-filter\\s*:|\\bfilter\\s*:", styles_text):
+              failures.append("styles.css: custom gradients, shadows, and filters are not part of the approved Material 3 treatment")
+          for radius in re.finditer(r"border-radius\\s*:\\s*([^;]+);", styles_text):
+              if not radius.group(1).strip().startswith("var(--md-sys-shape-corner-"):
+                  failures.append("styles.css: border radius must use an MD3 shape token")
+          if re.search(r"text-transform\\s*:\\s*uppercase", styles_text, flags=re.I):
+              failures.append("styles.css: uppercase text treatment conflicts with Material sentence case")
+          if "font-variation-settings" in styles_text:
+              failures.append("styles.css: remove custom font-axis treatment not specified for the Web implementation")
           declared = set(re.findall(r"(--[\w-]+)\s*:", joined_css))
           i = 0
           while i < len(joined_css):
