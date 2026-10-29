@@ -45,8 +45,8 @@ test('all pages load the new layout styles and use matching cache keys', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
     assert.match(html, /tokens\.css\?v=20261029-layout2/);
-    assert.match(html, /styles\.css\?v=20261029-layout2/);
-    assert.match(html, /app\.js\?v=20261029-md3-wide1/);
+    assert.match(html, /styles\.css\?v=20261029-mobile-nav3/);
+    assert.match(html, /app\.js\?v=20261029-mobile-nav3/);
     assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);
   }
@@ -127,4 +127,35 @@ test('homepage balances the hero and release panel on compact desktop screens', 
 test('homepage release title wraps long dynamic names without forcing horizontal overflow', () => {
   assert.match(styles, /\.release__title\s*\{[^}]*min-width:\s*0;[^}]*overflow-wrap:\s*anywhere/s);
   assert.match(read('index.html'), /id="release-title"/);
+});
+
+
+
+test('every page exposes an accessible collapsible mobile navigation', () => {
+  for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
+    const html = read(path);
+    assert.match(html, /<nav id="app-navigation" class="app-bar__nav" aria-label="Main navigation">/);
+    assert.match(html, /id="menu-toggle" type="button" aria-controls="app-navigation" aria-expanded="false" aria-label="Open navigation"/);
+    assert.match(html, /id="menu-icon" aria-hidden="true">menu/);
+    assert.ok(html.indexOf('<div class="app-bar__actions">') < html.indexOf('<nav id="app-navigation"'), path + ' must put the menu controls before navigation in DOM order');
+    assert.match(html, /href="releases.html"/);
+  }
+
+  assert.match(styles, /\.app-bar__menu-toggle\s*\{\s*display:\s*none;\s*\}/);
+  const mobileQueryStart = styles.lastIndexOf('@media (max-width: 839px)');
+  assert.notEqual(mobileQueryStart, -1, 'Missing compact navigation breakpoint');
+  const mobileQuery = extractCssBlock(styles, styles.indexOf('{', mobileQueryStart));
+  assert.match(mobileQuery, /grid-template-areas:\s*"brand actions"\s*"nav nav"/);
+  assert.match(mobileQuery, /\.app-bar__inner\s*>\s*\.brand\s*\{\s*grid-area:\s*brand/);
+  assert.match(mobileQuery, /\.app-bar__actions\s*\{\s*grid-area:\s*actions/);
+  assert.match(mobileQuery, /\.app-bar__nav\s*\{\s*grid-area:\s*nav/);
+  assert.match(mobileQuery, /\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
+  assert.match(mobileQuery, /\.app-bar\.has-mobile-menu:not\(\.is-menu-open\)\s+\.app-bar__nav\s*\{\s*display:\s*none;\s*\}/);
+  assert.match(mobileQuery, /max-height:\s*calc\(100dvh\s*-\s*var\(--app-layout-app-bar-height\)\s*-\s*2rem\)/);
+  assert.match(mobileQuery, /overflow-y:\s*auto/);
+  assert.match(mobileQuery, /\.app-bar\.is-menu-open\s+\.app-bar__nav\s*\{\s*display:\s*flex;\s*\}/);
+  const appJs = read('app.js');
+  assert.match(appJs, /aria-expanded/);
+  assert.match(appJs, /event\.key === 'Escape'/);
+  assert.match(appJs, /document\.addEventListener\('click',[\s\S]*!bar\.contains\(event\.target\)/);
 });
