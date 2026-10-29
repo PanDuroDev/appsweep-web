@@ -45,8 +45,8 @@ test('all pages load the new layout styles and use matching cache keys', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
     assert.match(html, /tokens\.css\?v=20261029-layout2/);
-    assert.match(html, /styles\.css\?v=20261029-mobile-nav2/);
-    assert.match(html, /app\.js\?v=20261029-mobile-nav2/);
+    assert.match(html, /styles\.css\?v=20261029-mobile-nav3/);
+    assert.match(html, /app\.js\?v=20261029-mobile-nav3/);
     assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);
   }
@@ -149,6 +149,9 @@ test('every page exposes an accessible collapsible mobile navigation', () => {
   assert.match(mobileQuery, /\.app-bar__actions\s*\{\s*grid-area:\s*actions/);
   assert.match(mobileQuery, /\.app-bar__nav\s*\{\s*grid-area:\s*nav/);
   assert.match(mobileQuery, /\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
+  assert.match(mobileQuery, /\.app-bar\.has-mobile-menu:not\(\.is-menu-open\)\s+\.app-bar__nav\s*\{\s*display:\s*none;\s*\}/);
+  assert.match(mobileQuery, /max-height:\s*calc\(100dvh\s*-\s*var\(--app-layout-app-bar-height\)\s*-\s*2rem\)/);
+  assert.match(mobileQuery, /overflow-y:\s*auto/);
   assert.match(mobileQuery, /\.app-bar\.is-menu-open\s+\.app-bar__nav\s*\{\s*display:\s*flex;\s*\}/);
   const appJs = read('app.js');
   assert.match(appJs, /aria-expanded/);
