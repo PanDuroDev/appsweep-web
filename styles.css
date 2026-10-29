@@ -983,3 +983,42 @@ button { font: inherit; }
   .docs-detail-list article { padding: var(--app-spacing-2); }
   .docs-steps, .docs-checklist { padding-inline-start: 1.25rem; }
 }
+
+/* Keep the homepage balanced on compact desktop screens as well. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .home-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+    grid-template-areas:
+      "hero download"
+      "workflow workflow"
+      "footer footer";
+    column-gap: var(--app-spacing-4);
+    align-content: start;
+  }
+
+  .home-page > .hero {
+    grid-area: hero;
+    padding-block-end: var(--app-spacing-4);
+  }
+
+  .home-page > #download {
+    grid-area: download;
+    align-self: start;
+    min-width: 0;
+    padding-block: var(--app-spacing-1) var(--app-spacing-4);
+    border-top: 0;
+  }
+
+  .home-page > #download .section-heading {
+    max-width: none;
+  }
+
+  .home-page > #workflow {
+    grid-area: workflow;
+  }
+
+  .home-page > .footer {
+    grid-area: footer;
+  }
+}
