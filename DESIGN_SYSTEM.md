@@ -75,7 +75,7 @@ Wrap a 32px visual chip or 40px icon button in `.md3-chip-hit-target` or `.md3-i
 - Choice controls: `.md3-choice`; switches: `.md3-switch` wrapping a checkbox input.
 - Feedback surfaces: `.md3-dialog`, `.md3-snackbar`, `.md3-tooltip[data-tooltip]`, and `.md3-progress-track`.
 
-These recipes are CSS primitives, not JavaScript components: interactive behavior (dialog opening, filtering, tab switching, form validation, progress updates and state management) must be implemented by the page or application that uses them.
+These recipes are CSS primitives, not JavaScript components: interactive behavior (dialog opening, filtering, tab switching, form validation, progress updates and state management) must be implemented by the page or application that uses them. Native `disabled` controls are disabled by the browser; `aria-disabled="true"` only exposes a state and still requires the application to block the action. The CSS preserves pointer targeting so keyboard and assistive-technology behavior is not silently replaced by `pointer-events`.
 
 ## Icon font
 

@@ -81,7 +81,7 @@ h1, h2, h3, p { margin-top: 0; }
   min-height: 36px;
   font-size: var(--md-sys-typescale-label-medium-size);
 }
-.release-status strong { color: var(--app-color-warning); font-size: var(--md-sys-typescale-label-small-size); letter-spacing: .1em; }
+.release-status strong { color: var(--app-color-warning); font-size: var(--md-sys-typescale-label-small-size); letter-spacing: var(--app-type-tracking-label-small); }
 .status-pulse { width: 7px; height: 7px; flex: 0 0 7px; border-radius: 50%; background: var(--app-color-warning); box-shadow: 0 0 0 4px color-mix(in srgb, var(--app-color-warning) 14%, transparent); }
 .hero h1, .docs-hero h1 { max-width: 700px; margin: 24px 0 22px; overflow-wrap: anywhere; }
 .headline-accent { color: var(--md-sys-color-primary); }
