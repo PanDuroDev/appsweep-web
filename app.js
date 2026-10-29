@@ -177,19 +177,19 @@
     if (!release || typeof release !== 'object' || Array.isArray(release) || typeof release.tag_name !== 'string') throw new Error('Invalid release data');
     title.textContent = typeof release.name === 'string' && release.name ? release.name : release.tag_name;
     const date = new Date(release.published_at || NaN);
-    const published = Number.isFinite(date.getTime()) ? `Published \${new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(date)}` : 'Published release';
+    const published = Number.isFinite(date.getTime()) ? `Published ${new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(date)}` : 'Published release';
     const asset = Array.isArray(release.assets) ? release.assets.find(isWindowsPackage) : null;
-    const filesUrl = `release.html?tag=\${encodeURIComponent(release.tag_name)}`;
+    const filesUrl = `release.html?tag=${encodeURIComponent(release.tag_name)}`;
     if (releaseAssets) { releaseAssets.href = filesUrl; releaseAssets.hidden = false; }
     if (releaseGithub && safeReleasePage(release.html_url)) { releaseGithub.href = release.html_url; releaseGithub.hidden = false; }
     if (asset) {
-      const size = Number.isFinite(asset.size) && asset.size > 0 ? ` · \${(asset.size / 1048576).toFixed(1)} MB` : '';
-      meta.textContent = `\${published} · \${asset.name}\${size}\${release.prerelease ? ' · Prerelease' : ''}`;
+      const size = Number.isFinite(asset.size) && asset.size > 0 ? ` · ${(asset.size / 1048576).toFixed(1)} MB` : '';
+      meta.textContent = `${published} · ${asset.name}${size}${release.prerelease ? ' · Prerelease' : ''}`;
       download.href = asset.browser_download_url;
       download.hidden = false;
       setLatestDownload(asset.browser_download_url, 'Download latest version');
     } else {
-      meta.textContent = `\${published} · No Windows installer is attached. View the release files to see what is available.`;
+      meta.textContent = `${published} · No Windows installer is attached. View the release files to see what is available.`;
       setLatestDownload(filesUrl, 'View latest available files');
     }
   }
