@@ -88,3 +88,43 @@ test('documentation redesign includes responsive facts, reading blocks, and read
   assert.match(styles, /\.docs-steps,\s*\.docs-checklist\s*\{[^}]*display:\s*grid/s);
   assert.match(styles, /@media\s*\(max-width:\s*839px\)[\s\S]*?\.docs-facts\s*\{\s*grid-template-columns:\s*1fr/);
 });
+
+/** Extracts one balanced CSS block so responsive assertions cannot match another breakpoint. */
+function extractCssBlock(source, openingBraceIndex) {
+  assert.equal(source[openingBraceIndex], '{', 'Expected a CSS opening brace');
+  let depth = 0;
+  for (let index = openingBraceIndex; index < source.length; index += 1) {
+    if (source[index] === '{') depth += 1;
+    if (source[index] === '}') {
+      depth -= 1;
+      if (depth === 0) return source.slice(openingBraceIndex + 1, index);
+    }
+  }
+  assert.fail('Unclosed CSS block');
+}
+
+test('homepage balances the hero and release panel on compact desktop screens', () => {
+  const mediaStart = styles.indexOf('@media (min-width: 1024px) and (max-width: 1199px)');
+  assert.notEqual(mediaStart, -1, 'Missing compact desktop media query');
+  const mediaOpen = styles.indexOf('{', mediaStart);
+  const media = extractCssBlock(styles, mediaOpen);
+  const homeStart = media.indexOf('.home-page');
+  assert.notEqual(homeStart, -1, 'Missing compact desktop homepage rule');
+  const homeOpen = media.indexOf('{', homeStart);
+  const home = extractCssBlock(media, homeOpen);
+
+  assert.match(home, /display:\s*grid/);
+  assert.match(home, /grid-template-columns:\s*minmax\(0,\s*1\.15fr\)\s+minmax\(340px,\s*0\.85fr\)/);
+  assert.match(home, /grid-template-areas:\s*"hero download"\s*"workflow workflow"\s*"footer footer"/);
+  assert.match(media, /\.home-page > \.hero\s*\{[^}]*grid-area:\s*hero/s, 'Hero must occupy the hero grid area');
+  assert.match(media, /\.home-page > \.hero\s*\{[^}]*min-width:\s*0/s);
+  assert.match(media, /\.home-page > #download\s*\{[^}]*grid-area:\s*download/s);
+  assert.match(media, /\.home-page > #workflow\s*\{[^}]*grid-area:\s*workflow/s);
+  assert.match(media, /\.home-page > \.footer\s*\{[^}]*grid-area:\s*footer/s);
+  assert.match(media, /\.home-page > #download \.section-heading\s*\{[^}]*max-width:\s*none/s);
+});
+
+test('homepage release title wraps long dynamic names without forcing horizontal overflow', () => {
+  assert.match(styles, /\.release__title\s*\{[^}]*min-width:\s*0;[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(read('index.html'), /id="release-title"/);
+});
