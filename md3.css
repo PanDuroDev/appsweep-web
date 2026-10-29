@@ -649,7 +649,7 @@ img, svg { max-width: 100%; }
   color: color-mix(in srgb, var(--md-fab-icon-color, var(--md-sys-color-primary)) 38%, transparent);
   background: color-mix(in srgb, var(--md-fab-container-color, var(--md-sys-color-surface-container-high)) 12%, var(--md-sys-color-surface));
 }
-.md3-fab:disabled .material-symbol, .md3-fab[aria-disabled="true"] .material-symbol { opacity: .38; }
+
 
 /* Badges and status */
 .md3-badge {
