@@ -340,7 +340,7 @@ button { font: inherit; }
   display: flex;
   align-items: center;
   gap: var(--app-spacing-1);
-  margin-block-end: var(--app-spacing-4);
+  margin-block-end: var(--app-spacing-2);
   color: var(--md-sys-color-primary);
   font-family: var(--md-sys-typescale-label-medium-font);
   font-size: var(--md-sys-typescale-label-medium-size);
@@ -525,6 +525,9 @@ button { font: inherit; }
   gap: var(--app-spacing-2);
 }
 .release-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   padding: var(--app-spacing-3);
   border: 1px solid var(--md-sys-color-outline-variant);
   border-radius: var(--md-sys-shape-corner-medium);
@@ -575,7 +578,7 @@ button { font: inherit; }
   font-size: var(--md-sys-typescale-body-medium-size);
   line-height: var(--md-sys-typescale-body-medium-line-height);
 }
-.release-card__actions { margin-block-start: var(--app-spacing-2); }
+.release-card__actions { margin-block-start: auto; padding-block-start: var(--app-spacing-2); }
 .release-state {
   display: flex;
   align-items: center;
@@ -714,7 +717,6 @@ button { font: inherit; }
   .project-card, .release, .release-card, .release-state, .asset-group, .release-notes {
     padding: var(--app-spacing-2);
   }
-  .project-card__number { margin-block-end: var(--app-spacing-2); }
   .footer__note { flex-basis: 100%; margin-right: 0; }
   .release-card__head, .asset-row { align-items: flex-start; }
   .release-version { max-width: 45%; overflow-wrap: anywhere; }
