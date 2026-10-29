@@ -144,13 +144,33 @@ test('latest Windows package creates a direct download link', async () => {
   assert.equal(app.ids['release-github'].hidden, false);
 });
 
+test('latest download skips prereleases and chooses the newest stable release', async () => {
+  const prerelease = release('v2-rc1', [asset('AppSweep-Preview.exe')], {
+    prerelease: true,
+    published_at: '2026-10-29T14:00:00Z',
+  });
+  const stable = release('v1', [asset('AppSweep-Stable.exe')], {
+    published_at: '2026-10-28T14:00:00Z',
+  });
+  let requestedUrl = '';
+  const app = boot({ fetcher: async url => {
+    requestedUrl = url;
+    return { ok: true, json: async () => [prerelease, stable] };
+  } });
+  await flush();
+  assert.match(requestedUrl, /releases\\?per_page=100$/);
+  assert.equal(app.ids['release-panel'].dataset.state, 'ready');
+  assert.equal(app.ids['release-title'].textContent, 'AppSweep v1');
+  assert.equal(app.ids['download-latest'].href, stable.assets[0].browser_download_url);
+});
+
 test('no release shows an empty state without inventing a download', async () => {
   const app = boot();
   await flush();
   assert.equal(app.ids['release-panel'].dataset.state, 'empty');
-  assert.equal(app.ids['release-title'].textContent, 'No published release yet');
+  assert.equal(app.ids['release-title'].textContent, 'No stable release published yet');
   assert.equal(app.ids['download-latest'].href, 'releases.html');
-  assert.equal(app.ids['download-latest-label'].textContent, 'No release available yet');
+  assert.equal(app.ids['download-latest-label'].textContent, 'No stable release available yet');
   assert.equal(app.ids['release-github'].hidden, true);
 });
 
