@@ -79,7 +79,7 @@ These recipes are CSS primitives, not JavaScript components: interactive behavio
 
 ## Icon font
 
-The site loads **Material Symbols Rounded** as a variable font. The `.material-symbol` helper supports AppSweep-owned `--app-icon-size`, `--app-icon-fill`, `--app-icon-weight`, `--app-icon-grade` and `--app-icon-optical-size` properties that map to the font's `FILL`, `wght`, `GRAD` and `opsz` axes. Use icon names from Google's Material Symbols catalogue and keep meaningful action labels in text for accessibility.
+The site loads **Material Symbols Rounded** as a variable font. The `.material-symbol` helper supports AppSweep-owned `--app-icon-size`, `--app-icon-fill`, `--app-icon-weight`, `--app-icon-grade` and `--app-icon-optical-size` properties that map to the font's `FILL`, `wght`, `GRAD` and `opsz` axes. FAB label size, line-height and weight use AppSweep-owned `--app-fab-label-text-*` aliases; Material Web documents the FAB label font but does not publish all three as FAB component tokens. Use icon names from Google's Material Symbols catalogue and keep meaningful action labels in text for accessibility.
 
 ## References
 

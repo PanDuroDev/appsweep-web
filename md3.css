@@ -296,6 +296,9 @@
   --app-component-field-height: 56px;
   --app-component-field-shape: var(--md-sys-shape-corner-extra-small);
   --app-component-focus-ring-width: 3px;
+  --app-fab-label-text-size: var(--md-sys-typescale-label-large-size);
+  --app-fab-label-text-line-height: var(--md-sys-typescale-label-large-line-height);
+  --app-fab-label-text-weight: var(--md-sys-typescale-label-large-weight);
 
   /* AppSweep-only supporting text role */
   --app-color-subtle: #a3a5b5;
@@ -624,9 +627,9 @@ img, svg { max-width: 100%; }
   background: var(--md-fab-container-color, var(--md-sys-color-surface-container-high));
   box-shadow: var(--app-fab-elevation, var(--app-elevation-level3));
   font-family: var(--md-fab-label-text-font, var(--md-sys-typescale-label-large-font));
-  font-size: var(--md-fab-label-text-size, var(--md-sys-typescale-label-large-size));
-  line-height: var(--md-fab-label-text-line-height, var(--md-sys-typescale-label-large-line-height));
-  font-weight: var(--md-fab-label-text-weight, var(--md-sys-typescale-label-large-weight));
+  font-size: var(--app-fab-label-text-size, var(--md-sys-typescale-label-large-size));
+  line-height: var(--app-fab-label-text-line-height, var(--md-sys-typescale-label-large-line-height));
+  font-weight: var(--app-fab-label-text-weight, var(--md-sys-typescale-label-large-weight));
   cursor: pointer;
   transition: border-radius var(--app-motion-duration-medium2) var(--app-motion-easing-emphasized), box-shadow var(--app-motion-duration-short3) var(--app-motion-easing-standard), transform var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
@@ -645,7 +648,7 @@ img, svg { max-width: 100%; }
   color: color-mix(in srgb, var(--md-fab-icon-color, var(--md-sys-color-primary)) 38%, transparent);
   background: color-mix(in srgb, var(--md-fab-container-color, var(--md-sys-color-surface-container-high)) 12%, var(--md-sys-color-surface));
 }
-.md3-fab:disabled, .md3-fab[aria-disabled="true"] .material-symbol { opacity: .38; }
+.md3-fab:disabled .material-symbol, .md3-fab[aria-disabled="true"] .material-symbol { opacity: .38; }
 
 /* Badges and status */
 .md3-badge {
@@ -1165,4 +1168,26 @@ img, svg { max-width: 100%; }
   line-height: var(--md-sys-typescale-label-small-line-height);
   font-weight: var(--md-sys-typescale-label-small-weight);
   letter-spacing: var(--app-type-tracking-label-small);
+}
+
+
+.md3-chip:disabled, .md3-chip[aria-disabled="true"], .chip:disabled, .chip[aria-disabled="true"] {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  cursor: not-allowed;
+}
+.md3-chip:disabled::before, .md3-chip[aria-disabled="true"]::before, .chip:disabled::before, .chip[aria-disabled="true"]::before { opacity: 0; }
+.md3-segmented-button:disabled, .md3-segmented-button[aria-disabled="true"] {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  cursor: not-allowed;
+}
+.md3-tab:disabled, .md3-tab[aria-disabled="true"], .md3-navigation-item:disabled, .md3-navigation-item[aria-disabled="true"] {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  cursor: not-allowed;
+}
+.md3-list-item[role="button"], .md3-menu-item[role="menuitem"] { cursor: pointer; }
+.md3-list-item[role="button"]:hover, .md3-menu-item[role="menuitem"]:hover {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent);
+}
+.md3-list-item[role="button"]:active, .md3-menu-item[role="menuitem"]:active {
+  background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
 }
