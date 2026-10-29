@@ -89,6 +89,7 @@ test('documentation redesign includes responsive facts, reading blocks, and read
   assert.match(styles, /@media\s*\(max-width:\s*839px\)[\s\S]*?\.docs-facts\s*\{\s*grid-template-columns:\s*1fr/);
 });
 
+/** Extracts one balanced CSS block so responsive assertions cannot match another breakpoint. */
 function extractCssBlock(source, openingBraceIndex) {
   assert.equal(source[openingBraceIndex], '{', 'Expected a CSS opening brace');
   let depth = 0;
@@ -120,4 +121,9 @@ test('homepage balances the hero and release panel on compact desktop screens', 
   assert.match(media, /\.home-page > #workflow\s*\{[^}]*grid-area:\s*workflow/s);
   assert.match(media, /\.home-page > \.footer\s*\{[^}]*grid-area:\s*footer/s);
   assert.match(media, /\.home-page > #download \.section-heading\s*\{[^}]*max-width:\s*none/s);
+});
+
+test('homepage release title wraps long dynamic names without forcing horizontal overflow', () => {
+  assert.match(styles, /\.release__title\s*\{[^}]*min-width:\s*0;[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(read('index.html'), /id="release-title"/);
 });
