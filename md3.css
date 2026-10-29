@@ -729,22 +729,37 @@ img, svg { max-width: 100%; }
 .md3-menu-item { display: flex; align-items: center; gap: var(--app-spacing-3); min-height: 48px; padding: 0 var(--app-spacing-3); color: inherit; background: transparent; text-decoration: none; }
 .md3-menu-item:not([aria-disabled="true"]):hover, .md3-menu-item:not([aria-disabled="true"]):focus-visible { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
 
-/* Text fields, selection controls and switches */
+/* Outlined text fields: consistent four-corner outline and explicit focus/hover states. */
 .md3-text-field { display: flex; flex-direction: column; gap: 6px; width: 100%; color: var(--md-outlined-text-field-label-text-color, var(--md-sys-color-on-surface-variant)); font-family: var(--md-sys-typescale-label-medium-font); font-size: var(--md-sys-typescale-body-small-size); }
+.md3-text-field > label { color: var(--md-outlined-text-field-label-text-color, var(--md-sys-color-on-surface-variant)); }
 .md3-text-field input, .md3-text-field textarea, .md3-text-field select {
   width: 100%;
   min-height: var(--md-outlined-text-field-container-height, var(--app-component-field-height));
   padding: 14px 16px;
-  border: 1px solid var(--md-outlined-text-field-outline-color, var(--md-sys-color-outline));
-  border-radius: var(--md-outlined-text-field-container-shape, var(--app-component-field-shape)) var(--md-outlined-text-field-container-shape, var(--app-component-field-shape)) 0 0;
+  border: var(--md-outlined-text-field-outline-width, 1px) solid var(--md-outlined-text-field-outline-color, var(--md-sys-color-outline));
+  border-radius: var(--md-outlined-text-field-container-shape, var(--app-component-field-shape));
   color: var(--md-outlined-text-field-input-text-color, var(--md-sys-color-on-surface));
-  background: var(--md-sys-color-surface-container-highest);
+  background: transparent;
   font-size: var(--md-sys-typescale-body-large-size);
   outline: none;
-  transition: border-color var(--app-motion-duration-short3) var(--app-motion-easing-standard), box-shadow var(--app-motion-duration-short3) var(--app-motion-easing-standard);
+  transition: border-color var(--app-motion-duration-short3) var(--app-motion-easing-standard), border-width var(--app-motion-duration-short3) var(--app-motion-easing-standard);
 }
-.md3-text-field input:focus, .md3-text-field textarea:focus, .md3-text-field select:focus { border-color: var(--md-outlined-text-field-focus-outline-color, var(--md-sys-color-primary)); box-shadow: inset 0 -2px var(--md-outlined-text-field-focus-outline-color, var(--md-sys-color-primary)); }
-.md3-text-field input[aria-invalid="true"], .md3-text-field textarea[aria-invalid="true"] { border-color: var(--md-sys-color-error); }
+.md3-text-field input:not(:disabled):not(:focus):not([aria-invalid="true"]):hover,
+.md3-text-field textarea:not(:disabled):not(:focus):not([aria-invalid="true"]):hover,
+.md3-text-field select:not(:disabled):not(:focus):not([aria-invalid="true"]):hover {
+  border-color: var(--md-outlined-text-field-hover-outline-color, var(--md-sys-color-on-surface));
+}
+.md3-text-field input:focus, .md3-text-field textarea:focus, .md3-text-field select:focus {
+  border-color: var(--md-outlined-text-field-focus-outline-color, var(--md-sys-color-primary));
+  border-width: var(--md-outlined-text-field-focus-outline-width, 3px);
+}
+.md3-text-field input[aria-invalid="true"], .md3-text-field textarea[aria-invalid="true"], .md3-text-field select[aria-invalid="true"] { border-color: var(--md-sys-color-error); }
+.md3-text-field input:disabled, .md3-text-field textarea:disabled, .md3-text-field select:disabled {
+  border-color: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
+  color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
+  cursor: not-allowed;
+  opacity: 1;
+}
 .md3-text-field .field-supporting { color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-body-small-size); }
 .md3-choice { display: inline-flex; align-items: center; gap: 10px; min-height: 40px; color: var(--md-sys-color-on-surface); cursor: pointer; }
 .md3-choice input { width: 18px; height: 18px; margin: 0; accent-color: var(--md-sys-color-primary); }
@@ -922,7 +937,10 @@ img, svg { max-width: 100%; }
   --md-outlined-text-field-container-height: 56px;
   --md-outlined-text-field-container-shape: var(--md-sys-shape-corner-extra-small);
   --md-outlined-text-field-outline-color: var(--md-sys-color-outline);
+  --md-outlined-text-field-outline-width: 1px;
+  --md-outlined-text-field-hover-outline-color: var(--md-sys-color-on-surface);
   --md-outlined-text-field-focus-outline-color: var(--md-sys-color-primary);
+  --md-outlined-text-field-focus-outline-width: 3px;
   --md-outlined-text-field-label-text-color: var(--md-sys-color-on-surface-variant);
   --md-outlined-text-field-input-text-color: var(--md-sys-color-on-surface);
 }

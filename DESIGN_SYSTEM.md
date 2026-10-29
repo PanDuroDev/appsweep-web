@@ -137,14 +137,14 @@ Use these patterns as starting points. Keep interactive state, navigation, form 
 ### Text field with supporting text
 
 ```html
-<label class="md3-text-field">
-  Publisher
-  <input type="text" name="publisher" autocomplete="organization"
+<div class="md3-text-field">
+  <label for="publisher">Publisher</label>
+  <input id="publisher" type="text" name="publisher" autocomplete="organization"
          aria-describedby="publisher-help">
   <span class="field-supporting" id="publisher-help">
     Filter by the publisher name.
   </span>
-</label>
+</div>
 ```
 
 ### Tabs with an accessible selected state
