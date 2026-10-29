@@ -45,7 +45,9 @@ test('all pages load the new layout styles and use matching cache keys', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
     assert.match(html, /tokens\.css\?v=20261029-md3-wide1/);
-    assert.match(html, /styles\.css\?v=20261029-md3-wide1/);
+    assert.match(html, /styles\.css\?v=20261029-md3-tidy1/);
+    assert.match(html, /app\.js\?v=20261029-md3-wide1/);
+    assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);
   }
 });
@@ -55,4 +57,15 @@ test('design notes document the widened shell and adaptive classes', () => {
   assert.match(design, /1920px/);
   assert.match(design, /\.docs-page--with-nav/);
   assert.match(design, /four columns/i);
+});
+
+
+test('homepage step cards keep a compact and consistent label-to-title gap', () => {
+  assert.match(styles, /\.project-card__number\\s*\\{[^}]*margin-block-end:\\s*var\\(--app-spacing-2\\)/s);
+  assert.doesNotMatch(styles, /@media\\s*\\(max-width:\\s*599px\\)[\\s\\S]*?\\.project-card__number\\s*\\{/);
+});
+
+test('release cards use a consistent vertical stack with actions aligned to the bottom', () => {
+  assert.match(styles, /\\.release-card\\s*\\{[^}]*display:\\s*flex;[^}]*flex-direction:\\s*column;[^}]*min-width:\\s*0;/s);
+  assert.match(styles, /\\.release-card__actions\\s*\\{[^}]*margin-block-start:\\s*auto;[^}]*padding-block-start:\\s*var\\(--app-spacing-2\\)/s);
 });
