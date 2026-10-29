@@ -62,6 +62,21 @@
   --md-ref-typeface-brand: 'Manrope', 'Segoe UI', sans-serif;
   --md-ref-typeface-plain: 'DM Sans', 'Segoe UI', sans-serif;
   --md-sys-typescale-display-large-font: var(--md-ref-typeface-brand);
+  --md-sys-typescale-display-medium-font: var(--md-ref-typeface-brand);
+  --md-sys-typescale-display-small-font: var(--md-ref-typeface-brand);
+  --md-sys-typescale-headline-large-font: var(--md-ref-typeface-brand);
+  --md-sys-typescale-headline-medium-font: var(--md-ref-typeface-brand);
+  --md-sys-typescale-headline-small-font: var(--md-ref-typeface-brand);
+  --md-sys-typescale-title-large-font: var(--md-ref-typeface-brand);
+  --md-sys-typescale-title-medium-font: var(--md-ref-typeface-plain);
+  --md-sys-typescale-title-small-font: var(--md-ref-typeface-plain);
+  --md-sys-typescale-body-large-font: var(--md-ref-typeface-plain);
+  --md-sys-typescale-body-medium-font: var(--md-ref-typeface-plain);
+  --md-sys-typescale-body-small-font: var(--md-ref-typeface-plain);
+  --md-sys-typescale-label-large-font: var(--md-ref-typeface-plain);
+  --md-sys-typescale-label-medium-font: var(--md-ref-typeface-plain);
+  --md-sys-typescale-label-small-font: var(--md-ref-typeface-plain);
+
   --md-sys-typescale-display-large-size: clamp(3rem, 6.5vw, 4.875rem);
   --md-sys-typescale-display-large-line-height: 1.04;
   --md-sys-typescale-display-large-weight: 700;
@@ -313,26 +328,39 @@ img, svg { max-width: 100%; }
   pointer-events: none;
 }
 .md3-button--filled, .button-filled {
-  color: var(--md-sys-color-on-primary);
-  background: var(--md-sys-color-primary);
+  min-height: var(--md-filled-button-container-height, var(--md-comp-button-height));
+  border-radius: var(--md-filled-button-container-shape, var(--md-comp-button-container-shape));
+  color: var(--md-filled-button-label-text-color, var(--md-sys-color-on-primary));
+  background: var(--md-filled-button-container-color, var(--md-sys-color-primary));
+  font-family: var(--md-filled-button-label-text-font, var(--md-sys-typescale-label-large-font));
+  font-size: var(--md-filled-button-label-text-size, var(--md-comp-button-label-size));
 }
 .md3-button--elevated, .button-elevated {
-  color: var(--md-sys-color-primary);
-  background: var(--md-sys-color-surface-container-low);
-  box-shadow: var(--md-sys-elevation-level1);
+  min-height: var(--md-elevated-button-container-height, var(--md-comp-button-height));
+  border-radius: var(--md-elevated-button-container-shape, var(--md-comp-button-container-shape));
+  color: var(--md-elevated-button-label-text-color, var(--md-sys-color-primary));
+  background: var(--md-elevated-button-container-color, var(--md-sys-color-surface-container-low));
+  box-shadow: var(--md-elevated-button-container-elevation, var(--md-sys-elevation-level1));
 }
 .md3-button--elevated:hover, .button-elevated:hover { box-shadow: var(--md-sys-elevation-level2); }
 .md3-button--tonal, .button-tonal {
-  color: var(--md-sys-color-on-secondary-container);
-  background: var(--md-sys-color-secondary-container);
+  min-height: var(--md-filled-tonal-button-container-height, var(--md-comp-button-height));
+  border-radius: var(--md-filled-tonal-button-container-shape, var(--md-comp-button-container-shape));
+  color: var(--md-filled-tonal-button-label-text-color, var(--md-sys-color-on-secondary-container));
+  background: var(--md-filled-tonal-button-container-color, var(--md-sys-color-secondary-container));
 }
 .md3-button--outlined, .button-outlined {
-  color: var(--md-sys-color-primary);
-  border-color: var(--md-sys-color-outline);
-  background: transparent;
+  min-height: var(--md-outlined-button-container-height, var(--md-comp-button-height));
+  border-radius: var(--md-outlined-button-container-shape, var(--md-comp-button-container-shape));
+  color: var(--md-outlined-button-label-text-color, var(--md-sys-color-primary));
+  border-width: var(--md-outlined-button-outline-width, 1px);
+  border-color: var(--md-outlined-button-outline-color, var(--md-sys-color-outline));
+  background: var(--md-outlined-button-container-color, transparent);
 }
 .md3-button--text, .button-text {
-  color: var(--md-sys-color-primary);
+  min-height: var(--md-text-button-container-height, var(--md-comp-button-height));
+  border-radius: var(--md-text-button-container-shape, var(--md-comp-button-container-shape));
+  color: var(--md-text-button-label-text-color, var(--md-sys-color-primary));
   padding-inline: 12px;
   background: transparent;
 }
@@ -349,8 +377,8 @@ img, svg { max-width: 100%; }
   padding: 0;
   overflow: hidden;
   border: 1px solid transparent;
-  border-radius: var(--md-sys-shape-corner-full);
-  color: var(--md-sys-color-on-surface-variant);
+  border-radius: var(--md-icon-button-container-shape, var(--md-sys-shape-corner-full));
+  color: var(--md-icon-button-icon-color, var(--md-sys-color-on-surface-variant));
   background: transparent;
   cursor: pointer;
   isolation: isolate;
@@ -358,10 +386,10 @@ img, svg { max-width: 100%; }
     background-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard),
     border-color var(--md-sys-motion-duration-short3) var(--md-sys-motion-easing-standard);
 }
-.md3-icon-button .material-symbol { --md-icon-size: var(--md-comp-icon-button-icon-size); }
-.md3-icon-button--filled { color: var(--md-sys-color-on-primary); background: var(--md-sys-color-primary); }
-.md3-icon-button--tonal { color: var(--md-sys-color-on-secondary-container); background: var(--md-sys-color-secondary-container); }
-.md3-icon-button--outlined { border-color: var(--md-sys-color-outline); }
+.md3-icon-button .material-symbol { --md-icon-size: var(--md-icon-button-icon-size, var(--md-comp-icon-button-icon-size)); }
+.md3-icon-button--filled { width: var(--md-filled-icon-button-container-width, var(--md-comp-icon-button-size)); height: var(--md-filled-icon-button-container-height, var(--md-comp-icon-button-size)); border-radius: var(--md-filled-icon-button-container-shape, var(--md-sys-shape-corner-full)); color: var(--md-filled-icon-button-icon-color, var(--md-sys-color-on-primary)); background: var(--md-filled-icon-button-container-color, var(--md-sys-color-primary)); }
+.md3-icon-button--tonal { width: var(--md-filled-tonal-icon-button-container-width, var(--md-comp-icon-button-size)); height: var(--md-filled-tonal-icon-button-container-height, var(--md-comp-icon-button-size)); border-radius: var(--md-filled-tonal-icon-button-container-shape, var(--md-sys-shape-corner-full)); color: var(--md-filled-tonal-icon-button-icon-color, var(--md-sys-color-on-secondary-container)); background: var(--md-filled-tonal-icon-button-container-color, var(--md-sys-color-secondary-container)); }
+.md3-icon-button--outlined { width: var(--md-outlined-icon-button-container-width, var(--md-comp-icon-button-size)); height: var(--md-outlined-icon-button-container-height, var(--md-comp-icon-button-size)); border-radius: var(--md-outlined-icon-button-container-shape, var(--md-sys-shape-corner-full)); border-width: var(--md-outlined-icon-button-outline-width, 1px); border-color: var(--md-outlined-icon-button-outline-color, var(--md-sys-color-outline)); }
 .md3-icon-button[aria-pressed="true"], .md3-icon-button.is-selected {
   color: var(--md-sys-color-on-primary);
   background: var(--md-sys-color-primary);
@@ -386,11 +414,13 @@ img, svg { max-width: 100%; }
   font-weight: 500;
   line-height: 1.25;
 }
-.md3-chip--assist, .md3-chip--suggestion { border-color: var(--md-sys-color-outline); }
+.md3-chip--assist { border-radius: var(--md-assist-chip-container-shape, var(--md-comp-chip-shape)); border-color: var(--md-assist-chip-outline-color, var(--md-sys-color-outline)); color: var(--md-assist-chip-label-text-color, var(--md-sys-color-on-surface)); font-family: var(--md-assist-chip-label-text-font, var(--md-sys-typescale-label-large-font)); }
+.md3-chip--suggestion { border-radius: var(--md-suggestion-chip-container-shape, var(--md-comp-chip-shape)); border-color: var(--md-suggestion-chip-outline-color, var(--md-sys-color-outline)); color: var(--md-suggestion-chip-label-text-color, var(--md-sys-color-on-surface)); }
 .md3-chip--filter[aria-pressed="true"], .md3-chip--filter.is-selected {
   border-color: transparent;
-  color: var(--md-sys-color-on-secondary-container);
-  background: var(--md-sys-color-secondary-container);
+  border-radius: var(--md-filter-chip-container-shape, var(--md-comp-chip-shape));
+  color: var(--md-filter-chip-selected-label-text-color, var(--md-sys-color-on-secondary-container));
+  background: var(--md-filter-chip-selected-container-color, var(--md-sys-color-secondary-container));
 }
 .md3-chip--input { border-color: transparent; background: var(--md-sys-color-surface-container-high); }
 .md3-chip--elevated { border-color: transparent; background: var(--md-sys-color-surface-container-low); box-shadow: var(--md-sys-elevation-level1); }
@@ -400,13 +430,13 @@ img, svg { max-width: 100%; }
 /* Cards: elevated, filled and outlined with optional expressive shape change */
 .md3-card {
   min-width: 0;
-  border-radius: var(--md-comp-card-shape);
+  border-radius: var(--md-card-container-shape, var(--md-comp-card-shape));
   color: var(--md-sys-color-on-surface);
-  background: var(--md-sys-color-surface-container-low);
+  background: var(--md-card-container-color, var(--md-sys-color-surface-container-low));
 }
 .md3-card--elevated { background: var(--md-sys-color-surface-container-low); box-shadow: var(--md-sys-elevation-level1); }
 .md3-card--filled { background: var(--md-sys-color-surface-container-highest); }
-.md3-card--outlined { border: 1px solid var(--md-sys-color-outline-variant); background: transparent; }
+.md3-card--outlined { border: var(--md-card-outline-width, 1px) solid var(--md-card-outline-color, var(--md-sys-color-outline-variant)); background: transparent; }
 .md3-card--expressive { transition: border-radius var(--md-sys-motion-duration-medium4) var(--md-sys-motion-easing-emphasized), border-color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard), background-color var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-standard), transform var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized); }
 .md3-card--expressive:hover { border-radius: 30px 30px 18px 30px; }
 .md3-card--expressive:focus-within { border-color: var(--md-sys-color-primary); }
@@ -421,10 +451,10 @@ img, svg { max-width: 100%; }
   min-height: 56px;
   padding: 0 16px;
   border: 0;
-  border-radius: var(--md-sys-shape-corner-large);
-  color: var(--md-sys-color-on-primary-container);
-  background: var(--md-sys-color-primary-container);
-  box-shadow: var(--md-sys-elevation-level3);
+  border-radius: var(--md-fab-container-shape, var(--md-sys-shape-corner-large));
+  color: var(--md-fab-icon-color, var(--md-sys-color-on-primary-container));
+  background: var(--md-fab-container-color, var(--md-sys-color-primary-container));
+  box-shadow: var(--md-fab-container-elevation, var(--md-sys-elevation-level3));
   font-size: var(--md-sys-typescale-title-medium-size);
   font-weight: 600;
   cursor: pointer;
@@ -504,11 +534,11 @@ img, svg { max-width: 100%; }
 .md3-text-field { display: flex; flex-direction: column; gap: 6px; width: 100%; color: var(--md-sys-color-on-surface-variant); font-size: var(--md-sys-typescale-body-small-size); }
 .md3-text-field input, .md3-text-field textarea, .md3-text-field select {
   width: 100%;
-  min-height: var(--md-comp-field-height);
+  min-height: var(--md-outlined-text-field-container-height, var(--md-comp-field-height));
   padding: 14px 16px;
-  border: 1px solid var(--md-sys-color-outline);
-  border-radius: var(--md-comp-field-shape) var(--md-comp-field-shape) 0 0;
-  color: var(--md-sys-color-on-surface);
+  border: 1px solid var(--md-outlined-text-field-outline-color, var(--md-sys-color-outline));
+  border-radius: var(--md-outlined-text-field-container-shape, var(--md-comp-field-shape)) var(--md-outlined-text-field-container-shape, var(--md-comp-field-shape)) 0 0;
+  color: var(--md-outlined-text-field-input-text-color, var(--md-sys-color-on-surface));
   background: var(--md-sys-color-surface-container-highest);
   font-size: var(--md-sys-typescale-body-large-size);
   outline: none;
@@ -608,4 +638,86 @@ img, svg { max-width: 100%; }
   --app-color-warning-container: #ffdfa8;
   --app-color-on-warning-container: #261900;
   --subtle: #636575;
+}
+
+
+/* Component tokens use the public Material Web naming pattern. */
+:root {
+  --md-filled-button-container-height: 40px;
+  --md-filled-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-filled-button-container-color: var(--md-sys-color-primary);
+  --md-filled-button-label-text-color: var(--md-sys-color-on-primary);
+  --md-filled-button-label-text-font: var(--md-sys-typescale-label-large-font);
+  --md-filled-button-label-text-size: var(--md-sys-typescale-label-large-size);
+  --md-filled-button-icon-size: 18px;
+
+  --md-elevated-button-container-height: 40px;
+  --md-elevated-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-elevated-button-container-color: var(--md-sys-color-surface-container-low);
+  --md-elevated-button-label-text-color: var(--md-sys-color-primary);
+  --md-elevated-button-container-elevation: var(--md-sys-elevation-level1);
+
+  --md-filled-tonal-button-container-height: 40px;
+  --md-filled-tonal-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-filled-tonal-button-container-color: var(--md-sys-color-secondary-container);
+  --md-filled-tonal-button-label-text-color: var(--md-sys-color-on-secondary-container);
+
+  --md-outlined-button-container-height: 40px;
+  --md-outlined-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-outlined-button-container-color: transparent;
+  --md-outlined-button-outline-color: var(--md-sys-color-outline);
+  --md-outlined-button-outline-width: 1px;
+  --md-outlined-button-label-text-color: var(--md-sys-color-primary);
+
+  --md-text-button-container-height: 40px;
+  --md-text-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-text-button-label-text-color: var(--md-sys-color-primary);
+
+  --md-icon-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-icon-button-icon-color: var(--md-sys-color-on-surface-variant);
+  --md-icon-button-icon-size: 24px;
+  --md-filled-icon-button-container-width: 40px;
+  --md-filled-icon-button-container-height: 40px;
+  --md-filled-icon-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-filled-icon-button-container-color: var(--md-sys-color-primary);
+  --md-filled-icon-button-icon-color: var(--md-sys-color-on-primary);
+  --md-filled-icon-button-icon-size: 24px;
+  --md-filled-tonal-icon-button-container-width: 40px;
+  --md-filled-tonal-icon-button-container-height: 40px;
+  --md-filled-tonal-icon-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-filled-tonal-icon-button-container-color: var(--md-sys-color-secondary-container);
+  --md-filled-tonal-icon-button-icon-color: var(--md-sys-color-on-secondary-container);
+  --md-outlined-icon-button-container-width: 40px;
+  --md-outlined-icon-button-container-height: 40px;
+  --md-outlined-icon-button-container-shape: var(--md-sys-shape-corner-full);
+  --md-outlined-icon-button-outline-color: var(--md-sys-color-outline);
+  --md-outlined-icon-button-outline-width: 1px;
+
+  --md-assist-chip-container-shape: var(--md-sys-shape-corner-small);
+  --md-assist-chip-outline-color: var(--md-sys-color-outline);
+  --md-assist-chip-label-text-color: var(--md-sys-color-on-surface);
+  --md-assist-chip-label-text-font: var(--md-sys-typescale-label-large-font);
+  --md-filter-chip-container-shape: var(--md-sys-shape-corner-small);
+  --md-filter-chip-selected-container-color: var(--md-sys-color-secondary-container);
+  --md-filter-chip-selected-label-text-color: var(--md-sys-color-on-secondary-container);
+  --md-suggestion-chip-container-shape: var(--md-sys-shape-corner-small);
+  --md-suggestion-chip-outline-color: var(--md-sys-color-outline);
+  --md-suggestion-chip-label-text-color: var(--md-sys-color-on-surface);
+
+  --md-card-container-shape: var(--md-sys-shape-corner-large);
+  --md-card-container-color: var(--md-sys-color-surface-container-low);
+  --md-card-outline-color: var(--md-sys-color-outline-variant);
+  --md-card-outline-width: 1px;
+  --md-card-content-padding: 24px;
+  --md-fab-container-shape: var(--md-sys-shape-corner-large);
+  --md-fab-container-color: var(--md-sys-color-primary-container);
+  --md-fab-icon-color: var(--md-sys-color-on-primary-container);
+  --md-fab-container-elevation: var(--md-sys-elevation-level3);
+
+  --md-outlined-text-field-container-height: 56px;
+  --md-outlined-text-field-container-shape: var(--md-sys-shape-corner-extra-small);
+  --md-outlined-text-field-outline-color: var(--md-sys-color-outline);
+  --md-outlined-text-field-focus-outline-color: var(--md-sys-color-primary);
+  --md-outlined-text-field-label-text-color: var(--md-sys-color-on-surface-variant);
+  --md-outlined-text-field-input-text-color: var(--md-sys-color-on-surface);
 }

@@ -34,7 +34,7 @@ Available roles follow the Material type scale:
 - Body: `body-large`, `body-medium`, `body-small`
 - Label: `label-large`, `label-medium`, `label-small`
 
-Each role exposes size, line-height, weight and tracking tokens under `--md-sys-typescale-*`.
+Each role exposes font family, size, line-height, weight and tracking tokens under `--md-sys-typescale-*`. Component properties also follow Material Web's component-token naming pattern, including `--md-filled-button-*`, `--md-outlined-button-*`, `--md-icon-button-*`, `--md-card-*`, `--md-fab-*` and `--md-outlined-text-field-*`; change these at `:root` or scope them to a component wrapper.
 
 ## Shapes, elevation and motion
 
