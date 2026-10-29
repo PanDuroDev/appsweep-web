@@ -62,7 +62,7 @@ test('design notes document the widened shell and adaptive classes', () => {
 
 test('homepage step cards keep a compact and consistent label-to-title gap', () => {
   assert.match(styles, /\.project-card__number\s*\{[^}]*margin-block-end:\s*var\(--app-spacing-2\)/s);
-  assert.doesNotMatch(styles, /@media\s*\(max-width:\s*599px\)[\s\\S]*?\.project-card__number\s*\{/);
+  assert.doesNotMatch(styles, /@media\s*\(max-width:\s*599px\)[\s\S]*?\.project-card__number\s*\{/);
 });
 
 test('release cards use a consistent vertical stack with actions aligned to the bottom', () => {
