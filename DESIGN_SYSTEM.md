@@ -20,7 +20,7 @@ This is a lightweight CSS implementation informed by Google's Material 3 and Mat
 
 ## Color roles
 
-The default theme is dark, with an optional companion light palette activated by setting `data-theme="light"` on the root `<html>` element. Both themes define primary, secondary, tertiary and error role pairs; each has an `on-*` foreground and (where appropriate) a container pair. It also defines neutral surface roles from `surface-container-lowest` through `surface-container-highest`, `on-surface`, `on-surface-variant`, `outline`, `outline-variant`, `inverse-surface`, `inverse-on-surface`, `inverse-primary`, `surface-tint`, `scrim` and `shadow`.
+The default theme is a fixed brand-authored dark palette, with an optional static light palette activated by setting `data-theme="light"` on the root `<html>` element. Wallpaper-based dynamic color extraction is not implemented. Both themes define primary, secondary, tertiary and error role pairs; each has an `on-*` foreground and (where appropriate) a container pair. It also defines neutral surface roles from `surface-container-lowest` through `surface-container-highest`, `on-surface`, `on-surface-variant`, `outline`, `outline-variant`, `inverse-surface`, `inverse-on-surface`, `inverse-primary`, `surface-tint`, `scrim` and `shadow`.
 
 AppSweep-specific success/warning statuses use the supplementary `--app-color-*` tokens rather than redefining Material's error palette.
 
@@ -34,7 +34,7 @@ Available roles follow the Material type scale:
 - Body: `body-large`, `body-medium`, `body-small`
 - Label: `label-large`, `label-medium`, `label-small`
 
-Material Web exposes font, size, line-height and weight for each baseline type role. Letter tracking is a site-specific extension under `--app-type-tracking-*`. Component properties also follow Material Web's component-token naming pattern, including `--md-filled-button-*`, `--md-outlined-button-*`, `--md-icon-button-*`, `--app-card-*`, `--md-fab-*` and `--md-outlined-text-field-*`; change these at `:root` or scope them to a component wrapper.
+Material Web exposes font, size, line-height and weight for each of its 15 baseline type roles. Letter tracking is a site-specific extension under `--app-type-tracking-*`. Material 3 Expressive also defines emphasized counterparts; this stylesheet provides AppSweep-owned `--app-type-emphasized-*` aliases because those are not official Material Web tokens. Component properties also follow Material Web's component-token naming pattern, including `--md-filled-button-*`, `--md-outlined-button-*`, `--md-icon-button-*`, `--app-card-*`, `--md-fab-*` and `--md-outlined-text-field-*`; change these at `:root` or scope them to a component wrapper.
 
 ## Shapes, elevation and motion
 

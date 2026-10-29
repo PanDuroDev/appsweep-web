@@ -136,6 +136,83 @@
   --md-sys-typescale-label-small-weight: 600;
   --app-type-tracking-label-small: .04em;
 
+  /* AppSweep-owned emphasized counterparts for M3 Expressive; not Material Web tokens. */
+  --app-type-emphasized-display-large-font: var(--md-sys-typescale-display-large-font);
+  --app-type-emphasized-display-large-size: var(--md-sys-typescale-display-large-size);
+  --app-type-emphasized-display-large-line-height: var(--md-sys-typescale-display-large-line-height);
+  --app-type-emphasized-display-large-weight: 800;
+  --app-type-emphasized-display-large-tracking: var(--app-type-tracking-display-large);
+  --app-type-emphasized-display-medium-font: var(--md-sys-typescale-display-medium-font);
+  --app-type-emphasized-display-medium-size: var(--md-sys-typescale-display-medium-size);
+  --app-type-emphasized-display-medium-line-height: var(--md-sys-typescale-display-medium-line-height);
+  --app-type-emphasized-display-medium-weight: 800;
+  --app-type-emphasized-display-medium-tracking: var(--app-type-tracking-display-medium);
+  --app-type-emphasized-display-small-font: var(--md-sys-typescale-display-small-font);
+  --app-type-emphasized-display-small-size: var(--md-sys-typescale-display-small-size);
+  --app-type-emphasized-display-small-line-height: var(--md-sys-typescale-display-small-line-height);
+  --app-type-emphasized-display-small-weight: 800;
+  --app-type-emphasized-display-small-tracking: var(--app-type-tracking-display-small);
+  --app-type-emphasized-headline-large-font: var(--md-sys-typescale-headline-large-font);
+  --app-type-emphasized-headline-large-size: var(--md-sys-typescale-headline-large-size);
+  --app-type-emphasized-headline-large-line-height: var(--md-sys-typescale-headline-large-line-height);
+  --app-type-emphasized-headline-large-weight: 800;
+  --app-type-emphasized-headline-large-tracking: var(--app-type-tracking-headline-large);
+  --app-type-emphasized-headline-medium-font: var(--md-sys-typescale-headline-medium-font);
+  --app-type-emphasized-headline-medium-size: var(--md-sys-typescale-headline-medium-size);
+  --app-type-emphasized-headline-medium-line-height: var(--md-sys-typescale-headline-medium-line-height);
+  --app-type-emphasized-headline-medium-weight: 800;
+  --app-type-emphasized-headline-medium-tracking: var(--app-type-tracking-headline-medium);
+  --app-type-emphasized-headline-small-font: var(--md-sys-typescale-headline-small-font);
+  --app-type-emphasized-headline-small-size: var(--md-sys-typescale-headline-small-size);
+  --app-type-emphasized-headline-small-line-height: var(--md-sys-typescale-headline-small-line-height);
+  --app-type-emphasized-headline-small-weight: 800;
+  --app-type-emphasized-headline-small-tracking: var(--app-type-tracking-headline-small);
+  --app-type-emphasized-title-large-font: var(--md-sys-typescale-title-large-font);
+  --app-type-emphasized-title-large-size: var(--md-sys-typescale-title-large-size);
+  --app-type-emphasized-title-large-line-height: var(--md-sys-typescale-title-large-line-height);
+  --app-type-emphasized-title-large-weight: 700;
+  --app-type-emphasized-title-large-tracking: var(--app-type-tracking-title-large);
+  --app-type-emphasized-title-medium-font: var(--md-sys-typescale-title-medium-font);
+  --app-type-emphasized-title-medium-size: var(--md-sys-typescale-title-medium-size);
+  --app-type-emphasized-title-medium-line-height: var(--md-sys-typescale-title-medium-line-height);
+  --app-type-emphasized-title-medium-weight: 700;
+  --app-type-emphasized-title-medium-tracking: var(--app-type-tracking-title-medium);
+  --app-type-emphasized-title-small-font: var(--md-sys-typescale-title-small-font);
+  --app-type-emphasized-title-small-size: var(--md-sys-typescale-title-small-size);
+  --app-type-emphasized-title-small-line-height: var(--md-sys-typescale-title-small-line-height);
+  --app-type-emphasized-title-small-weight: 700;
+  --app-type-emphasized-title-small-tracking: var(--app-type-tracking-title-small);
+  --app-type-emphasized-body-large-font: var(--md-sys-typescale-body-large-font);
+  --app-type-emphasized-body-large-size: var(--md-sys-typescale-body-large-size);
+  --app-type-emphasized-body-large-line-height: var(--md-sys-typescale-body-large-line-height);
+  --app-type-emphasized-body-large-weight: 500;
+  --app-type-emphasized-body-large-tracking: var(--app-type-tracking-body-large);
+  --app-type-emphasized-body-medium-font: var(--md-sys-typescale-body-medium-font);
+  --app-type-emphasized-body-medium-size: var(--md-sys-typescale-body-medium-size);
+  --app-type-emphasized-body-medium-line-height: var(--md-sys-typescale-body-medium-line-height);
+  --app-type-emphasized-body-medium-weight: 500;
+  --app-type-emphasized-body-medium-tracking: var(--app-type-tracking-body-medium);
+  --app-type-emphasized-body-small-font: var(--md-sys-typescale-body-small-font);
+  --app-type-emphasized-body-small-size: var(--md-sys-typescale-body-small-size);
+  --app-type-emphasized-body-small-line-height: var(--md-sys-typescale-body-small-line-height);
+  --app-type-emphasized-body-small-weight: 500;
+  --app-type-emphasized-body-small-tracking: var(--app-type-tracking-body-small);
+  --app-type-emphasized-label-large-font: var(--md-sys-typescale-label-large-font);
+  --app-type-emphasized-label-large-size: var(--md-sys-typescale-label-large-size);
+  --app-type-emphasized-label-large-line-height: var(--md-sys-typescale-label-large-line-height);
+  --app-type-emphasized-label-large-weight: 700;
+  --app-type-emphasized-label-large-tracking: var(--app-type-tracking-label-large);
+  --app-type-emphasized-label-medium-font: var(--md-sys-typescale-label-medium-font);
+  --app-type-emphasized-label-medium-size: var(--md-sys-typescale-label-medium-size);
+  --app-type-emphasized-label-medium-line-height: var(--md-sys-typescale-label-medium-line-height);
+  --app-type-emphasized-label-medium-weight: 700;
+  --app-type-emphasized-label-medium-tracking: var(--app-type-tracking-label-medium);
+  --app-type-emphasized-label-small-font: var(--md-sys-typescale-label-small-font);
+  --app-type-emphasized-label-small-size: var(--md-sys-typescale-label-small-size);
+  --app-type-emphasized-label-small-line-height: var(--md-sys-typescale-label-small-line-height);
+  --app-type-emphasized-label-small-weight: 700;
+  --app-type-emphasized-label-small-tracking: var(--app-type-tracking-label-small);
+
   /* Shape scale */
   --md-sys-shape-corner-none: 0;
   --md-sys-shape-corner-extra-small: 4px;
@@ -690,4 +767,126 @@ img, svg { max-width: 100%; }
   --md-outlined-text-field-focus-outline-color: var(--md-sys-color-primary);
   --md-outlined-text-field-label-text-color: var(--md-sys-color-on-surface-variant);
   --md-outlined-text-field-input-text-color: var(--md-sys-color-on-surface);
+}
+
+
+/* AppSweep M3 Expressive emphasized type presets, namespaced separately from official tokens. */
+.app-type-emphasized-display-large {
+  font-family: var(--app-type-emphasized-display-large-font);
+  font-size: var(--app-type-emphasized-display-large-size);
+  line-height: var(--app-type-emphasized-display-large-line-height);
+  font-weight: var(--app-type-emphasized-display-large-weight);
+  letter-spacing: var(--app-type-emphasized-display-large-tracking);
+}
+
+.app-type-emphasized-display-medium {
+  font-family: var(--app-type-emphasized-display-medium-font);
+  font-size: var(--app-type-emphasized-display-medium-size);
+  line-height: var(--app-type-emphasized-display-medium-line-height);
+  font-weight: var(--app-type-emphasized-display-medium-weight);
+  letter-spacing: var(--app-type-emphasized-display-medium-tracking);
+}
+
+.app-type-emphasized-display-small {
+  font-family: var(--app-type-emphasized-display-small-font);
+  font-size: var(--app-type-emphasized-display-small-size);
+  line-height: var(--app-type-emphasized-display-small-line-height);
+  font-weight: var(--app-type-emphasized-display-small-weight);
+  letter-spacing: var(--app-type-emphasized-display-small-tracking);
+}
+
+.app-type-emphasized-headline-large {
+  font-family: var(--app-type-emphasized-headline-large-font);
+  font-size: var(--app-type-emphasized-headline-large-size);
+  line-height: var(--app-type-emphasized-headline-large-line-height);
+  font-weight: var(--app-type-emphasized-headline-large-weight);
+  letter-spacing: var(--app-type-emphasized-headline-large-tracking);
+}
+
+.app-type-emphasized-headline-medium {
+  font-family: var(--app-type-emphasized-headline-medium-font);
+  font-size: var(--app-type-emphasized-headline-medium-size);
+  line-height: var(--app-type-emphasized-headline-medium-line-height);
+  font-weight: var(--app-type-emphasized-headline-medium-weight);
+  letter-spacing: var(--app-type-emphasized-headline-medium-tracking);
+}
+
+.app-type-emphasized-headline-small {
+  font-family: var(--app-type-emphasized-headline-small-font);
+  font-size: var(--app-type-emphasized-headline-small-size);
+  line-height: var(--app-type-emphasized-headline-small-line-height);
+  font-weight: var(--app-type-emphasized-headline-small-weight);
+  letter-spacing: var(--app-type-emphasized-headline-small-tracking);
+}
+
+.app-type-emphasized-title-large {
+  font-family: var(--app-type-emphasized-title-large-font);
+  font-size: var(--app-type-emphasized-title-large-size);
+  line-height: var(--app-type-emphasized-title-large-line-height);
+  font-weight: var(--app-type-emphasized-title-large-weight);
+  letter-spacing: var(--app-type-emphasized-title-large-tracking);
+}
+
+.app-type-emphasized-title-medium {
+  font-family: var(--app-type-emphasized-title-medium-font);
+  font-size: var(--app-type-emphasized-title-medium-size);
+  line-height: var(--app-type-emphasized-title-medium-line-height);
+  font-weight: var(--app-type-emphasized-title-medium-weight);
+  letter-spacing: var(--app-type-emphasized-title-medium-tracking);
+}
+
+.app-type-emphasized-title-small {
+  font-family: var(--app-type-emphasized-title-small-font);
+  font-size: var(--app-type-emphasized-title-small-size);
+  line-height: var(--app-type-emphasized-title-small-line-height);
+  font-weight: var(--app-type-emphasized-title-small-weight);
+  letter-spacing: var(--app-type-emphasized-title-small-tracking);
+}
+
+.app-type-emphasized-body-large {
+  font-family: var(--app-type-emphasized-body-large-font);
+  font-size: var(--app-type-emphasized-body-large-size);
+  line-height: var(--app-type-emphasized-body-large-line-height);
+  font-weight: var(--app-type-emphasized-body-large-weight);
+  letter-spacing: var(--app-type-emphasized-body-large-tracking);
+}
+
+.app-type-emphasized-body-medium {
+  font-family: var(--app-type-emphasized-body-medium-font);
+  font-size: var(--app-type-emphasized-body-medium-size);
+  line-height: var(--app-type-emphasized-body-medium-line-height);
+  font-weight: var(--app-type-emphasized-body-medium-weight);
+  letter-spacing: var(--app-type-emphasized-body-medium-tracking);
+}
+
+.app-type-emphasized-body-small {
+  font-family: var(--app-type-emphasized-body-small-font);
+  font-size: var(--app-type-emphasized-body-small-size);
+  line-height: var(--app-type-emphasized-body-small-line-height);
+  font-weight: var(--app-type-emphasized-body-small-weight);
+  letter-spacing: var(--app-type-emphasized-body-small-tracking);
+}
+
+.app-type-emphasized-label-large {
+  font-family: var(--app-type-emphasized-label-large-font);
+  font-size: var(--app-type-emphasized-label-large-size);
+  line-height: var(--app-type-emphasized-label-large-line-height);
+  font-weight: var(--app-type-emphasized-label-large-weight);
+  letter-spacing: var(--app-type-emphasized-label-large-tracking);
+}
+
+.app-type-emphasized-label-medium {
+  font-family: var(--app-type-emphasized-label-medium-font);
+  font-size: var(--app-type-emphasized-label-medium-size);
+  line-height: var(--app-type-emphasized-label-medium-line-height);
+  font-weight: var(--app-type-emphasized-label-medium-weight);
+  letter-spacing: var(--app-type-emphasized-label-medium-tracking);
+}
+
+.app-type-emphasized-label-small {
+  font-family: var(--app-type-emphasized-label-small-font);
+  font-size: var(--app-type-emphasized-label-small-size);
+  line-height: var(--app-type-emphasized-label-small-line-height);
+  font-weight: var(--app-type-emphasized-label-small-weight);
+  letter-spacing: var(--app-type-emphasized-label-small-tracking);
 }
