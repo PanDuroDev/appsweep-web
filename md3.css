@@ -468,7 +468,7 @@ img, svg { max-width: 100%; }
   color: var(--md-outlined-button-label-text-color, var(--md-sys-color-primary));
   border-width: var(--md-outlined-button-outline-width, 1px);
   border-color: var(--md-outlined-button-outline-color, var(--md-sys-color-outline));
-  background: var(--md-outlined-button-container-color, transparent);
+  background: var(--app-outlined-button-container-color, transparent);
   font-family: var(--md-outlined-button-label-text-font, var(--md-sys-typescale-label-large-font));
   font-size: var(--md-outlined-button-label-text-size, var(--md-sys-typescale-label-large-size));
   font-weight: var(--md-outlined-button-label-text-weight, var(--md-sys-typescale-label-large-weight));
@@ -734,7 +734,7 @@ img, svg { max-width: 100%; }
 .md3-text-field > label { color: var(--md-outlined-text-field-label-text-color, var(--md-sys-color-on-surface-variant)); }
 .md3-text-field input, .md3-text-field textarea, .md3-text-field select {
   width: 100%;
-  min-height: var(--md-outlined-text-field-container-height, var(--app-component-field-height));
+  min-height: var(--app-component-field-height);
   padding: 14px 16px;
   border: var(--md-outlined-text-field-outline-width, 1px) solid var(--md-outlined-text-field-outline-color, var(--md-sys-color-outline));
   border-radius: var(--md-outlined-text-field-container-shape, var(--app-component-field-shape));
@@ -954,7 +954,7 @@ img, svg { max-width: 100%; }
 
   --md-outlined-button-container-height: 40px;
   --md-outlined-button-container-shape: var(--md-sys-shape-corner-full);
-  --md-outlined-button-container-color: transparent;
+  --app-outlined-button-container-color: transparent;
   --md-outlined-button-outline-color: var(--md-sys-color-outline);
   --md-outlined-button-outline-width: 1px;
   --md-outlined-button-label-text-color: var(--md-sys-color-primary);
@@ -1000,7 +1000,7 @@ img, svg { max-width: 100%; }
   --md-fab-icon-color: var(--md-sys-color-primary);
   --app-fab-elevation: var(--app-elevation-level3);
 
-  --md-outlined-text-field-container-height: 56px;
+  
   --md-outlined-text-field-container-shape: var(--md-sys-shape-corner-extra-small);
   --md-outlined-text-field-outline-color: var(--md-sys-color-outline);
   --md-outlined-text-field-outline-width: 1px;
