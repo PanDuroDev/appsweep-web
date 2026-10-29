@@ -737,7 +737,6 @@ button { font: inherit; }
   }
   .home-page > .hero {
     grid-area: hero;
-    min-width: 0;
     padding-block-end: var(--app-spacing-4);
   }
   .home-page > #download {
@@ -1000,6 +999,7 @@ button { font: inherit; }
 
   .home-page > .hero {
     grid-area: hero;
+    min-width: 0;
     padding-block-end: var(--app-spacing-4);
   }
 
