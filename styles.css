@@ -197,8 +197,14 @@ code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size
 
 /* Material 3 Expressive foundation: semantic roles, states and adaptive layout */
 :root {
+  --secondary-container: #383344;
+  --on-secondary-container: #eee0ff;
   --tertiary-container: #443047;
   --on-tertiary-container: #ffeff6;
+  --on-secondary: #332d3d;
+  --on-tertiary: #49263b;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
 }
 ::selection { color: var(--on-primary); background: var(--primary); }
 :where(a, button, [role="button"], summary, input, select, textarea):focus-visible {
