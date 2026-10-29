@@ -558,3 +558,54 @@ img, svg { max-width: 100%; }
   html { scroll-behavior: auto !important; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+
+/* Optional companion light scheme. Set data-theme="light" on <html> to opt in. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --md-sys-color-primary: #4b4f8f;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #e2e1ff;
+  --md-sys-color-on-primary-container: #171a4b;
+  --md-sys-color-inverse-primary: #c5c9ff;
+  --md-sys-color-secondary: #605a6f;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #e7dff6;
+  --md-sys-color-on-secondary-container: #1d1927;
+  --md-sys-color-tertiary: #7a4c65;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #ffd8e9;
+  --md-sys-color-on-tertiary-container: #321022;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+  --md-sys-color-background: #faf8ff;
+  --md-sys-color-on-background: #1b1b21;
+  --md-sys-color-surface: #faf8ff;
+  --md-sys-color-on-surface: #1b1b21;
+  --md-sys-color-surface-dim: #d9d8e0;
+  --md-sys-color-surface-bright: #faf8ff;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f4f2fa;
+  --md-sys-color-surface-container: #eeedf5;
+  --md-sys-color-surface-container-high: #e8e7ef;
+  --md-sys-color-surface-container-highest: #e2e1e9;
+  --md-sys-color-on-surface-variant: #454650;
+  --md-sys-color-outline: #757680;
+  --md-sys-color-outline-variant: #c5c5d0;
+  --md-sys-color-inverse-surface: #303036;
+  --md-sys-color-inverse-on-surface: #f1eff7;
+  --md-sys-color-surface-tint: #4b4f8f;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-shadow: #000000;
+  --app-color-success: #25683e;
+  --app-color-on-success: #ffffff;
+  --app-color-success-container: #c1f0cd;
+  --app-color-on-success-container: #00210d;
+  --app-color-warning: #795900;
+  --app-color-on-warning: #ffffff;
+  --app-color-warning-container: #ffdfa8;
+  --app-color-on-warning-container: #261900;
+  --subtle: #636575;
+}

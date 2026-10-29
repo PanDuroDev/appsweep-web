@@ -107,7 +107,7 @@ h1, h2, h3, p { margin-top: 0; }
   overflow: hidden;
   isolation: isolate;
   border-radius: 44% 56% 52% 48% / 46% 40% 60% 54%;
-  background: radial-gradient(ellipse at 48% 50%, #282a48 0, #1b1c2c 36%, color-mix(in srgb, var(--md-sys-color-background) 15%, transparent) 72%);
+  background: radial-gradient(ellipse at 48% 50%, color-mix(in srgb, var(--md-sys-color-primary-container) 72%, var(--md-sys-color-surface)) 0, var(--md-sys-color-surface-container-low) 36%, color-mix(in srgb, var(--md-sys-color-background) 15%, transparent) 72%);
 }
 .hero-art::before { position: absolute; width: 310px; height: 310px; border-radius: 42% 58% 65% 35%; background: linear-gradient(140deg, color-mix(in srgb, var(--md-sys-color-primary) 16%, transparent), color-mix(in srgb, var(--md-sys-color-tertiary) 4%, transparent)); content: ""; transform: rotate(28deg); }
 .art-orbit { position: absolute; width: 340px; height: 340px; border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 28%, transparent); border-radius: 50%; }
@@ -115,7 +115,7 @@ h1, h2, h3, p { margin-top: 0; }
 .orbit-two { transform: scaleX(.92) rotate(-48deg); border-color: color-mix(in srgb, var(--md-sys-color-tertiary) 20%, transparent); }
 .art-slab { position: absolute; width: 154px; height: 182px; border-radius: var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-extra-large) var(--md-sys-shape-corner-medium); transition: transform var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized); }
 .slab-back { background: var(--md-sys-color-tertiary); transform: translate(30px,-5px) rotate(12deg); opacity: .86; }
-.slab-front { background: linear-gradient(145deg, #d8dbff, #9299ed); transform: translate(-13px,10px) rotate(-9deg); box-shadow: var(--md-sys-elevation-level5), inset 1px 1px 0 rgb(255 255 255 / .5); }
+.slab-front { background: linear-gradient(145deg, var(--md-sys-color-primary), color-mix(in srgb, var(--md-sys-color-primary) 72%, var(--md-sys-color-primary-container))); transform: translate(-13px,10px) rotate(-9deg); box-shadow: var(--md-sys-elevation-level5), inset 1px 1px 0 rgb(255 255 255 / .5); }
 .hero-art:hover .slab-front { transform: translate(-18px,6px) rotate(-6deg); }
 .hero-art:hover .slab-back { transform: translate(35px,-10px) rotate(16deg); }
 .art-spark { position: absolute; color: var(--md-sys-color-primary); }
