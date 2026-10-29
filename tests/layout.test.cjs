@@ -144,8 +144,14 @@ test('every page exposes an accessible collapsible mobile navigation', () => {
   const mobileQueryStart = styles.lastIndexOf('@media (max-width: 839px)');
   assert.notEqual(mobileQueryStart, -1, 'Missing compact navigation breakpoint');
   const mobileQuery = extractCssBlock(styles, styles.indexOf('{', mobileQueryStart));
+  assert.match(mobileQuery, /grid-template-areas:\s*"brand actions"\s*"nav nav"/);
+  assert.match(mobileQuery, /\.app-bar__inner\s*>\s*\.brand\s*\{\s*grid-area:\s*brand/);
+  assert.match(mobileQuery, /\.app-bar__actions\s*\{\s*grid-area:\s*actions/);
+  assert.match(mobileQuery, /\.app-bar__nav\s*\{\s*grid-area:\s*nav/);
   assert.match(mobileQuery, /\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
   assert.match(mobileQuery, /\.app-bar\.is-menu-open\s+\.app-bar__nav\s*\{\s*display:\s*flex;\s*\}/);
-  assert.match(read('app.js'), /aria-expanded/);
-  assert.match(read('app.js'), /event\.key === 'Escape'/);
+  const appJs = read('app.js');
+  assert.match(appJs, /aria-expanded/);
+  assert.match(appJs, /event\.key === 'Escape'/);
+  assert.match(appJs, /document\.addEventListener\('click',[\s\S]*!bar\.contains\(event\.target\)/);
 });
