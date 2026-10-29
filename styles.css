@@ -839,9 +839,6 @@ button { font: inherit; }
   min-width: 0;
 }
 
-.docs-block + .docs-block {
-  border-top: 1px solid var(--md-sys-color-outline-variant);
-}
 
 @media (max-width: 599px) {
   .home-page > #workflow {
