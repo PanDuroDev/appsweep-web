@@ -98,7 +98,7 @@ test('release detail groups Windows, Linux, macOS, source archives, and extra fi
   assert.equal(app.ids['assets-macos'].children.length, 1);
   assert.equal(app.ids['assets-source'].children.length, 3);
   assert.equal(app.ids['assets-other'].children.length, 1);
-  const links = walk(app.ids['release-detail-content'] || node()).filter(n => n.tagName === 'A');
+  const links = walk(app.ids['assets-windows']).filter(n => n.tagName === 'A');
   assert.ok(links.some(n => n.href === asset('AppSweep-Setup.exe').browser_download_url));
   assert.equal(app.ids['release-detail-notes'].textContent, 'Security update');
   assert.equal(app.ids['release-detail-github'].href, release.html_url);
