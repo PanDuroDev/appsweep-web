@@ -189,7 +189,7 @@
       download.hidden = false;
       setLatestDownload(asset.browser_download_url, 'Download latest version');
     } else {
-      meta.textContent = `${published} · No Windows installer is attached. View the release files to see what is available.`;
+      meta.textContent = `${published} · No Windows download is available for this release. View the release files to see what is available.`;
       setLatestDownload(filesUrl, 'View latest available files');
     }
   }
