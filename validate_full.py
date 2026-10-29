@@ -1,0 +1,178 @@
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import unquote, urlsplit
+import re
+import sys
+
+ROOT = Path(".").resolve()
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+failures = []
+
+class PageParser(HTMLParser):
+    def __init__(self, path):
+        super().__init__(convert_charrefs=True)
+        self.path = path
+        self.stack = []
+        self.ids = set()
+        self.refs = []
+        self.id_refs = []
+        self.errors = []
+
+    def _record(self, tag, attrs, push=True):
+        values = dict(attrs)
+        identifier = values.get("id")
+        if identifier:
+            if identifier in self.ids:
+                self.errors.append("duplicate id: " + identifier)
+            self.ids.add(identifier)
+        for attr in ("href", "src"):
+            if values.get(attr):
+                self.refs.append((attr, values[attr]))
+        for attr in ("aria-describedby", "aria-labelledby"):
+            for identifier in (values.get(attr) or "").split():
+                self.id_refs.append((attr, identifier))
+        if values.get("for"):
+            self.id_refs.append(("for", values["for"]))
+        if tag == "a" and values.get("target") == "_blank":
+            rel = set((values.get("rel") or "").lower().split())
+            if not {"noopener", "noreferrer"} & rel:
+                self.errors.append("target=_blank link lacks noopener/noreferrer")
+        if push and tag not in VOID:
+            self.stack.append(tag)
+
+    def handle_starttag(self, tag, attrs):
+        self._record(tag, attrs)
+
+    def handle_startendtag(self, tag, attrs):
+        self._record(tag, attrs, push=False)
+
+    def handle_endtag(self, tag):
+        if tag in VOID:
+            self.errors.append("void element has closing tag: " + tag)
+        elif not self.stack or self.stack[-1] != tag:
+            expected = self.stack[-1] if self.stack else "(none)"
+            self.errors.append(f"mismatched closing tag </{tag}>; expected </{expected}>")
+        else:
+            self.stack.pop()
+
+html_paths = sorted(ROOT.glob("*.html"))
+if not html_paths:
+    failures.append("no root HTML pages found")
+pages = {}
+for path in html_paths:
+    parser = PageParser(path)
+    try:
+        parser.feed(path.read_text(encoding="utf-8"))
+        parser.close()
+    except Exception as exc:
+        failures.append(f"{path.name}: HTML parser error: {exc}")
+        continue
+    if parser.stack:
+        parser.errors.append("unclosed tags: " + ", ".join(parser.stack))
+    for error in parser.errors:
+        failures.append(f"{path.name}: {error}")
+    pages[path.resolve()] = parser
+
+for source, parser in pages.items():
+    for attr, value in parser.id_refs:
+        if value not in parser.ids:
+            failures.append(f"{source.name}: {attr} references missing id #{value}")
+    for attr, value in parser.refs:
+        parts = urlsplit(value)
+        if parts.scheme or parts.netloc:
+            continue
+        if parts.path:
+            target = (source.parent / unquote(parts.path)).resolve()
+            if not target.is_relative_to(ROOT):
+                failures.append(f"{source.name}: {attr} escapes repository root: {value}")
+                continue
+            if not target.is_file():
+                failures.append(f"{source.name}: missing local target: {value}")
+                continue
+            if parts.fragment and target.suffix.lower() in {".html", ".htm"} and target.resolve() in pages:
+                if unquote(parts.fragment) not in pages[target.resolve()].ids:
+                    failures.append(f"{source.name}: missing target fragment: {value}")
+        elif parts.fragment and unquote(parts.fragment) not in parser.ids:
+            failures.append(f"{source.name}: missing target fragment: {value}")
+
+css_paths = sorted(ROOT.glob("*.css"))
+css_sources = []
+for path in css_paths:
+    source = re.sub(r"/\*.*?\*/", "", path.read_text(encoding="utf-8"), flags=re.S)
+    depth = 0
+    quote = None
+    escaped = False
+    for char in source:
+        if quote:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == quote:
+                quote = None
+            continue
+        if char in {"'", '"'}:
+            quote = char
+        elif char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth < 0:
+                break
+    if depth != 0:
+        failures.append(f"{path.name}: unbalanced CSS braces")
+    css_sources.append(source)
+
+joined_css = "\n".join(css_sources)
+declared = set(re.findall(r"(--[\w-]+)\s*:", joined_css))
+i = 0
+while i < len(joined_css):
+    if joined_css[i:i + 4] != "var(":
+        i += 1
+        continue
+    j, depth, has_fallback = i + 4, 1, False
+    while j < len(joined_css) and depth:
+        if joined_css[j] == "(":
+            depth += 1
+        elif joined_css[j] == ")":
+            depth -= 1
+        elif joined_css[j] == "," and depth == 1:
+            has_fallback = True
+        j += 1
+    body = joined_css[i + 4:j - 1]
+    match = re.match(r"\s*(--[\w-]+)", body)
+    if match and match.group(1) not in declared and not has_fallback:
+        failures.append("undefined CSS custom property without fallback: " + match.group(1))
+    i = j
+
+if re.search(r"--md-(?:comp-|card-|sys-(?:motion|spacing|state|elevation-level))[\w-]*\s*:", joined_css):
+    failures.append("non-standard Material token prefix found; app-owned tokens should use --app-*")
+
+if not re.search(r"@media\s*\(forced-colors:\s*active\)", joined_css):
+    failures.append("missing forced-colors high-contrast support")
+
+design_path = ROOT / "DESIGN_SYSTEM.md"
+if design_path.is_file():
+    design_text = design_path.read_text(encoding="utf-8")
+    documented_classes = set(re.findall(r"`\.([\w-]+)`", design_text))
+    css_classes = set(re.findall(r"\.([a-zA-Z_][\w-]*)", joined_css))
+    missing_classes = sorted(documented_classes - css_classes)
+    if missing_classes:
+        failures.append("DESIGN_SYSTEM.md references undefined CSS classes: " + ", ".join(missing_classes))
+
+versions = []
+for path in html_paths:
+    source = path.read_text(encoding="utf-8")
+    found = re.findall(r"""(?:tokens\.css|styles\.css)\?v=([^"' ]+)""", source)
+    if len(found) != 2 or len(set(found)) != 1:
+        failures.append(f"{path.name}: expected matching cache versions for both stylesheets")
+    versions.extend(found)
+if versions and len(set(versions)) != 1:
+    failures.append("CSS cache versions differ between HTML pages")
+
+if failures:
+    print("Static site validation failed:")
+    for failure in failures:
+        print(" - " + failure)
+    sys.exit(1)
+print(f"Static site validation passed ({len(html_paths)} HTML pages, {len(css_paths)} CSS files).")

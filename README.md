@@ -1,27 +1,29 @@
-# AppSweep Web
+# AppSweep website
 
-A small, text-first website for [AppSweep](https://github.com/PanDuroDev/appsweep), an open-source Windows desktop application.
+A responsive, text-first download and documentation site for the pre-alpha Windows project. No application screenshots or simulated application interface.
 
-## Pages
+## Design
 
-- `index.html` — project overview, confirmed project purpose, download/release link, and source link.
-- `docs.html` — basic download, build, safe-use, and support guidance.
+The layout, Google Sans Flex font, rose `#FF5CA8` Tonal Spot palette, shape silhouettes, and card proportions closely follow [metawka/expressive-profile](https://github.com/metawka/expressive-profile), adapted to AppSweep's real content. See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) for values and attribution.
 
-## Stack
+Plain HTML/CSS/JavaScript. No framework, package manager, build step, backend, or API key. The main font is local; Material Symbols load from Google Fonts. JavaScript adds persistent light/dark themes, reading progress, and a live GitHub release lookup with a rotating, morphing loading indicator. All navigation and the releases link work without JavaScript.
 
-- Semantic HTML
-- Responsive CSS with a dark Material Design 3-inspired color system
-- No build step, package manager, external image assets, or API keys
-- GitHub Pages deployed with GitHub Actions
+## Preview and checks
 
-## Local preview
+Serve this directory over HTTP:
 
-Open `index.html` or `docs.html` in a browser, or serve this directory with any static HTTP server.
+```sh
+python -m http.server 8123 --bind 127.0.0.1
+```
 
-## Deployment
+On Windows, use `py -3 -m http.server 8123 --bind 127.0.0.1` if `python` is unavailable. Open http://127.0.0.1:8123/.
 
-The workflow in `.github/workflows/pages.yml` deploys the repository root to GitHub Pages whenever a commit is pushed to `main`. Configure **Settings → Pages → Build and deployment → Source: GitHub Actions** if Pages is not enabled.
+Run the dependency-free behavior checks with Node.js 22 or newer:
 
-Intended site URL: https://pandurodev.github.io/appsweep-web/
+```sh
+node --test tests/app.test.cjs
+```
 
-The download button opens the project's GitHub Releases page. It does not imply that a downloadable release asset is currently available; check the releases page for the actual published files.
+The Pages workflow also validates markup, links, CSS tokens, documentation classes, and cache versions. Pushes to `main` deploy the static files to https://pandurodev.github.io/appsweep-web/.
+
+GitHub can be unavailable or rate-limited; the page falls back to the official releases link. No published release is a valid state, not a promised download. AppSweep is experimental: review results and back up important data before testing.

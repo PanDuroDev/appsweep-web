@@ -188,7 +188,7 @@ jobs:
           versions = []
           for path in html_paths:
               source = path.read_text(encoding="utf-8")
-              found = re.findall(r"""(?:md3\.css|styles\.css)\?v=([^"' ]+)""", source)
+              found = re.findall(r"""(?:tokens\.css|styles\.css)\?v=([^"' ]+)""", source)
               if len(found) != 2 or len(set(found)) != 1:
                   failures.append(f"{path.name}: expected matching cache versions for both stylesheets")
               versions.extend(found)
@@ -202,6 +202,8 @@ jobs:
               sys.exit(1)
           print(f"Static site validation passed ({len(html_paths)} HTML pages, {len(css_paths)} CSS files).")
           PY
+      - name: Check UI behavior
+        run: node --test tests/app.test.cjs
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6.0.0
       - name: Upload website
