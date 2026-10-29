@@ -1056,7 +1056,7 @@ button { font: inherit; }
 
   .app-bar__nav {
     grid-area: nav;
-    display: none;
+    display: flex;
     width: 100%;
     min-width: 0;
     flex-direction: column;
@@ -1064,9 +1064,13 @@ button { font: inherit; }
     gap: var(--app-spacing-1);
     padding-block: var(--app-spacing-2);
     border-top: 1px solid var(--md-sys-color-outline-variant);
-    overflow: visible;
+    max-height: calc(100vh - var(--app-layout-app-bar-height) - 2rem);
+    max-height: calc(100dvh - var(--app-layout-app-bar-height) - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
+  .app-bar.has-mobile-menu:not(.is-menu-open) .app-bar__nav { display: none; }
   .app-bar.is-menu-open .app-bar__nav { display: flex; }
 
   .app-bar__nav a {
