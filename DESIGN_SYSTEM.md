@@ -17,11 +17,11 @@ The website uses Material Design 3 roles and component patterns through semantic
 - Spacing uses shared 8dp-based tokens. Main content remains constrained to 920px and reflows at compact/medium breakpoints.
 - Tonal surfaces replace custom shadows. Gradients, backdrop blur, arbitrary corner radii, and hover movement are not used.
 - Buttons use filled, tonal, and outlined treatments with consistent state feedback and 48px minimum interaction targets.
-- Motion uses the Material 3 web fallback: the standard easing curve, 100–150ms state feedback, and the emphasized-decelerate curve only for the keyboard skip link entering view. The release progress indicator uses a steady 1.4s cycle rather than a rapid spin.
+- Motion uses the Material 3 web fallback: the standard easing curve and 150ms state feedback. A press gives pill-shaped buttons and navigation items a subtle, tokenized corner morph; icon-only buttons move to the medium corner token. This is a CSS approximation of Expressive shape motion, not native spring physics. The release progress indicator uses a steady 1.4s cycle.
 - Filled, tonal, outlined, and quiet buttons use the same state-layer opacity tokens: 8% hover, 10% focus, and 10% pressed. Navigation uses matching tonal layers; no control shifts position, scales, or glows during interaction.
 - Keyboard focus remains visible through a 2px primary outline. Disabled buttons reduce label and container contrast instead of relying on a browser-default appearance.
-- Interactive text links transition color and underline thickness. Static text, non-interactive cards, and imagery are not animated for decoration; this site currently contains no content images requiring image-specific motion.
-- Reduced-motion preferences disable smooth scrolling, transitions, and the loading rotation; forced-colors mode remains supported.
+- Interactive text links transition color and underline thickness on hover and press. Static text, non-interactive cards, and imagery are not animated for decoration; this site currently contains no content images requiring image-specific motion.
+- Reduced-motion preferences disable transitions and the loading rotation; no global smooth scrolling or ornamental entrance motion is added. Forced-colors mode remains supported.
 
 ## Release behavior
 

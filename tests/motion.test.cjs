@@ -8,8 +8,6 @@ const styles = readFileSync(join(__dirname, '../styles.css'), 'utf8');
 
 test('motion tokens use Material 3 web timing and state-layer values', () => {
   assert.match(tokens, /--app-motion-easing-standard:\s*cubic-bezier\(0\.2,\s*0,\s*0,\s*1\)/);
-  assert.match(tokens, /--app-motion-easing-emphasized-decelerate:\s*cubic-bezier\(0\.05,\s*0\.7,\s*0\.1,\s*1\)/);
-  assert.match(tokens, /--app-motion-duration-short2:\s*100ms/);
   assert.match(tokens, /--app-motion-duration-short3:\s*150ms/);
   assert.match(tokens, /--app-state-hover-opacity:\s*8%/);
   assert.match(tokens, /--app-state-focus-opacity:\s*10%/);
@@ -25,7 +23,7 @@ test('buttons expose hover, keyboard focus, pressed, and disabled feedback', () 
   assert.match(styles, /:where\(a, button\):focus-visible\s*\{[^}]*outline:\s*2px solid/s);
 });
 
-test('navigation controls use non-moving state layers for hover, focus, and press', () => {
+test('navigation controls use state layers and expressive shape changes only while pressed', () => {
   for (const selector of [
     '.app-bar__nav a:hover',
     '.app-bar__nav a:focus-visible',
@@ -38,7 +36,15 @@ test('navigation controls use non-moving state layers for hover, focus, and pres
   }
   assert.match(styles, /\.app-bar__nav a\s*\{[^}]*transition:[^;]*background-color/s);
   assert.match(styles, /\.docs-nav a\s*\{[^}]*transition:[^;]*background-color/s);
+  assert.match(styles, /\.btn:active\s*\{[^}]*border-radius:\s*var\(--md-sys-shape-corner-large-increased\)/s);
+  assert.match(styles, /\.btn--icon:active\s*\{\s*border-radius:\s*var\(--md-sys-shape-corner-medium\)/);
+  assert.match(styles, /\.app-bar__nav a:active\s*\{[^}]*border-radius:\s*var\(--md-sys-shape-corner-large-increased\)/s);
+  assert.match(styles, /\.docs-nav a:active\s*\{[^}]*border-radius:\s*var\(--md-sys-shape-corner-large-increased\)/s);
   assert.doesNotMatch(styles, /(?:\.app-bar__nav a|\.docs-nav a|\.btn)(?::hover|:active|:focus-visible)[^{]*\{[^}]*transform\s*:/s);
+});
+test('text links communicate a press without decorative movement', () => {
+  assert.match(styles, /a:where\(:not\(\.btn\):not\(\.brand\)\):active\s*\{[^}]*text-decoration-thickness:\s*2px/s);
+  assert.doesNotMatch(styles, /a:where\(:not\(\.btn\):not\(\.brand\)\):active\s*\{[^}]*transform\s*:/s);
 });
 
 test('decorative shadows, glows, gradients, and hover movement are absent', () => {
@@ -47,5 +53,6 @@ test('decorative shadows, glows, gradients, and hover movement are absent', () =
 });
 
 test('reduced-motion preference disables nonessential movement and transitions', () => {
-  assert.match(styles, /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*?scroll-behavior:\s*auto;[\s\S]*?\.loading-indicator\s*\{\s*animation:\s*none;[\s\S]*?transition:\s*none;/);
+  assert.match(styles, /@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*?\.loading-indicator\s*\{\s*animation:\s*none;[\s\S]*?transition:\s*none;/);
+  assert.doesNotMatch(styles, /scroll-behavior:\s*smooth/);
 });
