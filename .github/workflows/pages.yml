@@ -176,6 +176,15 @@ jobs:
           if not re.search(r"@media\s*\(forced-colors:\s*active\)", joined_css):
               failures.append("missing forced-colors high-contrast support")
 
+          design_path = ROOT / "DESIGN_SYSTEM.md"
+          if design_path.is_file():
+              design_text = design_path.read_text(encoding="utf-8")
+              documented_classes = set(re.findall(r"`\.([\w-]+)`", design_text))
+              css_classes = set(re.findall(r"\.([a-zA-Z_][\w-]*)", joined_css))
+              missing_classes = sorted(documented_classes - css_classes)
+              if missing_classes:
+                  failures.append("DESIGN_SYSTEM.md references undefined CSS classes: " + ", ".join(missing_classes))
+
           versions = []
           for path in html_paths:
               source = path.read_text(encoding="utf-8")
