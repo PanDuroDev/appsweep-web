@@ -419,6 +419,10 @@ button { font: inherit; }
 @keyframes md3-progress-rotation {
   to { transform: rotate(360deg); }
 }
+.release__title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .release__meta {
   max-width: 68ch;
   color: var(--md-sys-color-on-surface-variant);
