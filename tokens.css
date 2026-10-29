@@ -133,8 +133,14 @@
   --app-spacing-5: 48px;
   --app-spacing-6: 64px;
   --app-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --app-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
   --app-motion-duration-short2: 100ms;
+  --app-motion-duration-short3: 150ms;
   --app-motion-duration-medium1: 250ms;
+  --app-motion-duration-progress-cycle: 1400ms;
+  --app-state-hover-opacity: 8%;
+  --app-state-focus-opacity: 10%;
+  --app-state-pressed-opacity: 10%;
   --app-layout-content-max: 920px;
   --app-layout-app-bar-height: 64px;
   --app-layout-header-offset: 80px;
