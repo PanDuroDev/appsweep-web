@@ -88,3 +88,81 @@ The site loads **Material Symbols Rounded** as a variable font. The `.material-s
 - [Material Web — icon buttons](https://github.com/material-components/material-web/blob/main/docs/components/icon-button.md)
 - [Material Web — icons](https://github.com/material-components/material-web/blob/main/docs/components/icon.md)
 - [Material Web — chips](https://github.com/material-components/material-web/blob/main/docs/components/chip.md)
+
+
+## Copy-ready HTML templates
+
+Use these patterns as starting points. Keep interactive state, navigation, form validation and dialog behavior in JavaScript; the CSS provides appearance, not that behavior.
+
+### Filled button with a leading icon
+
+```html
+<a class="md3-button md3-button--filled md3-button--icon-leading" href="/releases">
+  <span class="material-symbol" aria-hidden="true">download</span>
+  View downloads
+</a>
+```
+
+### Icon button
+
+```html
+<button class="md3-icon-button md3-icon-button--tonal"
+        type="button" aria-label="Search">
+  <span class="material-symbol" aria-hidden="true">search</span>
+</button>
+```
+
+### Expressive outlined card
+
+```html
+<article class="md3-card md3-card--outlined md3-card--expressive">
+  <span class="material-symbol" aria-hidden="true">apps</span>
+  <h2>Installed applications</h2>
+  <p>Inspect available information before taking action.</p>
+</article>
+```
+
+### Filter chip with state
+
+```html
+<button class="md3-chip md3-chip--filter"
+        type="button" aria-pressed="false">
+  <span class="material-symbol" aria-hidden="true">filter_list</span>
+  Windows apps
+</button>
+```
+
+### Text field with supporting text
+
+```html
+<label class="md3-text-field">
+  Publisher
+  <input type="text" name="publisher" autocomplete="organization"
+         aria-describedby="publisher-help">
+  <span class="field-supporting" id="publisher-help">
+    Filter by the publisher name.
+  </span>
+</label>
+```
+
+### Tabs with an accessible selected state
+
+```html
+<div class="md3-tabs" role="tablist" aria-label="Application details">
+  <button class="md3-tab" role="tab"
+          aria-selected="true" id="tab-overview">Overview</button>
+  <button class="md3-tab" role="tab"
+          aria-selected="false" id="tab-locations">Locations</button>
+</div>
+```
+
+### Switch
+
+```html
+<label class="md3-switch">
+  <input type="checkbox" name="show-system-apps">
+  <span>Show system apps</span>
+</label>
+```
+
+Set the selected tab/chip attributes to match the real application state. Do not use CSS-selected appearances as a substitute for keyboard behavior or accessible state.
