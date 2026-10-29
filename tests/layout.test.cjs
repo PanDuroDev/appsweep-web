@@ -116,6 +116,7 @@ test('homepage balances the hero and release panel on compact desktop screens', 
   assert.match(home, /display:\s*grid/);
   assert.match(home, /grid-template-columns:\s*minmax\(0,\s*1\.15fr\)\s+minmax\(340px,\s*0\.85fr\)/);
   assert.match(home, /grid-template-areas:\s*"hero download"\s*"workflow workflow"\s*"footer footer"/);
+  assert.match(media, /\.home-page > \.hero\s*\{[^}]*grid-area:\s*hero/s, 'Hero must occupy the hero grid area');
   assert.match(media, /\.home-page > \.hero\s*\{[^}]*min-width:\s*0/s);
   assert.match(media, /\.home-page > #download\s*\{[^}]*grid-area:\s*download/s);
   assert.match(media, /\.home-page > #workflow\s*\{[^}]*grid-area:\s*workflow/s);
