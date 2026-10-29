@@ -219,3 +219,52 @@ code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+
+/* Responsive layout corrections */
+html { overflow-x: clip; }
+body { overflow-wrap: break-word; }
+.topbar, .hero, .trust-strip, .section, .workflow-section, .cta-section, footer, .docs-hero, .docs-layout {
+  min-width: 0;
+}
+.hero-copy, .workflow-copy, .cta-copy, .cta-actions, .docs-content { min-width: 0; }
+.hero h1, .docs-hero h1 { overflow-wrap: anywhere; }
+.cta-section { flex-wrap: nowrap; }
+.cta-actions { flex-shrink: 0; margin-left: 0; }
+@media (max-width: 900px) {
+  .cta-section { flex-wrap: wrap; }
+  .cta-copy { flex: 1 1 calc(100% - 110px); min-width: 0; }
+  .cta-actions { width: 100%; margin-left: 0; padding-left: 0; }
+}
+@media (max-width: 760px) {
+  .topbar { flex-wrap: wrap; padding: 14px 0; gap: 14px; }
+  .topbar nav { order: 3; width: 100%; margin: 0; justify-content: space-between; gap: 10px; }
+  .topbar nav a { white-space: nowrap; }
+  .topbar > .button { margin-left: auto; }
+  .hero { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .hero-art { width: 100%; min-height: 300px; }
+  .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .workflow-section { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .docs-layout { grid-template-columns: 1fr; gap: 24px; }
+  .docs-nav { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .docs-nav-title { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .topbar nav { overflow-x: auto; justify-content: flex-start; padding: 2px 0 7px; }
+  .topbar nav a { flex: 0 0 auto; }
+  .hero h1, .docs-hero h1 { font-size: clamp(40px, 11vw, 54px); letter-spacing: -2px; }
+  .actions { align-items: stretch; }
+  .actions .button { flex: 1 1 100%; }
+  .hero-art { min-height: 270px; }
+  .trust-strip { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .feature-card { min-height: 0; }
+  .workflow-section { padding: 27px 20px; }
+  .cta-section { align-items: flex-start; padding: 24px 20px; }
+  .cta-symbol { flex-basis: 48px; height: 48px; }
+  .cta-copy { flex-basis: calc(100% - 70px); }
+  .cta-actions { display: grid; grid-template-columns: 1fr; }
+  .cta-actions .button { width: 100%; }
+  footer { align-items: flex-start; }
+  .footer-note { flex-basis: 100%; }
+}
