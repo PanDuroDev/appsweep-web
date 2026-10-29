@@ -268,3 +268,39 @@ body { overflow-wrap: break-word; }
   footer { align-items: flex-start; }
   .footer-note { flex-basis: 100%; }
 }
+
+
+/* Project maturity: keep the existing A mark provisional; no new logo artwork */
+.release-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 18px 0 0;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 205, 125, .28);
+  border-radius: 999px;
+  background: rgba(255, 190, 95, .075);
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.4;
+}
+.release-status strong {
+  color: #ffd08a;
+  font-size: .72rem;
+  letter-spacing: .1em;
+}
+.status-pulse {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: #ffbf69;
+  box-shadow: 0 0 0 4px rgba(255, 191, 105, .12);
+}
+.docs-status-notice { margin-top: 24px; }
+@media (max-width: 520px) {
+  .release-status { align-items: flex-start; border-radius: 16px; }
+}
