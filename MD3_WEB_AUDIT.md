@@ -256,3 +256,30 @@ A scan of literal CSS values also found layout widths, icon sizes, 40px brand/pr
 - [x] Confirm no inline style declarations or additional hard-coded color literals were found in the four page HTML files during this scan.
 
 **Assessment:** No color-policy finding from this check. The light-mode #f5f5f5 value is the defined M3 surface role used for browser chrome metadata, not an additional brand-palette exception. The HTML/CSS/JS source relationship is consistent. Browser chrome rendering still needs device/browser verification.
+
+## Live evidence update — 2026-10-30: asynchronous status semantics and asset typography
+
+### Finding F-A11Y-01 — Release async state announcements
+- **Classification:** likely WCAG 2.2 SC 4.1.3 Status Messages failure; medium severity.
+- **Affected:** releases.html and release.html; releases.js.
+- **Evidence:** The list/detail containers toggle aria-busy, but their loading, empty, and error messages are not exposed through role=status, role=alert, or aria-live. releases.js changes their visibility during fetch/retry. The detail page also updates per-platform availability text without a live region. The homepage uses role=status/aria-live for its ready/error blocks, so the announcement pattern is inconsistent across the pages.
+- **Impact:** Screen-reader users may not be notified when asynchronous loading finishes, no release is found, a fetch fails, or platform assets become available.
+- **Recommendation:** Add a concise persistent live status region to each list/detail view and update it on loading, ready/empty, and error. Keep the detailed cards and asset lists outside the live region to avoid large announcements. Verify initial load and retry with a screen reader.
+- **Reference:** [WCAG 2.2 SC 4.1.3](https://www.w3.org/TR/WCAG22/#status-messages).
+- **Verification:** Source inspection only; assistive-technology behavior remains to be confirmed.
+
+### Finding F-STYLES-02 — Mixed type roles on asset filenames
+- **Classification:** confirmed mixed M3 type-role declaration; low severity.
+- **Location:** styles.css lines 660–664 (.asset-row__name).
+- **Evidence:** The selector combines Body Medium family/size/line-height (14px/20px) with Title Medium weight 500 and inherits Body Medium tracking. Material 3 Title Small is the coherent role matching 14px/20px/500, with its own tracking token.
+- **Recommendation:** Apply the complete Title Small token set or use Body Medium consistently. Do not mix a single weight property from another role.
+- **Reference:** [Material Web v0.192 generated type scale](https://github.com/material-components/material-web/blob/main/tokens/versions/v0_192/_md-sys-typescale.scss).
+- **Verification:** Source inspection; no browser computed styles have been claimed.
+
+### Status
+- [x] Inspect release list/detail asynchronous loading, empty, error, retry, and platform-availability DOM states.
+- [x] Compare live-region semantics on the homepage against releases and release-detail pages.
+- [x] Record F-A11Y-01 and F-STYLES-02 in the PR discussion and audit log.
+- [ ] Add and test persistent concise live status announcements for release list/detail.
+- [ ] Align asset filename typography with one complete M3 role.
+- [ ] Re-run accessibility and typography regression checks after fixes.
