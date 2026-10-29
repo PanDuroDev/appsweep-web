@@ -150,7 +150,7 @@ test('every page exposes an accessible collapsible mobile navigation', () => {
   assert.match(mobileQuery, /\.app-bar__actions\s*\{\s*grid-area:\s*actions/);
   assert.match(mobileQuery, /\.app-bar__nav\s*\{\s*grid-area:\s*nav/);
   assert.match(mobileQuery, /\.app-bar\.has-mobile-menu\s+\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/);
-  assert.doesNotMatch(mobileQuery, /\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}/, 'Menu toggle must stay hidden until JavaScript initializes');
+  assert.doesNotMatch(mobileQuery, /^\s*\.app-bar__menu-toggle\s*\{\s*display:\s*inline-flex;\s*\}\s*$/m, 'Menu toggle must stay hidden until JavaScript initializes');
   assert.match(mobileQuery, /\.app-bar\.has-mobile-menu:not\(\.is-menu-open\)\s+\.app-bar__nav\s*\{\s*display:\s*none;\s*\}/);
   assert.match(mobileQuery, /max-height:\s*calc\(100dvh\s*-\s*var\(--app-layout-app-bar-height\)\s*-\s*2rem\)/);
   assert.match(mobileQuery, /overflow-y:\s*auto/);
