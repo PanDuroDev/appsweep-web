@@ -1,66 +1,27 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#fff8f8">
-  <meta name="description" content="Pre-alpha documentation for AppSweep: release checks, Windows source builds, and important safety precautions.">
-  <title>AppSweep — Getting started</title>
+<html lang="en"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#fff8f8">
+  <meta name="description" content="Getting started with AppSweep: downloads, Windows source builds, and safety notes for this pre-alpha project."><title>AppSweep — Getting started</title>
   <script>let theme;try{theme=localStorage.getItem('theme')}catch{}document.documentElement.dataset.theme=theme==='light'||theme==='dark'?theme:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';</script>
   <link rel="preload" href="assets/GoogleSansFlex-subset.woff2" as="font" type="font/woff2" crossorigin>
-  <!-- shortcut: icons need Google Fonts, self-host a glyph subset if full offline rendering is required. -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0&amp;display=block">
-  <link rel="stylesheet" href="tokens.css?v=20261029-expressive2">
-  <link rel="stylesheet" href="styles.css?v=20261029-expressive2">
-  <script src="app.js?v=20261029-expressive2" defer></script>
-</head>
-<body>
+  <link rel="stylesheet" href="tokens.css?v=20261029-simple1"><link rel="stylesheet" href="styles.css?v=20261029-simple1"><script src="app.js?v=20261029-simple1" defer></script>
+</head><body>
   <a class="btn skip-link" href="#main">Skip to content</a>
-  <div class="backdrop" aria-hidden="true"><div class="shape backdrop__shape" data-shape="flower"></div><div class="shape backdrop__shape backdrop__shape--second" data-shape="clover"></div></div>
-  <header class="app-bar" id="app-bar">
-    <div class="app-bar__inner">
-      <a class="brand" href="index.html" aria-label="AppSweep home"><span class="shape brand__mark" data-shape="flower" aria-hidden="true"></span>AppSweep</a>
-      <nav class="app-bar__nav" aria-label="Main navigation"><a href="index.html#features">Features</a><a href="index.html#workflow">How it works</a><a href="docs.html" aria-current="page">Documentation</a></nav>
-      <div class="app-bar__actions"><button class="btn btn--tonal btn--icon" id="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="icon" id="theme-icon" aria-hidden="true">dark_mode</span></button><a class="btn btn--tonal" href="#download">Get AppSweep<span class="icon" aria-hidden="true">arrow_forward</span></a></div>
-    </div>
-    <svg class="wavy wavy--bar" aria-hidden="true"><path class="wavy__track"></path><path class="wavy__value"></path><circle class="wavy__stop" r="2"></circle></svg>
-  </header>
-  <main class="page" id="main" tabindex="-1">
-    <section class="profile" aria-labelledby="docs-title">
-      <div class="shape profile__decor" data-shape="flower" aria-hidden="true"></div><div class="shape profile__decor profile__decor--second" data-shape="clover" aria-hidden="true"></div><div class="shape profile__decor profile__decor--third" data-shape="sunny" aria-hidden="true"></div>
-      <div class="shape profile__avatar" data-shape="sunny" aria-hidden="true"><span class="shape profile__avatar-mark" data-shape="cookie12">A</span></div>
-      <div class="profile__copy"><p class="profile__eyebrow">AppSweep / Documentation</p><h1 id="docs-title">Start here.</h1><p class="profile__subtitle">Stay informed. Test cautiously.<br>Your guide to an early-stage project.</p><div class="chips"><span class="chip chip--status"><span class="status-dot" aria-hidden="true"></span>Pre-alpha</span><span class="chip">Windows 10/11</span></div></div>
-    </section>
-    <section class="card docs-intro" aria-labelledby="intro-title"><div class="section-heading"><span class="shape shape-icon" data-shape="flower" aria-hidden="true"><span class="icon">menu_book</span></span><h2 id="intro-title">Before you begin</h2></div><p class="section-copy">AppSweep is in pre-alpha, earlier than beta. Expect incomplete features, bugs, changing behavior, and potentially unavailable builds. It uses Rust, egui, and a C++ helper.</p><div class="notice"><span class="icon" aria-hidden="true">warning</span><p><strong>Experimental software, not a stable release.</strong> Do not rely on it for critical system maintenance. Back up important data before testing.</p></div></section>
-    <nav class="docs-nav" aria-label="On this page"><a href="#download">01 · Download</a><a href="#build">02 · Build from source</a><a href="#safety">03 · Safety notes</a><a href="#support">04 · Get help</a></nav>
-    <section class="card docs-block" id="download" aria-labelledby="download-title">
-      <div class="section-heading"><span class="shape shape-icon" data-shape="cookie12" aria-hidden="true"><span class="icon">download</span></span><h2 id="download-title">Download AppSweep</h2></div>
-      <p class="section-copy">Open the <a href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">GitHub Releases page</a> and check whether a pre-alpha build is published. There may be no ready-to-run download yet.</p>
-      <p class="section-copy">Do not assume the latest source commit has a matching release binary, and avoid unofficial download mirrors. Read the release notes and requirements before running a build.</p>
-      <div class="actions"><a class="btn btn--tonal" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">Check releases<span class="icon" aria-hidden="true">open_in_new</span></a><a class="btn btn--text" href="index.html#download">Live release check<span class="icon" aria-hidden="true">arrow_forward</span></a></div>
-    </section>
-    <section class="card docs-block" id="build" aria-labelledby="build-title">
-      <div class="section-heading"><span class="shape shape-icon" data-shape="clover" aria-hidden="true"><span class="icon">code</span></span><h2 id="build-title">Build on Windows</h2></div>
-      <p class="section-copy">The required Windows native build tools may depend on the current source. Check the repository README and workflow instructions first. If the project prerequisites are installed, start with:</p>
-      <pre tabindex="0" aria-label="Build commands"><code>git clone https://github.com/PanDuroDev/appsweep.git
+  <header class="app-bar" id="app-bar"><div class="app-bar__inner">
+    <a class="brand" href="index.html" aria-label="AppSweep home"><span class="brand__mark" aria-hidden="true">A</span><span>AppSweep</span></a>
+    <nav class="app-bar__nav" aria-label="Main navigation"><a href="index.html#workflow">How it works</a><a href="docs.html" aria-current="page">Documentation</a><a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Source</a></nav>
+    <div class="app-bar__actions"><button class="btn btn--icon btn--quiet" id="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="icon" id="theme-icon" aria-hidden="true">dark_mode</span></button><a class="btn btn--tonal btn--small" href="#download">Releases</a></div>
+  </div></header>
+  <main class="page docs-page" id="main" tabindex="-1">
+    <section class="docs-hero" aria-labelledby="docs-title"><p class="eyebrow">Documentation <span aria-hidden="true">·</span> Pre-alpha</p><h1 id="docs-title">Getting started.</h1><p class="hero__lead">Find a build, compile from source, and understand the limits before testing AppSweep.</p><aside class="notice" aria-label="Safety warning"><span class="icon" aria-hidden="true">info</span><p><strong>Experimental software.</strong> AppSweep is earlier than beta and is not a stable system-maintenance tool. Back up important data before testing.</p></aside></section>
+    <nav class="docs-nav" aria-label="On this page"><a href="#download">01 Download</a><a href="#build">02 Build</a><a href="#safety">03 Safety</a><a href="#support">04 Get help</a></nav>
+    <section class="section docs-block" id="download" aria-labelledby="download-title"><div class="section-heading"><p class="eyebrow">01 / Downloads</p><h2 id="download-title">Check for a published build</h2></div><p class="section-copy">Open the official <a href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">GitHub Releases page</a> and check whether a pre-alpha build is available. There may be no ready-to-run download yet.</p><p class="section-copy">Read the release notes and requirements before running anything. Avoid unofficial download mirrors, and do not assume every source commit has a matching release binary.</p><div class="actions"><a class="btn" href="index.html#download">Check live release status</a><a class="btn btn--outlined" href="https://github.com/PanDuroDev/appsweep/releases" target="_blank" rel="noreferrer">Open releases <span class="icon" aria-hidden="true">open_in_new</span></a></div></section>
+    <section class="section docs-block" id="build" aria-labelledby="build-title"><div class="section-heading"><p class="eyebrow">02 / From source</p><h2 id="build-title">Build on Windows</h2></div><p class="section-copy">Native build requirements can change with the source. Review the current repository README and CI workflow before compiling. If the prerequisites are installed, start with:</p><pre tabindex="0" aria-label="Build commands"><code>git clone https://github.com/PanDuroDev/appsweep.git
 cd appsweep
-cargo build --release</code></pre>
-      <p class="section-copy">A successful Cargo build does not guarantee every native helper or runtime dependency is packaged correctly. Treat build instructions as subject to change while the project is pre-alpha; inspect the current repository for the latest requirements.</p>
-      <div class="actions"><a class="btn btn--tonal" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Review source repository<span class="icon" aria-hidden="true">open_in_new</span></a></div>
-    </section>
-    <section class="card docs-block" id="safety" aria-labelledby="safety-title">
-      <div class="section-heading"><span class="shape shape-icon" data-shape="sunny" aria-hidden="true"><span class="icon">shield</span></span><h2 id="safety-title">Inspect, don't assume</h2></div>
-      <p class="section-copy">Discovery, metadata, uninstall behavior, and path detection may be incomplete, inaccurate, or change without notice. Verify the selected application, publisher, and purpose of every location. Deleting the wrong item can break applications or Windows components.</p>
-      <div class="notice"><span class="icon" aria-hidden="true">warning</span><p><strong>A detected path is not proof that it is safe to delete.</strong> Back up important data, test cautiously, and prefer Windows' normal uninstall process when appropriate.</p></div>
-    </section>
-    <section class="card docs-block" id="support" aria-labelledby="support-title">
-      <div class="section-heading"><span class="shape shape-icon" data-shape="flower" aria-hidden="true"><span class="icon">forum</span></span><h2 id="support-title">Get help</h2></div>
-      <p class="section-copy">Clear reproduction steps are especially useful during pre-alpha. Include your Windows version, the AppSweep version or commit, what you expected, what happened, and relevant error logs.</p>
-      <p class="section-copy"><strong>Remove personal information and sensitive paths before posting.</strong></p>
-      <div class="actions"><a class="btn btn--tonal" href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">Open GitHub Issues<span class="icon" aria-hidden="true">open_in_new</span></a></div>
-    </section>
-    <footer class="footer"><span>AppSweep · Open source · Pre-alpha</span><nav aria-label="Footer"><a href="index.html">Home</a><a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Source</a><a href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">Issues</a><a href="https://github.com/PanDuroDev/appsweep-web/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">Design system</a></nav></footer>
+cargo build --release</code></pre><p class="section-copy">A successful Cargo build does not guarantee native helpers or runtime dependencies are packaged. Follow the latest build instructions in the repository.</p><div class="actions"><a class="btn btn--outlined" href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Read build instructions <span class="icon" aria-hidden="true">open_in_new</span></a></div></section>
+    <section class="section docs-block" id="safety" aria-labelledby="safety-title"><div class="section-heading"><p class="eyebrow">03 / Before you act</p><h2 id="safety-title">Verify every result</h2></div><p class="section-copy">Application discovery, metadata, uninstall behavior, and path detection may be incomplete or inaccurate. Check the application, publisher, and purpose of each path.</p><p class="section-copy"><strong>A detected path is not proof that it is safe to delete.</strong> Removing the wrong item can break software or Windows components. Prefer the normal Windows uninstall flow when appropriate.</p></section>
+    <section class="section docs-block" id="support" aria-labelledby="support-title"><div class="section-heading"><p class="eyebrow">04 / Support</p><h2 id="support-title">Report a problem</h2></div><p class="section-copy">Include your Windows version, AppSweep version or commit, expected result, actual result, and relevant logs. Remove personal information and sensitive paths before posting.</p><div class="actions"><a class="btn" href="https://github.com/PanDuroDev/appsweep/issues" target="_blank" rel="noreferrer">Open GitHub Issues <span class="icon" aria-hidden="true">open_in_new</span></a></div></section>
+    <footer class="footer"><a class="brand footer__brand" href="index.html"><span class="brand__mark" aria-hidden="true">A</span><span>AppSweep</span></a><span class="footer__note">Open source · Pre-alpha</span><nav aria-label="Footer links"><a href="index.html">Home</a><a href="https://github.com/PanDuroDev/appsweep" target="_blank" rel="noreferrer">Source</a><a href="https://github.com/PanDuroDev/appsweep-web/blob/main/DESIGN_SYSTEM.md" target="_blank" rel="noreferrer">Design system</a></nav></footer>
   </main>
-</body>
-</html>
+</body></html>
