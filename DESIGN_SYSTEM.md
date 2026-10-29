@@ -1,36 +1,37 @@
 # AppSweep website design
 
-## Visual direction
+The website uses Material Design 3 roles and component patterns through semantic HTML and CSS tokens. It does not add custom decorative treatments or claim full Material 3 Expressive parity on the web.
 
-A compact, text-first website for AppSweep's experimental Windows utility. Its visual identity is deliberately monochrome: a near-black **#111111** foundation, **#eaeaea** primary text, and carefully spaced charcoal/silver tones for hierarchy. Subtle gradients add depth without neon accents, colorful decoration, or heavy shadows.
+## Color
 
-The homepage has one concise introduction, a direct latest-Windows-download action, a short three-step explanation, and the current-release panel. The dedicated **Releases** page displays every published GitHub release; each release opens an internal download detail page that lists Windows, Linux, macOS, source-code archives, and any remaining attached files.
+- The dark theme is the default. Its page surface is `#111111`, with primary text `#eaeaea`.
+- Monochrome values are assigned to Material 3 semantic roles in `tokens.css`; CSS components consume those roles instead of defining their own colors.
+- Primary/on-primary, secondary-container/on-secondary-container, and surface/on-surface are applied as semantic pairs.
+- The light theme uses matching neutral roles and remains available through the existing theme control.
+- Error messages use the Material 3 error role. Surface containers and outline-variant communicate hierarchy and boundaries without gradients or shadows.
 
-## Tokens and themes
+## Typography, shape, layout, and state
 
-- **tokens.css** defines semantic Material-inspired color roles and app-owned palette tokens.
-- Dark mode is the default: `--app-color-primary: #111111`, `--app-color-text: #eaeaea`; near-black surfaces progress through `#151515`, `#1b1b1b`, `#222222`, and `#2a2a2a`.
-- The accessible light theme remains available from the theme control. The selection is saved in local storage.
-- **styles.css** contains responsive page layout and component recipes. Surfaces use borders and low-contrast gradients rather than large shadows.
-- Release lists and platform groups use the same semantic token colors, keyboard focus, and responsive layouts.
+- The type scale uses Roboto Flex and Material 3 display, headline, title, body, and label roles.
+- Buttons use the full corner token; cards and grouped panels use the medium corner token; code panels use the small corner token.
+- Spacing uses shared 8dp-based tokens. Main content remains constrained to 920px and reflows at compact/medium breakpoints.
+- Tonal surfaces replace custom shadows. Gradients, backdrop blur, arbitrary corner radii, and hover movement are not used.
+- Buttons use filled, tonal, and outlined treatments with consistent state feedback and 48px minimum interaction targets.
+- Reduced-motion and forced-colors modes remain supported. Release loading uses a simple progress indicator rather than custom shape morphing.
 
-## Release data and downloads
+## Release behavior
 
-- **app.js** checks the newest public release for a Windows package. If found, the home-page action links directly to its official GitHub asset URL; it does not send the user to the release webpage. If no Windows package or no release exists, the action links to the website's Releases center and explains the state.
-- **releases.js** fetches the published releases from the official AppSweep repository, including pagination. It validates release-page, source-archive, and attached-asset URLs before rendering links.
-- **releases.html** lists every published release and provides buttons for internal file details and the original GitHub release page.
-- **release.html?tag=...** groups actual release assets into Windows, Linux, macOS, source code, and other files. Empty platform groups explicitly say that no file is available. GitHub's generated ZIP and tar.gz source archives are listed when the API supplies trusted source URLs.
-- Asset names and release notes are inserted as text, never as HTML. Download links are only generated for official AppSweep release assets and source archives.
-- API errors are distinct from an empty release list. Users can retry when GitHub is unreachable, and empty states do not invent downloads.
+- The homepage checks the public GitHub Releases API. When the latest release includes an official Windows package, its primary button links to that asset directly.
+- If no release exists, the button reports that no release is available. If GitHub cannot be reached, the button reports an error and the page offers a retry.
+- The Releases page lists published releases. Each version links to its internal file list and its official GitHub release page.
+- The per-release page groups actual assets as Windows, Linux, macOS, source code, and other files. Missing categories are explicitly marked unavailable.
+- Release notes and asset names are inserted as text. Download URLs are accepted only from the official AppSweep release path.
 
-## Behavior and accessibility
+## Web implementation boundary
 
-- The UI supports keyboard focus, reduced motion, forced colors, responsive layouts, and skip links.
-- The live release lookup shows separate loading, no-release, no-Windows-build, and network-error states.
-- No user data or server-side credentials are required; public GitHub release metadata is fetched in the browser.
+The supplied material-3-skill notes that Material Web is in maintenance mode and the newer M3 Expressive component set is not implemented on Web. This site therefore uses token-backed HTML/CSS rather than copying unsupported Compose-only motion or shape-morphing behavior.
 
-## Sources and licenses
-
-- The inherited Google Sans Flex font remains covered by **LICENSES/OFL-GoogleSansFlex.txt**.
-- Material 3 guidance: https://m3.material.io/develop/web
-- Official Material Web reference: https://github.com/material-components/material-web
+References:
+- https://m3.material.io/styles
+- https://m3.material.io/develop/web
+- https://github.com/SoufianoDev/material-3-skill/blob/master/skills/material-3/SKILL.md
