@@ -100,6 +100,10 @@
   const title = document.getElementById('release-title');
   const meta = document.getElementById('release-meta');
   const download = document.getElementById('release-download');
+  const latestDownload = document.getElementById('download-latest');
+  const latestDownloadLabel = document.getElementById('download-latest-label');
+  const releaseAssets = document.getElementById('release-assets');
+  const releaseGithub = document.getElementById('release-github');
   const retry = document.getElementById('release-retry');
   const indicator = document.querySelector('#loading-indicator svg');
   const indicatorPath = indicator.querySelector('path');
@@ -133,31 +137,60 @@
   reducedMotion.addEventListener('change', animateLoading);
 
   function safeAsset(asset) {
-    if (!asset || typeof asset.name !== 'string' || !/\.(exe|msi|zip)$/i.test(asset.name) || typeof asset.browser_download_url !== 'string') return false;
+    if (!asset || typeof asset.name !== 'string' || !/\.(exe|msi|msix|zip|7z|tar\.gz)$/i.test(asset.name) || typeof asset.browser_download_url !== 'string') return false;
     try {
       const url = new URL(asset.browser_download_url);
       return url.protocol === 'https:' && url.hostname === 'github.com' && !url.username && !url.password && !url.port
         && url.pathname.startsWith('/PanDuroDev/appsweep/releases/download/');
     } catch { return false; }
   }
+  function isWindowsPackage(asset) {
+    if (!safeAsset(asset)) return false;
+    const name = asset.name.toLowerCase();
+    if (/\.(exe|msi|msix)$/i.test(name)) return true;
+    return /(^|[._ -])(windows|win64|win32|win-x64|win-x86)([._ -]|$)/i.test(name)
+      && /\.(zip|7z|tar\.gz)$/i.test(name);
+  }
+  function setLatestDownload(href, label) {
+    if (latestDownload) latestDownload.href = href;
+    if (latestDownloadLabel) latestDownloadLabel.textContent = label;
+  }
+  function safeReleasePage(urlValue) {
+    if (typeof urlValue !== 'string') return false;
+    try {
+      const url = new URL(urlValue);
+      return url.protocol === 'https:' && url.hostname === 'github.com' && !url.username && !url.password && !url.port
+        && url.pathname.startsWith('/PanDuroDev/appsweep/releases/tag/');
+    } catch { return false; }
+  }
   function render(release) {
+    download.hidden = true;
+    download.removeAttribute('href');
+    if (releaseAssets) releaseAssets.hidden = true;
+    if (releaseGithub) releaseGithub.hidden = true;
     if (release === undefined) {
-      title.textContent = 'No public build yet';
-      meta.textContent = 'AppSweep is pre-alpha. A binary will appear here when an official release with downloadable assets is published.';
+      title.textContent = 'No published release yet';
+      meta.textContent = 'No AppSweep release has been published. The direct download will become available when a Windows build is attached to a release.';
+      setLatestDownload('releases.html', 'No release available yet');
       return;
     }
     if (!release || typeof release !== 'object' || Array.isArray(release) || typeof release.tag_name !== 'string') throw new Error('Invalid release data');
     title.textContent = typeof release.name === 'string' && release.name ? release.name : release.tag_name;
     const date = new Date(release.published_at || NaN);
-    const published = Number.isFinite(date.getTime()) ? `Published ${new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(date)}` : 'Published release';
-    const asset = Array.isArray(release.assets) ? release.assets.find(safeAsset) : null;
+    const published = Number.isFinite(date.getTime()) ? \`Published \${new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(date)}\` : 'Published release';
+    const asset = Array.isArray(release.assets) ? release.assets.find(isWindowsPackage) : null;
+    const filesUrl = \`release.html?tag=\${encodeURIComponent(release.tag_name)}\`;
+    if (releaseAssets) { releaseAssets.href = filesUrl; releaseAssets.hidden = false; }
+    if (releaseGithub && safeReleasePage(release.html_url)) { releaseGithub.href = release.html_url; releaseGithub.hidden = false; }
     if (asset) {
-      const size = Number.isFinite(asset.size) && asset.size > 0 ? ` · ${(asset.size / 1048576).toFixed(1)} MB` : '';
-      meta.textContent = `${published} · ${asset.name}${size}${release.prerelease ? ' · Prerelease' : ''}`;
+      const size = Number.isFinite(asset.size) && asset.size > 0 ? \` · \${(asset.size / 1048576).toFixed(1)} MB\` : '';
+      meta.textContent = \`\${published} · \${asset.name}\${size}\${release.prerelease ? ' · Prerelease' : ''}\`;
       download.href = asset.browser_download_url;
       download.hidden = false;
+      setLatestDownload(asset.browser_download_url, 'Download latest version');
     } else {
-      meta.textContent = `${published} · No Windows download available — check the release notes.`;
+      meta.textContent = \`\${published} · No Windows installer is attached. View the release files to see what is available.\`;
+      setLatestDownload(filesUrl, 'View latest available files');
     }
   }
   function setState(state) {
@@ -167,6 +200,7 @@
     ready.hidden = state === 'loading' || state === 'error';
     error.hidden = state !== 'error';
     retry.disabled = state === 'loading';
+    if (state === 'error') setLatestDownload('releases.html', 'Could not check releases');
     animateLoading();
     onScroll();
   }

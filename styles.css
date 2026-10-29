@@ -46,3 +46,25 @@
 @media(max-width:420px){.app-bar__inner{width:calc(100% - 24px)}.app-bar__nav{gap:0}.app-bar__nav a{padding-inline:8px;font-size:12px}.btn{padding-inline:13px}.hero h1{font-size:clamp(2.25rem,11vw,3rem)}.hero__lead{font-size:15px}.release{padding:16px}.docs-nav a{padding-inline:8px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 @media(forced-colors:active){.app-bar,.project-card,.release,.notice,.btn,.docs-nav{border:1px solid CanvasText}.brand__mark,.btn:not(.btn--outlined):not(.btn--quiet){forced-color-adjust:none;color:HighlightText;background:Highlight}.wavy__value,.wavy__stop{stroke:Highlight}}
+/* Release center */
+.release-list{display:grid;gap:14px}
+.release-card{padding:22px;border:1px solid var(--md-sys-color-outline-variant);border-radius:18px;background:var(--app-card-gradient)}
+.release-card__head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.release-card__intro{min-width:0}.release-card__intro .eyebrow{margin-bottom:7px}
+.release-card__title{font-size:clamp(1.25rem,3vw,1.6rem);font-weight:680;letter-spacing:-.025em;overflow-wrap:anywhere}
+.release-card__tag{margin-top:5px;color:var(--md-sys-color-on-surface-variant);font:500 13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+.release-version{flex:none;padding:5px 9px;border:1px solid var(--md-sys-color-outline-variant);border-radius:8px;color:var(--md-sys-color-on-surface-variant);font:600 12px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace}
+.release-card__meta{margin-top:14px;color:var(--md-sys-color-on-surface-variant);font-size:13px}.release-card__summary{margin-top:7px;color:var(--md-sys-color-on-surface);font-size:14px}.release-card__actions{margin-top:17px}
+.release-state{display:flex;align-items:center;gap:15px;padding:24px;border:1px solid var(--md-sys-color-outline-variant);border-radius:16px;background:var(--app-card-gradient)}
+.release-state h3{font-size:17px;font-weight:650}.release-state p{margin-top:5px;color:var(--md-sys-color-on-surface-variant);font-size:14px;line-height:1.6}
+.release-state--message{align-items:flex-start}.release-state--message>.icon{flex:none;margin-top:2px;color:var(--md-sys-color-on-surface-variant);font-size:23px}.release-state--message .actions,.release-state--message .btn{margin-top:14px}.release-state .loading-indicator{width:38px;height:38px}
+.asset-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.asset-group{min-width:0;padding:18px;border:1px solid var(--md-sys-color-outline-variant);border-radius:16px;background:var(--app-card-gradient)}.asset-group--wide{grid-column:1/-1}
+.asset-group__head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:13px;border-bottom:1px solid var(--md-sys-color-outline-variant)}.asset-group__head h3{font-size:17px;font-weight:650}
+.asset-status{color:var(--md-sys-color-on-surface-variant);font-size:12px;text-align:right}.asset-status--available{color:var(--md-sys-color-on-surface)}.asset-status--missing{color:var(--md-sys-color-on-surface-variant)}
+.asset-list{display:grid}.asset-list:empty:after{content:"No files for this category.";padding:16px 0 0;color:var(--md-sys-color-on-surface-variant);font-size:13px}
+.asset-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--md-sys-color-outline-variant)}.asset-row:last-child{border-bottom:0}
+.asset-row__description{min-width:0}.asset-row__name{font-size:13px;font-weight:600;overflow-wrap:anywhere}.asset-row__size{margin-top:3px;color:var(--md-sys-color-on-surface-variant);font-size:12px}.asset-row__download{flex:none;white-space:nowrap}
+.release-notes{margin-top:20px;padding:20px;border:1px solid var(--md-sys-color-outline-variant);border-radius:14px;background:var(--md-sys-color-surface-container-low)}.release-notes h3{font-size:17px;font-weight:650}.release-notes p{margin-top:10px;color:var(--md-sys-color-on-surface-variant);font-size:14px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+#download-latest{white-space:nowrap}
+@media(max-width:760px){.asset-groups{grid-template-columns:1fr}.asset-group--wide{grid-column:auto}.release-card{padding:18px}.asset-group{padding:16px}}
+@media(max-width:420px){.release-card__head{gap:8px}.release-version{max-width:45%;overflow-wrap:anywhere}.release-state{padding:17px}.asset-row{align-items:flex-start}.asset-row__download{padding-inline:10px}}
