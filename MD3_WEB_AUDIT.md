@@ -283,3 +283,33 @@ A scan of literal CSS values also found layout widths, icon sizes, 40px brand/pr
 - [ ] Add and test persistent concise live status announcements for release list/detail.
 - [ ] Align asset filename typography with one complete M3 role.
 - [ ] Re-run accessibility and typography regression checks after fixes.
+
+## Live evidence update — 2026-10-30: CSS hygiene, documentation, and font-asset pass
+
+### Token and CSS hygiene scan (source-only)
+- Scanned the complete current `tokens.css` declaration set against the complete `styles.css` variable references.
+- Found no undeclared custom-property references in `styles.css`.
+- Found no raw hexadecimal/RGB/HSL color literals in `styles.css`; the forced-colors rules use system colors (`CanvasText` and `Highlight`), which are platform accessibility colors rather than palette exceptions.
+- The repeated semantic color declarations in `:root[data-theme="light"]` are theme overrides, not duplicate declarations to remove.
+- Several declared color and typography roles are not directly consumed by the current CSS. This is not automatically a defect: unused roles may be retained as a deliberate token contract. Their retention/removal decision remains pending a complete token-role and page-usage map.
+- Reviewed the CSS radius declarations and responsive layout sections. No raw `border-radius` value was found in the source scan; all component radii use the named shape tokens. Literal pixel values remain for optical/control dimensions, borders, breakpoints, and content constraints and must be assessed by component rather than blanket-replaced.
+
+### F-ASSET-01 — Low — unused local Google Sans Flex subset
+- Location: `assets/GoogleSansFlex-subset.woff2` (32,388 bytes); `LICENSES/OFL-GoogleSansFlex.txt`.
+- Evidence: the repository tree contains the local font file, but the current four HTML pages load Roboto Flex from Google Fonts and neither `tokens.css` nor `styles.css` declares an `@font-face` or references the local WOFF2. The local font is not referenced by the current page sources or JavaScript.
+- Classification: redundant/unnecessary asset in the current implementation; low severity. The OFL notice is present, so this is not a claim of missing font-license text.
+- Recommendation: decide whether Google Sans Flex is an intended future typeface. If not, remove the unused WOFF2 and its now-unneeded license file in a separate cleanup; if yes, wire it deliberately and verify subset glyph coverage, fallback, and layout shift before changing the active typeface.
+- Validation: repository-wide reference scan plus source inspection of all four page font links and both stylesheets. No rendered font-loading or layout-shift test was performed.
+
+### Documentation consistency corroboration — F-TOKENS-02
+- `DESIGN_SYSTEM.md` currently repeats the 10% focus and pressed opacity values, while the generated Material Web v0.192 state tokens used in the audit specify 12% for both.
+- This is not a separate component defect: it is a documentation consequence of F-TOKENS-02. Update the design-system statement and `tests/motion.test.cjs` together with the eventual token correction.
+- No source or test changes were made.
+
+### Documentation and metadata review
+- `README.md`, `AGENT.md`, and `DESIGN_SYSTEM.md` were reviewed against the current repository tree and page architecture.
+- No confirmed broken project link or false project-status claim was found in this pass. The historical CI/deployment statement in `AGENT.md` is explicitly dated by its PR #3 commit/run context and instructs readers to check current workflows.
+- `.nojekyll` is present as an empty root file. Its necessity with the current GitHub Pages Actions artifact/deploy workflow remains a deployment-specific question; no deletion is recommended without verifying the published artifact behavior.
+
+### Scope and limitations
+Source-only repository inspection. No browser rendering, font network request, screen-reader, zoom/reflow, forced-colors session, Python validator execution, or new local test run was performed. The current PR CI result remains a separate GitHub Actions observation, not a substitute for those checks.
