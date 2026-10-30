@@ -4,6 +4,23 @@
   outline-offset: 2px;
 }
 
+/* Themed scrollbars: standard properties first, WebKit fallback for older engines. */
+* {
+  scrollbar-color: var(--md-sys-color-outline) transparent;
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar { width: 12px; height: 12px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb {
+  background-color: var(--md-sys-color-outline);
+  border: 3px solid transparent;
+  border-radius: var(--md-sys-shape-corner-full);
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover { background-color: var(--md-sys-color-on-surface-variant); }
+*::-webkit-scrollbar-button { display: none; }
+*::-webkit-scrollbar-corner { background: transparent; }
+
 html {
   scroll-padding-top: var(--app-layout-header-offset);
   -webkit-text-size-adjust: 100%;
@@ -830,6 +847,8 @@ button { font: inherit; }
 }
 
 @media (forced-colors: active) {
+  * { scrollbar-color: auto; scrollbar-width: auto; }
+  *::-webkit-scrollbar-thumb { background-color: ButtonText; }
   .btn, .notice, .project-card, .release, .release-card, .release-state, .asset-group, .release-notes {
     border: 1px solid CanvasText;
   }
