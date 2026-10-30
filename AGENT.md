@@ -19,12 +19,12 @@ The site is a lightweight static HTML/CSS/JavaScript project with no frontend fr
 - `app.js`: page behavior and GitHub Releases API integration.
 - `tokens.css` and `styles.css`: shared design tokens and responsive styling.
 - `DESIGN_SYSTEM.md`: design rules and implementation boundaries.
-- `tests/`: Node.js tests for behavior, layout, and motion.
-- GitHub Actions validates the static site and tests, then deploys GitHub Pages from `main`.
+- `tests/`: Node.js tests for behavior, layout, motion, releases, and validator fixtures.
+- GitHub Actions validates the static site and runs the tests on pull requests, then deploys GitHub Pages from `main`.
 
-The site includes a Material 3-inspired semantic design system, dark/light theme support, keyboard focus and reduced-motion handling, and a wide responsive layout. On large screens, the homepage places the hero beside the latest-release panel; documentation uses a side navigation rail; release cards and asset groups adapt to available width.
+The site implements Material 3 Web guidance through semantic tokens and native HTML/CSS/JavaScript, with dark/light theme support, keyboard focus, reduced-motion handling, and a wide responsive layout. On large screens, the homepage places the hero beside the latest-release panel; documentation uses a side navigation rail; release cards and asset groups adapt to available width.
 
-The latest completed layout change was merged in PR #3 (commit `a7d69d3`). Its CI run reported **27 passing tests**, successful static validation, and successful deployment. This records the state at that run; always check the latest workflow before relying on it.
+The latest audit findings and verification results are recorded in `MD3_WEB_AUDIT.md`. Always check the current workflow run before relying on a recorded result.
 
 ## Development and verification
 
@@ -36,13 +36,16 @@ python -m http.server 8123 --bind 127.0.0.1
 
 On Windows, `py -3 -m http.server 8123 --bind 127.0.0.1` also works. Open http://127.0.0.1:8123/.
 
-Run tests with Node.js 22 or newer:
+Validate the static site with Python 3 and run the tests with Node.js 22 or newer:
 
 ```sh
+python3 validate_full.py
 node --test tests/*.test.cjs
 ```
 
-Before submitting changes, run the tests and inspect the relevant pages at narrow, medium, and wide viewport sizes. Check the GitHub Actions result after pushing or merging; passing local tests alone does not prove Pages deployed successfully.
+On Windows, `py -3 validate_full.py` also works.
+
+Before submitting changes, run the validator and tests and inspect the relevant pages at narrow, medium, and wide viewport sizes. Check the GitHub Actions result after pushing or merging; passing local tests alone does not prove Pages deployed successfully.
 
 ## Rules for future changes
 

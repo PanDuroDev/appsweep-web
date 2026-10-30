@@ -136,8 +136,8 @@
   --app-motion-duration-short3: 150ms;
   --app-motion-duration-progress-cycle: 1400ms;
   --app-state-hover-opacity: 8%;
-  --app-state-focus-opacity: 10%;
-  --app-state-pressed-opacity: 10%;
+  --app-state-focus-opacity: 12%;
+  --app-state-pressed-opacity: 12%;
   --app-layout-content-max: 1920px;
   --app-layout-app-bar-height: 64px;
   --app-layout-header-offset: 80px;
