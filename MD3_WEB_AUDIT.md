@@ -377,6 +377,7 @@ Every source-confirmed finding in this audit is resolved in the branch. Browser 
 |---|---|---|
 | Static validator | `py -3 validate_full.py` | Pass: 4 HTML pages, 2 CSS files |
 | Behavior suite | `node --test tests/*.test.cjs` | Pass: 43 tests, 0 failures |
+| Pull-request CI | `.github/workflows/ci.yml` | Pass: canonical validator and 43 tests on the pushed head |
 | Browser matrix | `index.html`, `docs.html`, `releases.html`, `release.html` × dark/light × 320, 768, 1024, 1440px | No horizontal page overflow; navigation switches at 840px; no console errors; Roboto Flex loaded on every page |
 | Button metrics | Computed styles in the rendered pages | 40px containers, 48×48px generated touch targets, 18px text-button icons |
 | Lighthouse | All four pages | Accessibility 100, Best Practices 100, SEO 100; zero failures |
