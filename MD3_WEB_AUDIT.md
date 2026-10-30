@@ -313,3 +313,23 @@ A scan of literal CSS values also found layout widths, icon sizes, 40px brand/pr
 
 ### Scope and limitations
 Source-only repository inspection. No browser rendering, font network request, screen-reader, zoom/reflow, forced-colors session, Python validator execution, or new local test run was performed. The current PR CI result remains a separate GitHub Actions observation, not a substitute for those checks.
+
+## Live evidence update — 2026-10-30: component shape and outline applicability (source-only)
+
+### Shape assignment review
+- [x] Enumerate component `border-radius` declarations in `styles.css`.
+- [x] Confirm every declared component radius uses a named `--md-sys-shape-corner-*` token; no raw radius literal was found.
+- [x] Map current source usage: buttons/navigation/version chips/loading ring use the full corner; brand mark uses medium; cards, notices, release panels, asset groups and release notes use medium; code panels use small; pressed button/navigation shape changes use the increased-large token; icon-only pressed buttons use medium.
+- [ ] Verify the rendered shape and component metrics against Material Web in both themes and all relevant viewport/state combinations.
+
+**Assessment:** no additional raw-radius or inconsistent-token defect was found in source. This does not close the shape audit: token names alone do not prove the rendered component matches its M3 Web counterpart, and the known 40px-vs-48px visible button metric finding remains open.
+
+### Outline-variant applicability classification
+- [x] Enumerate source uses of `--md-sys-color-outline-variant` in `styles.css`.
+- [x] Classify the observed uses: section and footer separators; docs navigation divider; borders around non-interactive project/release/notice/asset/content panels; and asset-row/group separators.
+- [x] Confirm the actual interactive outlined buttons use `--md-sys-color-outline`, not outline-variant; the docs-detail accent uses outline as well.
+
+**Assessment:** the previously measured outline-variant ratios below 3:1 do not currently identify a WCAG 1.4.11 non-text-contrast failure from the source semantics inspected: the observed outline-variant borders are grouping/separator decoration rather than the only visual cue identifying an interactive control or its state. Keep this as a documented classification, not a contrast pass for all rendered components. Revisit if browser inspection shows any boundary is necessary to identify a control, state, or meaningful graphical object.
+
+### Scope and limitations
+This classification is source-based. No rendered-state, browser-computed-style, or assistive-technology test was performed. Existing F-TOKENS-01 and F-TOKENS-02 remain unresolved; no application source or tests were changed.
