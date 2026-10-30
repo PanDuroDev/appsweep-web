@@ -333,3 +333,17 @@ Source-only repository inspection. No browser rendering, font network request, s
 
 ### Scope and limitations
 This classification is source-based. No rendered-state, browser-computed-style, or assistive-technology test was performed. Existing F-TOKENS-01 and F-TOKENS-02 remain unresolved; no application source or tests were changed.
+
+## Live evidence update — 2026-10-30: standalone validator false-positive
+
+### F-VALIDATOR-01 — Low — `validate_full.py` incorrectly requires different stylesheet assets to share one cache key
+- Location: `validate_full.py:166–170`.
+- Evidence: the validator extracts the version strings from both `tokens.css?v=...` and `styles.css?v=...`, then requires `len(set(found)) == 1` for each page and also requires one global version across all extracted stylesheet references.
+- Current valid page markup intentionally uses distinct asset versions: `tokens.css?v=20261029-layout2` and `styles.css?v=20261029-mobile-nav4`. The cache key must be consistent for the same asset across pages; the token stylesheet and component stylesheet do not need to share a version string.
+- The Pages workflow's inline validator correctly tracks versions in separate per-asset buckets (`tokens.css` and `styles.css`) and checks consistency for each asset independently.
+- Classification: incorrect validator assumption; low severity while this script is not in CI, but it would create a false failure if adopted as the canonical validator unchanged.
+- Recommendation: parse asset name and version together; require exactly one occurrence of each stylesheet per page, one consistent version for each asset across all pages, and allow the two different assets to have different versions. Add fixtures for both a valid split-version case and an actual cross-page mismatch.
+- Validation: source-level comparison of `validate_full.py`, all four current HTML references, and the Pages inline validator. The standalone script was not executed in this pass.
+
+### F-CI-01 refinement
+Do not select `validate_full.py` as the canonical validator until F-VALIDATOR-01 is fixed and its coverage is compared with the Pages inline checks. The existing recommendation to consolidate validation remains valid, but the candidate script currently has a false-positive condition and does not yet demonstrate parity with the deployment validator.
