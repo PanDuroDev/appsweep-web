@@ -10,8 +10,15 @@ test('motion tokens use Material 3 web timing and state-layer values', () => {
   assert.match(tokens, /--app-motion-easing-standard:\s*cubic-bezier\(0\.2,\s*0,\s*0,\s*1\)/);
   assert.match(tokens, /--app-motion-duration-short3:\s*150ms/);
   assert.match(tokens, /--app-state-hover-opacity:\s*8%/);
-  assert.match(tokens, /--app-state-focus-opacity:\s*10%/);
-  assert.match(tokens, /--app-state-pressed-opacity:\s*10%/);
+  assert.match(tokens, /--app-state-focus-opacity:\s*12%/);
+  assert.match(tokens, /--app-state-pressed-opacity:\s*12%/);
+});
+
+test('buttons use a 40px Material Web container with a 48px touch target', () => {
+  assert.match(styles, /\.btn\s*\{[^}]*position:\s*relative;[^}]*min-height:\s*40px;/s);
+  assert.match(styles, /\.btn::after\s*\{[^}]*width:\s*max\(100%,\s*var\(--app-touch-target\)\);[^}]*height:\s*var\(--app-touch-target\);/s);
+  assert.match(styles, /\.btn--icon\s*\{\s*width:\s*40px;\s*min-width:\s*40px;/);
+  assert.match(styles, /\.btn:not\(\.btn--icon\)\s+\.icon\s*\{[^}]*width:\s*18px;[^}]*height:\s*18px;[^}]*font-size:\s*18px;/s);
 });
 
 test('buttons expose hover, keyboard focus, pressed, and disabled feedback', () => {

@@ -23,5 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Validate static site
+        run: python3 validate_full.py
       - name: Run test suite
         run: node --test tests/*.test.cjs

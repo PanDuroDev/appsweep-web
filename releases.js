@@ -1,11 +1,13 @@
 (() => {
   const API = 'https://api.github.com/repos/PanDuroDev/appsweep/releases';
   const OWNED_RELEASE_PREFIX = '/PanDuroDev/appsweep/releases/download/';
+  const REQUEST_TIMEOUT = 12000;
   const listView = document.getElementById('releases-view');
   const detailView = document.getElementById('release-detail');
   if (!listView && !detailView) return;
   const get = id => document.getElementById(id);
   const setState = (view, state) => { if (view) { view.dataset.state = state; view.setAttribute('aria-busy', String(state === 'loading')); } };
+  const announce = (id, text) => { const status = get(id); if (status) status.textContent = text; };
   const el = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined && text !== null) node.textContent = String(text); return node; };
   const appendLink = (parent, href, label, className = 'btn btn--outlined btn--small') => { const link = el('a', className, label); link.href = href; parent.appendChild(link); return link; };
   const safeAsset = asset => {
@@ -32,16 +34,22 @@
   const formatSize = value => Number.isFinite(value) && value > 0 ? (value / 1048576).toFixed(1) + ' MB' : '';
   const titleFor = release => typeof release.name === 'string' && release.name.trim() ? release.name : release.tag_name;
   async function fetchAllReleases() {
-    const all = [];
-    for (let page = 1; page <= 20; page++) {
-      const response = await fetch(API + '?per_page=100&page=' + page, { headers: { Accept: 'application/vnd.github+json' } });
-      if (!response.ok) throw new Error('GitHub returned HTTP ' + response.status);
-      const batch = await response.json();
-      if (!Array.isArray(batch)) throw new Error('GitHub returned an invalid release list');
-      all.push(...batch.filter(release => release && typeof release.tag_name === 'string' && !release.draft));
-      if (batch.length < 100) return all.sort((a, b) => new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime());
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+    try {
+      const all = [];
+      for (let page = 1; page <= 20; page++) {
+        const response = await fetch(API + '?per_page=100&page=' + page, { headers: { Accept: 'application/vnd.github+json' }, signal: controller.signal });
+        if (!response.ok) throw new Error('GitHub returned HTTP ' + response.status);
+        const batch = await response.json();
+        if (!Array.isArray(batch)) throw new Error('GitHub returned an invalid release list');
+        all.push(...batch.filter(release => release && typeof release.tag_name === 'string' && !release.draft));
+        if (batch.length < 100) return all.sort((a, b) => new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime());
+      }
+      throw new Error('Too many release pages to load safely');
+    } finally {
+      clearTimeout(timeout);
     }
-    throw new Error('Too many release pages to load safely');
   }
   function platformSummary(release) {
     const assets = Array.isArray(release.assets) ? release.assets.filter(safeAsset) : [];
@@ -70,12 +78,12 @@
   }
   async function loadReleaseList() {
     if (!listView) return;
-    setState(listView, 'loading'); get('releases-loading').hidden = false; get('releases-error').hidden = true; get('releases-empty').hidden = true; get('releases-list-items').hidden = true;
+    setState(listView, 'loading'); announce('releases-status', 'Loading releases.'); get('releases-loading').hidden = false; get('releases-error').hidden = true; get('releases-empty').hidden = true; get('releases-list-items').hidden = true;
     try {
       const releases = await fetchAllReleases(); get('releases-loading').hidden = true;
-      if (!releases.length) { get('releases-empty').hidden = false; setState(listView, 'empty'); return; }
-      renderReleases(releases); get('releases-list-items').hidden = false; setState(listView, 'ready');
-    } catch { get('releases-loading').hidden = true; get('releases-error').hidden = false; setState(listView, 'error'); }
+      if (!releases.length) { get('releases-empty').hidden = false; announce('releases-status', 'No published releases are available.'); setState(listView, 'empty'); return; }
+      renderReleases(releases); get('releases-list-items').hidden = false; announce('releases-status', 'Loaded ' + releases.length + (releases.length === 1 ? ' release.' : ' releases.')); setState(listView, 'ready');
+    } catch { get('releases-loading').hidden = true; get('releases-error').hidden = false; announce('releases-status', 'Could not load releases. Try again.'); setState(listView, 'error'); }
   }
   function addAssetRow(parent, name, url, size) {
     const row = el('article', 'asset-row'), description = el('div', 'asset-row__description');
@@ -103,24 +111,27 @@
     if (safeSourceUrl(release.zipball_url, 'zipball')) groups.source.push({ name: 'Source code (ZIP)', url: release.zipball_url, size: '' });
     if (safeSourceUrl(release.tarball_url, 'tarball')) groups.source.push({ name: 'Source code (tar.gz)', url: release.tarball_url, size: '' });
     for (const key of Object.keys(groups)) fillGroup(key, groups[key]);
+    const labels = { windows: 'Windows', linux: 'Linux', macos: 'macOS', source: 'source code', other: 'other files' };
+    const available = Object.keys(groups).filter(key => groups[key].length).map(key => labels[key]);
+    announce('release-detail-status', 'Release loaded. ' + (available.length ? available.join(', ') + (available.length === 1 ? ' is available.' : ' are available.') : 'No files are available.'));
     const notes = get('release-detail-notes');
     notes.textContent = typeof release.body === 'string' && release.body.trim() ? release.body.trim() : 'No release notes were provided.';
     notes.hidden = false;
   }
   async function loadReleaseDetail() {
     if (!detailView) return;
-    setState(detailView, 'loading'); get('release-detail-loading').hidden = false; get('release-detail-error').hidden = true; get('release-detail-empty').hidden = true; get('release-detail-content').hidden = true;
+    setState(detailView, 'loading'); announce('release-detail-status', 'Loading release files.'); get('release-detail-loading').hidden = false; get('release-detail-error').hidden = true; get('release-detail-empty').hidden = true; get('release-detail-content').hidden = true;
     let tag = ''; try { tag = new URLSearchParams(location.search).get('tag') || ''; } catch {}
     try {
       const releases = await fetchAllReleases(); get('release-detail-loading').hidden = true;
-      if (!tag) { get('release-detail-empty-copy').textContent = 'Choose a version from the releases list to see its files.'; get('release-detail-empty').hidden = false; setState(detailView, 'empty'); return; }
+      if (!tag) { get('release-detail-empty-copy').textContent = 'Choose a version from the releases list to see its files.'; get('release-detail-empty').hidden = false; announce('release-detail-status', 'Choose a release to see its files.'); setState(detailView, 'empty'); return; }
       const release = releases.find(item => item.tag_name === tag);
       if (!release) {
         get('release-detail-empty-copy').textContent = releases.length ? 'This release could not be found. It may have been removed or the link may be outdated.' : 'No AppSweep releases have been published yet, so there are no release files to download.';
-        get('release-detail-empty').hidden = false; setState(detailView, 'empty'); return;
+        get('release-detail-empty').hidden = false; announce('release-detail-status', releases.length ? 'This release could not be found.' : 'No releases have been published yet.'); setState(detailView, 'empty'); return;
       }
       renderDetail(release); get('release-detail-content').hidden = false; setState(detailView, 'ready');
-    } catch { get('release-detail-loading').hidden = true; get('release-detail-error').hidden = false; setState(detailView, 'error'); }
+    } catch { get('release-detail-loading').hidden = true; get('release-detail-error').hidden = false; announce('release-detail-status', 'Could not load this release. Try again.'); setState(detailView, 'error'); }
   }
   get('releases-retry')?.addEventListener('click', loadReleaseList);
   get('release-detail-retry')?.addEventListener('click', loadReleaseDetail);

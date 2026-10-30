@@ -21,15 +21,16 @@ function node(tag = 'div') {
   };
 }
 function walk(root) { return [root, ...(root.children || []).flatMap(walk)]; }
-const listIds = ['releases-view','releases-loading','releases-error','releases-empty','releases-list-items','releases-retry'];
-const detailIds = ['release-detail','release-detail-loading','release-detail-error','release-detail-empty','release-detail-empty-copy','release-detail-content','release-detail-retry','release-detail-title','release-detail-tag','release-detail-meta','release-detail-github','release-detail-notes',
+const listIds = ['releases-view','releases-status','releases-loading','releases-error','releases-empty','releases-list-items','releases-retry'];
+const detailIds = ['release-detail','release-detail-status','release-detail-loading','release-detail-error','release-detail-empty','release-detail-empty-copy','release-detail-content','release-detail-retry','release-detail-title','release-detail-tag','release-detail-meta','release-detail-github','release-detail-notes',
   'availability-windows','assets-windows','availability-linux','assets-linux','availability-macos','assets-macos','availability-source','assets-source','availability-other','assets-other'];
-function boot({ mode = 'list', search = '', fetcher } = {}) {
+function boot({ mode = 'list', search = '', fetcher, timers = {} } = {}) {
   const ids = {};
   for (const id of mode === 'list' ? listIds : detailIds) ids[id] = node();
   for (const id of ['releases-view','release-detail']) if (ids[id]) ids[id].dataset.state = 'idle';
   const document = { getElementById(id) { return ids[id]; }, createElement(tag) { return node(tag); } };
-  runInNewContext(source, { document, URL, URLSearchParams, Intl, location: { search },
+  runInNewContext(source, { document, URL, URLSearchParams, Intl, AbortController, location: { search },
+    setTimeout: timers.setTimeout || setTimeout, clearTimeout: timers.clearTimeout || clearTimeout,
     fetch: fetcher || (async () => ({ ok: true, json: async () => [] })) });
   return { ids };
 }
@@ -50,6 +51,7 @@ test('release index lists published versions and links to file details and GitHu
   await flush();
   assert.equal(app.ids['releases-view'].dataset.state, 'ready');
   assert.equal(app.ids['releases-list-items'].children.length, 2);
+  assert.equal(app.ids['releases-status'].textContent, 'Loaded 2 releases.');
   const links = walk(app.ids['releases-list-items']).filter(n => n.tagName === 'A');
   assert.ok(links.some(n => n.href === 'release.html?tag=v2'), 'internal files link exists');
   assert.ok(links.some(n => n.href === 'https://github.com/PanDuroDev/appsweep/releases/tag/v2'), 'GitHub release link exists');
@@ -61,6 +63,7 @@ test('empty release index explicitly says no versions exist instead of fabricati
   assert.equal(app.ids['releases-view'].dataset.state, 'empty');
   assert.equal(app.ids['releases-empty'].hidden, false);
   assert.equal(app.ids['releases-list-items'].children.length, 0);
+  assert.equal(app.ids['releases-status'].textContent, 'No published releases are available.');
 });
 
 test('release index distinguishes API errors and retry can recover', async () => {
@@ -72,11 +75,13 @@ test('release index distinguishes API errors and retry can recover', async () =>
   await flush();
   assert.equal(app.ids['releases-view'].dataset.state, 'error');
   assert.equal(app.ids['releases-error'].hidden, false);
+  assert.equal(app.ids['releases-status'].textContent, 'Could not load releases. Try again.');
   fail = false;
   app.ids['releases-retry'].listeners.click();
   await flush();
   assert.equal(app.ids['releases-view'].dataset.state, 'ready');
   assert.equal(app.ids['releases-list-items'].children.length, 1);
+  assert.equal(app.ids['releases-status'].textContent, 'Loaded 1 release.');
 });
 
 test('release detail groups Windows, Linux, macOS, source archives, and extra files', async () => {
@@ -98,6 +103,7 @@ test('release detail groups Windows, Linux, macOS, source archives, and extra fi
   assert.equal(app.ids['assets-macos'].children.length, 1);
   assert.equal(app.ids['assets-source'].children.length, 3);
   assert.equal(app.ids['assets-other'].children.length, 1);
+  assert.equal(app.ids['release-detail-status'].textContent, 'Release loaded. Windows, Linux, macOS, source code, other files are available.');
   const links = walk(app.ids['assets-windows']).filter(n => n.tagName === 'A');
   assert.ok(links.some(n => n.href === asset('AppSweep-Setup.exe').browser_download_url));
   assert.equal(app.ids['release-detail-notes'].textContent, 'Security update');
@@ -120,8 +126,37 @@ test('detail page marks missing platforms and rejects non-official asset URLs', 
 });
 
 test('unknown release tag displays a missing-release state', async () => {
-  const app = boot({ mode: 'detail', search: '?tag=does-not-exist' });
+  const app = boot({ mode: 'detail', search: '?tag=does-not-exist', fetcher: async () => ({ ok: true, json: async () => [githubRelease('v1')] }) });
   await flush();
   assert.equal(app.ids['release-detail'].dataset.state, 'empty');
   assert.equal(app.ids['release-detail-empty'].hidden, false);
+  assert.equal(app.ids['release-detail-status'].textContent, 'This release could not be found.');
+});
+
+test('stalled release requests abort on timeout and retry uses a fresh signal', async () => {
+  let timeoutCallback;
+  let rejectFirst;
+  const signals = [];
+  const app = boot({
+    fetcher: (url, options) => {
+      signals.push(options.signal);
+      if (signals.length === 1) return new Promise((resolve, reject) => { rejectFirst = reject; });
+      return Promise.resolve({ ok: true, json: async () => [githubRelease('v1')] });
+    },
+    timers: { setTimeout(fn) { timeoutCallback = fn; return 1; }, clearTimeout() {} },
+  });
+  await flush();
+  assert.equal(app.ids['releases-view'].dataset.state, 'loading');
+  assert.equal(typeof timeoutCallback, 'function');
+  timeoutCallback();
+  assert.equal(signals[0].aborted, true);
+  rejectFirst(Object.assign(new Error('Aborted'), { name: 'AbortError' }));
+  await flush();
+  assert.equal(app.ids['releases-view'].dataset.state, 'error');
+  app.ids['releases-retry'].listeners.click();
+  await flush();
+  assert.equal(app.ids['releases-view'].dataset.state, 'ready');
+  assert.equal(signals.length, 2);
+  assert.notEqual(signals[0], signals[1]);
+  assert.equal(signals[1].aborted, false);
 });

@@ -22,8 +22,9 @@ On Windows, use `py -3 -m http.server 8123 --bind 127.0.0.1`. Then open http://1
 
 ## Tests
 
-With Node.js 22 or newer:
+With Python 3 and Node.js 22 or newer:
 
+    py -3 validate_full.py
     node --test tests/*.test.cjs
 
-Pushes to `main` run static validation and behavior tests, then deploy GitHub Pages.
+Pull requests run the static validator and behavior tests. Pushes to `main` run both, then deploy GitHub Pages.

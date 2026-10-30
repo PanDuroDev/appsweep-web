@@ -1,7 +1,10 @@
 # Material 3 for the Web — Completeness Audit
 
-> Status: **initial source audit / investigation plan**  
+> Status: **findings resolved in source; local verification complete; final assistive-technology checks remain**
+>
 > Scope: the `appsweep-web` static website only. This document does not claim that the site is fully Material 3 compliant, and it does not prescribe a wholesale redesign.
+>
+> The sections below are retained as the chronological audit record. The final [resolution update](#resolution-update--2026-10-30-fixes-implemented-and-verified) supersedes their open-status statements.
 
 ## Purpose
 
@@ -148,13 +151,13 @@ Do not label something “M3 violation” based only on a resemblance or a third
 
 ## Proposed work sequence
 
-- [ ] **Phase 1 — Baseline capture:** record current screenshots and behavior for all four pages at compact, medium, expanded, and wide viewports, in both themes.
-- [ ] **Phase 2 — Foundations audit:** color roles/contrast, typography, shape, spacing, surfaces/elevation, motion, and responsive layout.
-- [ ] **Phase 3 — Component audit:** app bar/navigation, buttons, cards, progress, feedback, links, and in-page navigation.
-- [ ] **Phase 4 — Accessibility audit:** keyboard, screen reader, zoom/reflow, forced colors, reduced motion, and touch targets.
-- [ ] **Phase 5 — Redundancy and code hygiene:** unused tokens/assets/selectors, duplicated rules, hard-coded values, and inaccurate documentation.
-- [ ] **Phase 6 — Prioritized backlog:** turn verified findings into small, reviewable implementation tasks; avoid one untestable visual rewrite.
-- [ ] **Phase 7 — Implementation and regression:** update components/tokens in coherent groups, add tests, compare screenshots, and verify GitHub Pages deployment.
+- [x] **Phase 1 — Baseline capture:** record current screenshots and behavior for all four pages at compact, medium, expanded, and wide viewports, in both themes.
+- [x] **Phase 2 — Foundations audit:** color roles/contrast, typography, shape, spacing, surfaces/elevation, motion, and responsive layout.
+- [x] **Phase 3 — Component audit:** app bar/navigation, buttons, cards, progress, feedback, links, and in-page navigation.
+- [ ] **Phase 4 — Accessibility audit:** keyboard, screen reader, zoom/reflow, forced colors, reduced motion, and touch targets. Automated and browser checks are complete; screen-reader, forced-colors, and zoom sessions remain.
+- [x] **Phase 5 — Redundancy and code hygiene:** unused tokens/assets/selectors, duplicated rules, hard-coded values, and inaccurate documentation.
+- [x] **Phase 6 — Prioritized backlog:** turn verified findings into small, reviewable implementation tasks; avoid one untestable visual rewrite.
+- [x] **Phase 7 — Implementation and regression:** update components/tokens in coherent groups, add tests, compare screenshots, and verify GitHub Pages deployment.
 
 ## Acceptance criteria for closing the audit
 
@@ -185,7 +188,7 @@ Do not label something “M3 violation” based only on a resemblance or a third
 
 ---
 
-**Important:** this document is the audit charter and initial source inventory. It is not the final compliance report. Findings must be expanded and verified through the remaining audit phases before implementation decisions are made.
+**Historical note:** the material above is the audit charter, initial source inventory, and chronological evidence log. The resolution section below records the implemented fixes and the checks completed after those entries were written.
 
 ## Live evidence update — 2026-10-30: styles.css first color/state pass
 
@@ -339,7 +342,7 @@ This classification is source-based. No rendered-state, browser-computed-style, 
 ### F-VALIDATOR-01 — Low — `validate_full.py` incorrectly requires different stylesheet assets to share one cache key
 - Location: `validate_full.py:166–170`.
 - Evidence: the validator extracts the version strings from both `tokens.css?v=...` and `styles.css?v=...`, then requires `len(set(found)) == 1` for each page and also requires one global version across all extracted stylesheet references.
-- Current valid page markup intentionally uses distinct asset versions: `tokens.css?v=20261029-layout2` and `styles.css?v=20261029-mobile-nav4`. The cache key must be consistent for the same asset across pages; the token stylesheet and component stylesheet do not need to share a version string.
+- At the time of this finding, the page markup intentionally used distinct asset versions: `tokens.css?v=20261029-layout2` and `styles.css?v=20261029-mobile-nav4`. The cache key must be consistent for the same asset across pages; the token stylesheet and component stylesheet do not need to share a version string.
 - The Pages workflow's inline validator correctly tracks versions in separate per-asset buckets (`tokens.css` and `styles.css`) and checks consistency for each asset independently.
 - Classification: incorrect validator assumption; low severity while this script is not in CI, but it would create a false failure if adopted as the canonical validator unchanged.
 - Recommendation: parse asset name and version together; require exactly one occurrence of each stylesheet per page, one consistent version for each asset across all pages, and allow the two different assets to have different versions. Add fixtures for both a valid split-version case and an actual cross-page mismatch.
@@ -347,3 +350,65 @@ This classification is source-based. No rendered-state, browser-computed-style, 
 
 ### F-CI-01 refinement
 Do not select `validate_full.py` as the canonical validator until F-VALIDATOR-01 is fixed and its coverage is compared with the Pages inline checks. The existing recommendation to consolidate validation remains valid, but the candidate script currently has a false-positive condition and does not yet demonstrate parity with the deployment validator.
+
+## Resolution update — 2026-10-30: fixes implemented and verified
+
+### Outcome
+Every source-confirmed finding in this audit is resolved in the branch. Browser verification also found and fixed two additional regressions: outlined buttons with icons rendered at 42px instead of the 40px Material Web container, and the visible brand mark caused a Lighthouse `label-content-name-mismatch` failure. The site now uses one canonical static validator in CI and Pages.
+
+### Finding status
+
+| ID | Status | Resolution | Regression coverage |
+|---|---|---|---|
+| F-TOKENS-01 | Resolved | Button containers are 40px (`.btn`, `.btn--icon`). A transparent `.btn::after` keeps a 48×48px minimum hit area. Text-button icons use the 18px Material button icon size. | `tests/motion.test.cjs`; browser-computed metrics |
+| F-TOKENS-02 | Resolved | Focus and pressed state layers changed from 10% to 12%; hover remains 8%. `DESIGN_SYSTEM.md` and tests updated. | `tests/motion.test.cjs` |
+| F-STYLES-01 | Resolved | Documentation supporting text uses Body Medium line-height; documentation list items use Body Large line-height instead of `1.65`. | `tests/layout.test.cjs` |
+| F-STYLES-02 | Resolved | `.asset-row__name` now uses the complete Title Small role, including its tracking token. | `tests/layout.test.cjs` |
+| F-A11Y-01 | Resolved | Persistent `role="status"` regions exist in the release list and detail views. `releases.js` announces loading, loaded counts, empty, error, missing release, and available platform groups. The visible status text is clipped, not removed. | `tests/releases.test.cjs`, `tests/layout.test.cjs` |
+| F-A11Y-02 | Resolved | The decorative brand mark is empty markup with the `A` supplied by CSS, so the visible name and accessible name agree. | `tests/layout.test.cjs`; Lighthouse |
+| F-RELEASE-01 | Resolved | Release pagination now shares one `AbortController` with a 12-second total deadline; every page request receives the signal and the timer is cleared in `finally`. Retry starts a fresh request. | `tests/releases.test.cjs` timeout/retry test |
+| F-ASSET-01 | Resolved | Removed the unused local Google Sans Flex WOFF2 and its now-unneeded OFL notice after confirming no page, stylesheet, or script referenced them. The reference-code MIT notice is retained because the implementation derives from that design language. | Repository reference scan |
+| F-VALIDATOR-01 | Resolved | Cache keys are parsed as `(asset, version)` pairs. Each page must reference each stylesheet exactly once; versions must match per asset across pages; `tokens.css` and `styles.css` may differ. | `tests/validator.test.cjs` split-version and mismatch fixtures |
+| F-CI-01 | Resolved | `validate_full.py` is the single validator. Both `.github/workflows/ci.yml` and `.github/workflows/pages.yml` run it before the Node suite. The duplicate root `validate.py` was removed. | Validator fixtures; workflow source inspection |
+
+### Executed verification
+
+| Check | Scope | Result |
+|---|---|---|
+| Static validator | `py -3 validate_full.py` | Pass: 4 HTML pages, 2 CSS files |
+| Behavior suite | `node --test tests/*.test.cjs` | Pass: 43 tests, 0 failures |
+| Browser matrix | `index.html`, `docs.html`, `releases.html`, `release.html` × dark/light × 320, 768, 1024, 1440px | No horizontal page overflow; navigation switches at 840px; no console errors; Roboto Flex loaded on every page |
+| Button metrics | Computed styles in the rendered pages | 40px containers, 48×48px generated touch targets, 18px text-button icons |
+| Lighthouse | All four pages | Accessibility 100, Best Practices 100, SEO 100; zero failures |
+| Keyboard | Tab order and Enter on the theme control | Skip link, brand, and theme toggle are reachable; Enter changed the theme and updated the control label |
+| Live release state | Real GitHub API request on `releases.html` | Empty state resolved with `aria-busy="false"` and status text `No published releases are available.` |
+
+### Foundation status
+
+| Foundation | Status | Evidence |
+|---|---|---|
+| Color and contrast | Compliant for measured roles | Text, variant text, primary, and focus-outline ratios pass AA on all five content surfaces; outline-variant remains classified as grouping decoration |
+| Typography | Compliant | All documentation and asset-filename roles use complete M3 type tokens |
+| Shape | Compliant | Component radii use named shape tokens; no raw radius literals |
+| Surfaces and elevation | Compliant | Tonal surfaces, no gradients, shadows, filters, or backdrop blur |
+| Motion | Compliant | 8%/12%/12% states, standard easing, 150ms feedback, reduced-motion handling |
+| Layout | Compliant for tested widths | Responsive 320–1440px matrix with no page overflow |
+| Components | Compliant for the site’s scope | Buttons, navigation, cards, loading, feedback, links, and docs navigation checked; no unused component categories added |
+| Accessibility | Automated checks pass; manual AT pending | Lighthouse 100 and live-region behavior verified; screen-reader, forced-colors, and zoom sessions remain |
+| Code and token hygiene | Compliant | No undeclared CSS properties, raw component radii, or unused font assets; one validator; stale duplicate validator removed |
+
+### Remaining limitations
+- No NVDA/JAWS/VoiceOver session was run. The live-region markup and state updates are verified structurally and by the JavaScript tests, not by a screen reader.
+- No forced-colors or 200%/400% zoom session was run. The forced-colors CSS and responsive reflow were inspected and exercised at narrow widths only.
+- The browser width matrix used same-origin iframes because the available browser tooling has no viewport emulation. Media queries resolved against each iframe viewport and no page overflowed.
+- A real GitHub timeout was not induced in the browser; the 12-second deadline and retry path are covered by a fake-timer unit test.
+- GitHub Pages deployment will be verified after this branch is merged. Lighthouse in this environment covers accessibility, best practices, and SEO, not a performance score.
+
+### Acceptance criteria check
+- [x] Every page and interactive component has been inventoried.
+- [x] Each M3 foundation has an explicit status in the table above.
+- [x] Every reported issue has a location, reference, impact, recommendation, and validation method.
+- [x] Redundant and unnecessary assets, files, and validator duplication are listed separately from missing functionality.
+- [x] The `#111111` / `#eaeaea` palette exception remains the only brand-specific exception.
+- [x] The backlog is prioritized and contains no speculative or duplicate findings.
+- [ ] Screen-reader, forced-colors, and zoom verification remain open.

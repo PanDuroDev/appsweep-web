@@ -44,9 +44,9 @@ test('releases and assets use adaptive grids rather than a single narrow column'
 test('all pages load the new layout styles and use matching cache keys', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
-    assert.match(html, /tokens\.css\?v=20261029-layout2/);
-    assert.match(html, /styles\.css\?v=20261029-mobile-nav4/);
-    assert.match(html, /app\.js\?v=20261029-mobile-nav4/);
+    assert.match(html, /tokens\.css\?v=20261030-audit1/);
+    assert.match(html, /styles\.css\?v=20261030-audit1/);
+    assert.match(html, /app\.js\?v=20261030-audit1/);
     assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);
   }
@@ -87,6 +87,18 @@ test('documentation redesign includes responsive facts, reading blocks, and read
   assert.match(styles, /\.docs-detail-list\s*\{[^}]*display:\s*grid/s);
   assert.match(styles, /\.docs-steps,\s*\.docs-checklist\s*\{[^}]*display:\s*grid/s);
   assert.match(styles, /@media\s*\(max-width:\s*839px\)[\s\S]*?\.docs-facts\s*\{\s*grid-template-columns:\s*1fr/);
+});
+
+test('documentation body text uses complete Material 3 type roles', () => {
+  assert.match(styles, /\.docs-fact p:last-child,\s*\.docs-detail-list p,\s*\.docs-steps span\s*\{[^}]*line-height:\s*var\(--md-sys-typescale-body-medium-line-height\)/s);
+  assert.match(styles, /\.docs-steps li,\s*\.docs-checklist li\s*\{[^}]*line-height:\s*var\(--md-sys-typescale-body-large-line-height\)/s);
+  assert.match(styles, /\.asset-row__name\s*\{[^}]*font-family:\s*var\(--md-sys-typescale-title-small-font\)[^}]*font-size:\s*var\(--md-sys-typescale-title-small-size\)[^}]*font-weight:\s*var\(--md-sys-typescale-title-small-weight\)[^}]*line-height:\s*var\(--md-sys-typescale-title-small-line-height\)[^}]*letter-spacing:\s*var\(--md-sys-typescale-title-small-tracking\)/s);
+});
+
+test('release pages keep concise live status regions outside the changing content', () => {
+  assert.match(styles, /\.visually-hidden\s*\{[^}]*clip-path:\s*inset\(50%\)/s);
+  assert.match(read('releases.html'), /<p class="visually-hidden" id="releases-status" role="status" aria-live="polite" aria-atomic="true">Loading releases\.<\/p>/);
+  assert.match(read('release.html'), /<p class="visually-hidden" id="release-detail-status" role="status" aria-live="polite" aria-atomic="true">Loading release files\.<\/p>/);
 });
 
 /** Extracts one balanced CSS block so responsive assertions cannot match another breakpoint. */
@@ -130,6 +142,15 @@ test('homepage release title wraps long dynamic names without forcing horizontal
 });
 
 
+
+test('brand marks stay decorative so the visible name matches the accessible name', () => {
+  assert.match(styles, /\.brand__mark::before\s*\{\s*content:\s*"A";\s*\}/);
+  for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
+    const html = read(path);
+    assert.match(html, /<span class="brand__mark" aria-hidden="true"><\/span>/);
+    assert.doesNotMatch(html, /<span class="brand__mark" aria-hidden="true">A<\/span>/);
+  }
+});
 
 test('every page exposes an accessible collapsible mobile navigation', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {

@@ -17,9 +17,9 @@ The website uses Material Design 3 roles and component patterns through semantic
 - Spacing uses shared 8dp-based tokens. The app shell can expand to 1920px on large monitors with responsive screen margins; reading text retains character-based line limits rather than stretching across the full viewport.
 - Compact and medium widths reflow into stacked content and two-column feature layouts. Release cards keep their action links aligned at the bottom of each card, while homepage step labels use consistent spacing before titles. At 1200px+, the homepage uses a two-pane hero/latest-release layout, the documentation page (`.docs-page--with-nav`) places its section index in a sticky side rail beside the text, release cards form an adaptive grid, and release asset groups expand to four columns. The layout remains fluid below these breakpoints.
 - Tonal surfaces replace custom shadows. Gradients, backdrop blur, arbitrary corner radii, and hover movement are not used.
-- Buttons use filled, tonal, and outlined treatments with consistent state feedback and 48px minimum interaction targets.
+- Buttons use filled, tonal, and outlined treatments with consistent state feedback, 40px Material Web containers, and 48px minimum touch targets.
 - Motion uses the Material 3 web fallback: the standard easing curve and 150ms state feedback. A press gives pill-shaped buttons and navigation items a subtle, tokenized corner morph; icon-only buttons move to the medium corner token. This is a CSS approximation of Expressive shape motion, not native spring physics. The release progress indicator uses a steady 1.4s cycle.
-- Filled, tonal, outlined, and quiet buttons use the same state-layer opacity tokens: 8% hover, 10% focus, and 10% pressed. Navigation uses matching tonal layers; no control shifts position, scales, or glows during interaction.
+- Filled, tonal, outlined, and quiet buttons use the same state-layer opacity tokens: 8% hover, 12% focus, and 12% pressed. Navigation uses matching tonal layers; no control shifts position, scales, or glows during interaction.
 - Keyboard focus remains visible through a 2px primary outline. Disabled buttons reduce label and container contrast instead of relying on a browser-default appearance.
 - Interactive text links transition color and underline thickness on hover and press. Static text, non-interactive cards, and imagery are not animated for decoration; this site currently contains no content images requiring image-specific motion.
 - Reduced-motion preferences disable transitions and the loading rotation; no global smooth scrolling or ornamental entrance motion is added. Forced-colors mode remains supported.
@@ -30,6 +30,7 @@ The website uses Material Design 3 roles and component patterns through semantic
 - If no release exists, the button reports that no release is available. If GitHub cannot be reached, the button reports an error and the page offers a retry.
 - The Releases page lists published releases. Each version links to its internal file list and its official GitHub release page.
 - The per-release page groups actual assets as Windows, Linux, macOS, source code, and other files. Missing categories are explicitly marked unavailable.
+- Release list, detail, and availability changes are announced through persistent polite live status regions, not by moving focus or announcing the full lists.
 - Release notes and asset names are inserted as text. Download URLs are accepted only from the official AppSweep release path.
 
 ## Web implementation boundary
