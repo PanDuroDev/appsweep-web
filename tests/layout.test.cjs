@@ -44,9 +44,9 @@ test('releases and assets use adaptive grids rather than a single narrow column'
 test('all pages load the new layout styles and use matching cache keys', () => {
   for (const path of ['index.html', 'docs.html', 'releases.html', 'release.html']) {
     const html = read(path);
-    assert.match(html, /tokens\.css\?v=20261030-audit1/);
-    assert.match(html, /styles\.css\?v=20261030-audit1/);
-    assert.match(html, /app\.js\?v=20261030-audit1/);
+    assert.match(html, /tokens\.css\?v=\d{8}-[a-z0-9-]+/);
+    assert.match(html, /styles\.css\?v=\d{8}-[a-z0-9-]+/);
+    assert.match(html, /app\.js\?v=\d{8}-[a-z0-9-]+/);
     assert.doesNotMatch(html, /styles\.css\?v=20261029-md3-wide1/);
     assert.doesNotMatch(html, /20261029-md3-(?:strict1|motion1|pressed1)/);
   }

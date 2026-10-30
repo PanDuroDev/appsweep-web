@@ -384,6 +384,7 @@ Every source-confirmed finding in this audit is resolved in the branch. Browser 
 | Lighthouse | All four pages | Accessibility 100, Best Practices 100, SEO 100; zero failures |
 | Keyboard | Tab order and Enter on the theme control | Skip link, brand, and theme toggle are reachable; Enter changed the theme and updated the control label |
 | Live release state | Real GitHub API request on `releases.html` | Empty state resolved with `aria-busy="false"` and status text `No published releases are available.` |
+| GitHub Pages deploy | Post-merge `Deploy website to GitHub Pages` workflow | Success; the live stylesheet serves the 3px secondary focus ring, 8px pressed radius, and primary outlined/icon role changes |
 
 ### Foundation status
 
@@ -424,7 +425,7 @@ A Chrome DevTools Protocol probe forced `:hover`, `:focus-visible`, and `:active
 - No forced-colors or 200%/400% zoom session was run. The forced-colors CSS and responsive reflow were inspected and exercised at narrow widths only.
 - The browser width matrix used same-origin iframes because the available browser tooling has no viewport emulation. Media queries resolved against each iframe viewport and no page overflowed.
 - A real GitHub timeout was not induced in the browser; the 12-second deadline and retry path are covered by a fake-timer unit test.
-- GitHub Pages deployment will be verified after this branch is merged. Lighthouse in this environment covers accessibility, best practices, and SEO, not a performance score.
+- GitHub Pages deployment was verified after merge: the deploy workflow succeeded and the live stylesheet serves the corrected states. Lighthouse in this environment covers accessibility, best practices, and SEO, not a performance score.
 
 ### Acceptance criteria check
 - [x] Every page and interactive component has been inventoried.
