@@ -379,7 +379,8 @@ Every source-confirmed finding in this audit is resolved in the branch. Browser 
 | Behavior suite | `node --test tests/*.test.cjs` | Pass: 43 tests, 0 failures |
 | Pull-request CI | `.github/workflows/ci.yml` | Pass: canonical validator and 43 tests on the pushed head |
 | Browser matrix | `index.html`, `docs.html`, `releases.html`, `release.html` × dark/light × 320, 768, 1024, 1440px | No horizontal page overflow; navigation switches at 840px; no console errors; Roboto Flex loaded on every page |
-| Button metrics | Computed styles in the rendered pages | 40px containers, 48×48px generated touch targets, 18px text-button icons |
+| Button metrics | Computed styles in the rendered pages | 40px containers, 48×48px generated touch targets, 18px text-button icons; all measured label states ≥4.5:1 except the M3 disabled treatment |
+| Interaction states | Forced `:hover`, `:focus-visible`, `:active`, and combinations in dark and light | Distinct layers at 8%/12%/12%, 3px secondary focus ring, 8px pressed button radius; no transforms |
 | Lighthouse | All four pages | Accessibility 100, Best Practices 100, SEO 100; zero failures |
 | Keyboard | Tab order and Enter on the theme control | Skip link, brand, and theme toggle are reachable; Enter changed the theme and updated the control label |
 | Live release state | Real GitHub API request on `releases.html` | Empty state resolved with `aria-busy="false"` and status text `No published releases are available.` |
@@ -388,15 +389,35 @@ Every source-confirmed finding in this audit is resolved in the branch. Browser 
 
 | Foundation | Status | Evidence |
 |---|---|---|
-| Color and contrast | Compliant for measured roles | Text, variant text, primary, and focus-outline ratios pass AA on all five content surfaces; outline-variant remains classified as grouping decoration |
+| Color and contrast | Compliant for measured roles | Text, variant text, primary, and secondary focus-ring ratios pass AA on all five content surfaces; outline-variant remains classified as grouping decoration |
 | Typography | Compliant | All documentation and asset-filename roles use complete M3 type tokens |
-| Shape | Compliant | Component radii use named shape tokens; no raw radius literals |
+| Shape | Compliant | Component radii use named shape tokens; pressed buttons contract to the 8px small corner and navigation to 20px |
 | Surfaces and elevation | Compliant | Tonal surfaces, no gradients, shadows, filters, or backdrop blur |
-| Motion | Compliant | 8%/12%/12% states, standard easing, 150ms feedback, reduced-motion handling |
+| Motion | Compliant | 8%/12%/12% states, standard easing, 150ms feedback, pressed shape change, reduced-motion handling |
 | Layout | Compliant for tested widths | Responsive 320–1440px matrix with no page overflow |
 | Components | Compliant for the site’s scope | Buttons, navigation, cards, loading, feedback, links, and docs navigation checked; no unused component categories added |
 | Accessibility | Automated checks pass; manual AT pending | Lighthouse 100 and live-region behavior verified; screen-reader, forced-colors, and zoom sessions remain |
 | Code and token hygiene | Compliant | No undeclared CSS properties, raw component radii, or unused font assets; one validator; stale duplicate validator removed |
+
+### Computed interaction-state alignment — 2026-10-30
+
+A Chrome DevTools Protocol probe forced `:hover`, `:focus-visible`, and `:active` separately and in combination on every static variant, then read computed background, label, border, radius, outline, and contrast. Results led to the following corrections:
+
+- Outlined and text buttons now use the primary role for label and state layer; standard icon buttons use on-surface-variant.
+- The focus indicator is now the Material Web 3px secondary ring at a 2px offset; outlined buttons also switch their border to primary on focus.
+- A press now contracts filled, tonal, outlined, and icon buttons to the 8px small corner, a visible Expressive-style change instead of the previous 20px radius that had no effect on a 40px pill. Navigation items keep the 20px large-increased press radius.
+
+| Variant | Dark contrast: base / hover / focus / press | Light contrast: base / hover / focus / press | Pressed radius |
+|---|---|---|---|
+| Filled | 7.73 / 6.80 / 6.37 / 6.37 | 17.22 / 13.73 / 12.02 / 12.02 | 8px |
+| Tonal | 7.29 / 5.99 / 5.43 / 5.43 | 13.24 / 11.36 / 10.48 / 10.48 | 8px |
+| Outlined | 11.05 / 9.60 / 8.78 / 8.78 | 15.80 / 13.49 / 12.42 / 12.42 | 8px |
+| Icon | 11.05 / 9.60 / 8.78 / 8.78 | 8.52 / 7.52 / 7.05 / 7.05 | 8px |
+| Navigation | 11.05 / 13.17 / 11.76 / 11.76 | 8.52 / 13.49 / 12.42 / 12.42 | 20px |
+
+- Every measured label pair passes 4.5:1. Disabled labels measure 3.01:1 (filled, dark), 3.17:1 (outlined, dark), 2.25:1 (filled, light), and 2.34:1 (outlined, light); this is the M3 38% disabled treatment and is exempt under WCAG 1.4.3.
+- Focus rings render at 3px / 2px offset on every control. Disabled native buttons receive no focus in real use; forced pseudo-state probing cannot make them focusable.
+- Focus+hover resolves to the focus layer; focus+press keeps the ring and the pressed layer. No state applies a transform or shadow.
 
 ### Remaining limitations
 - No NVDA/JAWS/VoiceOver session was run. The live-region markup and state updates are verified structurally and by the JavaScript tests, not by a screen reader.

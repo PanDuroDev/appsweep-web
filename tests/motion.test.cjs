@@ -27,7 +27,10 @@ test('buttons expose hover, keyboard focus, pressed, and disabled feedback', () 
   assert.match(styles, /\.btn:active\s*\{[^}]*--app-state-pressed-opacity/s);
   assert.match(styles, /\.btn:disabled\s*\{/);
   assert.match(styles, /\.btn--outlined:disabled/);
-  assert.match(styles, /:where\(a, button\):focus-visible\s*\{[^}]*outline:\s*2px solid/s);
+  assert.match(styles, /:where\(a, button\):focus-visible\s*\{[^}]*outline:\s*3px solid var\(--md-sys-color-secondary\)/s);
+  assert.match(styles, /\.btn--outlined,\s*\.btn--quiet\s*\{[^}]*--btn-label:\s*var\(--md-sys-color-primary\);[^}]*color:\s*var\(--btn-label\)/s);
+  assert.match(styles, /\.btn--quiet\.btn--icon\s*\{\s*--btn-label:\s*var\(--md-sys-color-on-surface-variant\)/);
+  assert.match(styles, /\.btn--outlined:focus-visible\s*\{\s*border-color:\s*var\(--md-sys-color-primary\)/);
 });
 
 test('navigation controls use state layers and expressive shape changes only while pressed', () => {
@@ -43,8 +46,8 @@ test('navigation controls use state layers and expressive shape changes only whi
   }
   assert.match(styles, /\.app-bar__nav a\s*\{[^}]*transition:[^;]*background-color/s);
   assert.match(styles, /\.docs-nav a\s*\{[^}]*transition:[^;]*background-color/s);
-  assert.match(styles, /\.btn:active\s*\{[^}]*border-radius:\s*var\(--md-sys-shape-corner-large-increased\)/s);
-  assert.match(styles, /\.btn--icon:active\s*\{\s*border-radius:\s*var\(--md-sys-shape-corner-medium\)/);
+  assert.match(styles, /\.btn:active\s*\{[^}]*border-radius:\s*var\(--md-sys-shape-corner-small\)/s);
+  assert.doesNotMatch(styles, /\.btn--icon:active/);
   assert.match(styles, /\.app-bar__nav a:active\s*\{[^}]*border-radius:\s*var\(--md-sys-shape-corner-large-increased\)/s);
   assert.match(styles, /\.docs-nav a:active\s*\{[^}]*border-radius:\s*var\(--md-sys-shape-corner-large-increased\)/s);
   assert.doesNotMatch(styles, /(?:\.app-bar__nav a|\.docs-nav a|\.btn)(?::hover|:active|:focus-visible)[^{]*\{[^}]*transform\s*:/s);

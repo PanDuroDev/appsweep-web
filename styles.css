@@ -1,5 +1,6 @@
+/* Material Web focus ring: 3px secondary, 2px outward offset. */
 :where(a, button):focus-visible {
-  outline: 2px solid var(--md-sys-color-primary);
+  outline: 3px solid var(--md-sys-color-secondary);
   outline-offset: 2px;
 }
 
@@ -217,7 +218,7 @@ button { font: inherit; }
 }
 .btn:active {
   background-color: color-mix(in srgb, var(--md-sys-color-on-primary) var(--app-state-pressed-opacity), var(--md-sys-color-primary));
-  border-radius: var(--md-sys-shape-corner-large-increased);
+  border-radius: var(--md-sys-shape-corner-small);
 }
 .btn--tonal {
   color: var(--md-sys-color-on-secondary-container);
@@ -232,24 +233,28 @@ button { font: inherit; }
 .btn--tonal:active {
   background-color: color-mix(in srgb, var(--md-sys-color-on-secondary-container) var(--app-state-pressed-opacity), var(--md-sys-color-secondary-container));
 }
-.btn--outlined {
-  border: 1px solid var(--md-sys-color-outline);
-  color: var(--md-sys-color-on-surface);
+.btn--outlined,
+.btn--quiet {
+  --btn-label: var(--md-sys-color-primary);
+  color: var(--btn-label);
   background: transparent;
 }
+.btn--outlined { border: 1px solid var(--md-sys-color-outline); }
+/* Standard icon buttons use the on-surface-variant role, not the text-button primary. */
+.btn--quiet.btn--icon { --btn-label: var(--md-sys-color-on-surface-variant); }
 .btn--outlined:hover,
 .btn--quiet:hover {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-hover-opacity), transparent);
+  background-color: color-mix(in srgb, var(--btn-label) var(--app-state-hover-opacity), transparent);
 }
 .btn--outlined:focus-visible,
 .btn--quiet:focus-visible {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-focus-opacity), transparent);
+  background-color: color-mix(in srgb, var(--btn-label) var(--app-state-focus-opacity), transparent);
 }
 .btn--outlined:active,
 .btn--quiet:active {
-  background-color: color-mix(in srgb, var(--md-sys-color-on-surface) var(--app-state-pressed-opacity), transparent);
+  background-color: color-mix(in srgb, var(--btn-label) var(--app-state-pressed-opacity), transparent);
 }
-.btn--quiet { color: var(--md-sys-color-on-surface); background: transparent; }
+.btn--outlined:focus-visible { border-color: var(--md-sys-color-primary); }
 .btn:disabled {
   color: color-mix(in srgb, var(--md-sys-color-on-surface) 38%, transparent);
   background: color-mix(in srgb, var(--md-sys-color-on-surface) 12%, transparent);
@@ -262,7 +267,6 @@ button { font: inherit; }
 }
 .btn--icon { width: 40px; min-width: 40px; padding: 0; }
 .btn:not(.btn--icon) .icon { width: 18px; height: 18px; font-size: 18px; }
-.btn--icon:active { border-radius: var(--md-sys-shape-corner-medium); }
 .btn--small { padding-inline: var(--app-spacing-2); }
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: var(--app-spacing-1); }
 
