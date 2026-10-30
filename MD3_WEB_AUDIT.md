@@ -397,6 +397,7 @@ Every source-confirmed finding in this audit is resolved in the branch. Browser 
 | Motion | Compliant | 8%/12%/12% states, standard easing, 150ms feedback, pressed shape change, reduced-motion handling |
 | Layout | Compliant for tested widths | Responsive 320–1440px matrix with no page overflow |
 | Components | Compliant for the site’s scope | Buttons, navigation, cards, loading, feedback, links, and docs navigation checked; no unused component categories added |
+| Scrollbars | Compliant | Outline thumb over a transparent track: 5.91:1 dark and 4.17:1 light; thin standard scrollbar with a rounded WebKit fallback; forced-colors restores system colors |
 | Accessibility | Automated checks pass; manual AT pending | Lighthouse 100 and live-region behavior verified; screen-reader, forced-colors, and zoom sessions remain |
 | Code and token hygiene | Compliant | No undeclared CSS properties, raw component radii, or unused font assets; one validator; stale duplicate validator removed |
 
